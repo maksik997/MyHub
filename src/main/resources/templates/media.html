@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub - Gallery</title>
+    <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/media_page.css}" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div>
+            <img th:src="@{/images/logo.png}" src="" alt="logo.png">
+            <div>
+                <h1>MyHub</h1>
+                <h2>Welcome to the Hub.</h2>
+            </div>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Start</a></li>
+                <li><a th:href="@{/games}">Games</a></li>
+                <li><a class="selected" th:href="@{/media}">Gallery</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div>
+            <h1>Gallery:</h1>
+            <p>Found: <span th:text="${totalCount}">Number</span> images total.</p>
+            <a th:href="@{/media/upload}">Upload</a>
+        </div>
+
+        <div class="media-item" th:each="m : ${media}">
+            <h1 th:text="${m.type}"></h1>
+            <img src="" alt="" th:src="${m.path}" th:alt="${m.fileName}" th:if="${m.type == T(pl.magzik.model.Media.MediaType).IMAGE}">
+            <video controls th:if="${m.type == T(pl.magzik.model.Media.MediaType).VIDEO}">
+                <source th:src="${m.path}" src="">
+                Your browser does not support the video tag.
+            </video>
+            <p>Filename: <span th:text="${m.fileName}">NAME</span></p>
+            <a th:href="${m.path}" target="_blank">Open</a>
+        </div>
+
+        <!-- PAGINATION -->
+        <nav th:if="${totalCount > 0}"><ul>
+            <li th:if="${currentPage > 0}">
+                <a th:href="@{/media(page=${currentPage - 1}, size=10)}">
+                    «
+                </a>
+            </li>
+
+            <li th:each="i : ${#numbers.sequence(1, totalPages)}">
+                <a th:href="@{/media(page=${i - 1}, size=10)}"
+                    th:classappend="${i - 1 == currentPage} ? 'active'">
+                    <span th:text="${i}">1</span>
+            </a></li>
+
+            <li th:if="${currentPage < totalPages - 1}">
+                <a th:href="@{/media(page=${currentPage + 1}, size=10)}">
+                    »
+                </a>
+            </li>
+        </ul></nav>
+    </main>
+
+    <footer>
+        <p>
+            <span>Manage your entertainment!</span><br>
+            Created by: &copy; Magzik<br>
+            2024
+        </p>
+    </footer>
+</body>
+</html>

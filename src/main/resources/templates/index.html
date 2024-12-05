@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub</title>
+    <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/landing_page.css}" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div>
+            <img th:src="@{/images/logo.png}" src="" alt="logo.png">
+            <div>
+                <h1>MyHub</h1>
+                <h2>Welcome to the Hub.</h2>
+            </div>
+        </div>
+
+        <nav><ul>
+            <li><a class="selected" th:href="@{/}">Start</a></li>
+            <li><a th:href="@{/games}">Games</a></li>
+            <li><a th:href="@{/media}">Gallery</a></li>
+        </ul></nav>
+    </header>
+
+    <main>
+        <div class="card">
+            <h1>Games</h1>
+            <p>Discover and play your favourite games from our collection.</p>
+            <a th:href="@{/games}">Explore games</a>
+        </div>
+        <div class="card">
+            <h1>Gallery</h1>
+            <p>Browse through an exciting gallery of images and videos.</p>
+            <a th:href="@{/media}">Explore gallery</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>
+            <span>Manage your entertainment!</span><br>
+            Created by: &copy; Magzik<br>
+            2024
+        </p>
+    </footer>
+</body>
+</html>

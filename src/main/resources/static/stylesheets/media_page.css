@@ -1,0 +1,73 @@
+@import url('colors.css');
+
+main > div a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: var(--color-accent-1);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    border-radius: 15px;
+    transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
+}
+
+main > div a:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-accent-2);
+    font-weight: bold;
+}
+
+main > .media-item {
+    width: 80%;
+    padding: 20px;
+    margin: 20px auto;
+}
+
+main > .media-item img,
+main > .media-item video {
+    max-width: 100%;
+    max-height: 60vh;
+}
+
+main > .media-item p {
+    width: 100%;
+    white-space: nowrap;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: clip;
+    text-align: left;
+}
+
+main > .media-item p span {
+    font-style: italic;
+}
+
+main > nav {
+    margin: 40px 0;
+}
+
+main > nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style-type: none;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+main > nav ul li a {
+    padding: 10px 15px;
+    background-color: var(--color-accent-1);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    border-radius: 15px;
+    transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
+}
+
+main > nav ul li a:hover,
+main > nav ul li a.active {
+    transform: translateY(-2px);
+    background-color: var(--color-accent-2);
+    font-weight: bold;
+}

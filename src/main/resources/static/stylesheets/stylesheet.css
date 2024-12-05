@@ -1,0 +1,167 @@
+@import url('colors.css');
+
+/* Animations */
+
+@keyframes backgroundAnimation {
+    0%, 100% {
+        background-position: 0 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes loopyLogoLoop {
+    0%, 100% {
+        rotate: 360deg;
+    }
+    50% {
+        rotate: 0deg;
+    }
+}
+
+/* Main elements */
+
+* {
+    font-family: Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    color: var(--color-font);
+    background: var(--gradient-background);
+    background-size: 300% 300%;
+    animation: backgroundAnimation 12s ease infinite;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-font);
+}
+
+/* Header */
+
+header {
+    background-color: var(--color-main);
+}
+
+header > div {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px 0;
+}
+
+header > div img {
+    width: 64px;
+    height: 64px;
+    filter: grayscale(100%) brightness(255);
+    animation: loopyLogoLoop 6s ease-in-out infinite;
+}
+
+header > div div {
+    margin: 0 10px;
+}
+
+header > div h1,
+header > div h2 {
+    margin: 0;
+    padding: 0;
+}
+
+header > div h1 {
+    letter-spacing: 0.1em;
+}
+
+header > div h2 {
+    margin: 0 15px;
+    font-size: 1.1em;
+    font-style: italic;
+    font-weight: normal;
+}
+
+header > nav {
+    width: 100%;
+}
+
+header > nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+header > nav ul > li {
+    width: 100%;
+}
+
+header > nav ul > li a {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 0;
+    background-color: var(--color-accent-1);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    text-align: center;
+    transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
+}
+
+header > nav ul > li a:hover,
+header > nav ul > li a.selected {
+    transform: translateY(-2px);
+    background-color: var(--color-accent-2);
+    font-weight: bold;
+}
+
+/* Main */
+
+main {
+    flex-grow: 1;
+}
+
+main > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    margin: 10px auto 0;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: var(--color-main);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+}
+
+main > div * {
+    display: inline-block;
+    margin: 0;
+    padding: 0 0 5px;
+    font-size: 1.1rem;
+}
+
+main > div h1 {
+    font-size: 1.7em;
+}
+
+/* Footer */
+
+footer {
+    width: 100%;
+    background-color: var(--color-main);
+    margin-top: auto;
+}
+
+footer > p {
+    margin: 0;
+    text-align: center;
+}
+
+footer > p span {
+    font-weight: bold;
+}

@@ -1,0 +1,51 @@
+@import url('colors.css');
+
+main > form {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--color-main);
+    border-radius: 20px;
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    text-align: center;
+    font-size: 1.2em;
+}
+
+main > form input[type="file"] {
+    max-width: 100%;
+    margin: 15px 0;
+    padding: 10px;
+    border: 2px dashed var(--color-accent-3);
+    border-radius: 15px;
+    color: var(--color-accent-3);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+main > form input[type="file"]:hover {
+    cursor: pointer;
+}
+
+main > form button {
+    padding: 10px 30px;
+    background-color: var(--color-accent-1);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    border-radius: 15px;
+    transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
+    outline: 0;
+    border: 0;
+    color: var(--color-font);
+    font-size: 0.8em;
+}
+
+main > form button:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-accent-2);
+    font-weight: bold;
+    cursor: pointer;
+}

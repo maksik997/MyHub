@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub - Gallery upload</title>
+    <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/upload_page.css}" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div>
+            <img th:src="@{/images/logo.png}" src="" alt="logo.png">
+            <div>
+                <h1>MyHub</h1>
+                <h2>Welcome to the Hub.</h2>
+            </div>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Start</a></li>
+                <li><a th:href="@{/games}">Games</a></li>
+                <li><a th:href="@{/media}">Gallery</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div>
+            <h1>Upload media:</h1>
+        </div>
+
+        <form th:if="${message == ''}" th:action="@{/media/upload}" method="post" enctype="multipart/form-data">
+            <label for="files">Choose a file to upload:</label>
+            <input type="file" name="files" id="files" accept="image/*,video/*" multiple>
+            <button type="submit">Upload</button>
+        </form>
+
+        <div th:if="${message != ''}">
+            <p th:text="${message}">Status:</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>
+            <span>Manage your entertainment!</span><br>
+            Created by: &copy; Magzik<br>
+            2024
+        </p>
+    </footer>
+</body>
+</html>

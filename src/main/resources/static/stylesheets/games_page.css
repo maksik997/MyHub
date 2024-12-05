@@ -1,0 +1,75 @@
+@import url("colors.css");
+
+main > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    margin: 10px auto 0;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: var(--color-main);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+}
+
+main > div * {
+    display: inline-block;
+    margin: 0;
+    padding: 0 0 5px;
+    font-size: 1.1rem;
+}
+
+main > div h1 {
+    font-size: 1.7em;
+}
+
+main > ul {
+    padding: 0 20px;
+    margin: 10px 0;
+    list-style-type: none;
+}
+
+main > ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 30px;
+    background-color: var(--color-main);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    border-radius: 20px;
+    font-size: 1.3em;
+}
+
+main > ul li p {
+    font-weight: bold;
+}
+
+main > ul li a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    background-color: var(--color-accent-1);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    border-radius: 100%;
+    transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
+}
+
+main > ul li a:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-accent-2);
+    font-weight: bold;
+}
+
+main > ul li a > i {
+    font-size: 32px !important;
+    transition: font-weight 0.3s ease;
+}
+
+main > ul li a:hover > i {
+    font-weight: bold;
+}
+

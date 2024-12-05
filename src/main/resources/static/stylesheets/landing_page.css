@@ -1,0 +1,49 @@
+@import url('colors.css');
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+main .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 350px;
+    width: 350px;
+    background-color: var(--color-main);
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    text-align: center;
+    font-size: 1.2em;
+}
+
+main .card > * {
+    margin: 0;
+    padding: 0;
+}
+
+main .card > h1 {
+    font-size: 1.5em;
+}
+
+main .card > a {
+    width: 100%;
+    padding: 15px 30px;
+    background-color: var(--color-accent-1);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    text-align: center;
+    transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
+    border-radius: 15px;
+}
+
+main .card > a:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-accent-2);
+    font-weight: bold;
+}

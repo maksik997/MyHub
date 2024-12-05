@@ -1,0 +1,10 @@
+:root {
+    --gradient-background: linear-gradient(45deg, #03045e 0%, #00b4d8 75%, #caf0f8 100%);
+    --color-main: rgba(3, 4, 94, 0.4);
+    --color-accent-1: rgba(0, 119, 182, 1);
+    --color-accent-2: rgba(0, 142, 222, 1);
+    --color-accent-3: rgba(144, 224, 239, 1);
+    --color-accent-4: rgba(202, 240, 248, 1);
+    --color-font: #fff;
+    --color-shadow: rgba(0, 0, 0, 0.3);
+}
