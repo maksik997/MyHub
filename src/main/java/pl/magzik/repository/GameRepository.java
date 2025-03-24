@@ -1,12 +1,10 @@
 package pl.magzik.repository;
 
 import jakarta.annotation.PostConstruct;
-//import org.jetbrains.annotations.Contract;
-//import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import pl.magzik.model.Game;
 
 import java.io.File;
@@ -18,13 +16,20 @@ import java.util.*;
  * Each game is represented by a directory containing exactly one HTML file.
  * Games are loaded and stored in memory for later retrieval.
  * */
-@Service
+@Repository
 public class GameRepository {
+
+    /* TODO:
+    *   No.1 - Extent's persistence
+    *           Because there is no database - it has to be addressed manually
+    *  */
+
     private static final Logger logger = LoggerFactory.getLogger(GameRepository.class);
 
     @Value("${game-dir}")
     private String gameDirectory;
 
+    @Deprecated // Possible memory usage optimization.
     private List<Game> games;
 
     /**
@@ -33,9 +38,10 @@ public class GameRepository {
      * If the directory is valid, it will load all the games into memory.
      */
     @PostConstruct
+    @Deprecated
     public void init() {
         logger.info("Initialising Game repository...");
-        this.games = findAllGames();
+        this.games = findAll();
         logger.info("Loaded: {} games. Game repository initialised.", games.size());
     }
 
@@ -47,6 +53,7 @@ public class GameRepository {
      */
     /*@NotNull
     @Contract("-> new")*/
+    @Deprecated
     public List<Game> getAllGames() {
         return List.copyOf(games);
     }
@@ -59,10 +66,17 @@ public class GameRepository {
      * @return An {@link Optional} containing the game if found, or an empty {@link Optional} if no game matches the name.
      */
     /*@NotNull*/
+    @Deprecated
     public Optional<Game> findGameByName(/*@NotNull*/ String name) {
         return games.stream()
             .filter(g -> g.name().equals(name))
             .findFirst();
+    }
+
+    public Optional<Game> findById(UUID id) {
+        return games.stream()
+                .filter(game -> game.id().equals(id))
+                .findFirst();
     }
 
     /**
@@ -72,7 +86,7 @@ public class GameRepository {
      * @return A list of {@link Game} objects discovered in the directory.
      *         If the directory is invalid or empty, an empty list is returned.
      */
-    private List<Game> findAllGames() {
+    public List<Game> findAll() {
         File mainDirectory = new File(gameDirectory);
 
         if (!isMainDirectoryValid(mainDirectory)) return new ArrayList<>();

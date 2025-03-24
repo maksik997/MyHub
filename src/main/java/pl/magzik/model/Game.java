@@ -5,6 +5,7 @@ package pl.magzik.model;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * Represents a game directory containing an HTML file, typically used to identify a game
@@ -22,7 +23,7 @@ import java.util.Arrays;
  * @param name the name of the game directory (typically the directory name).
  * @param htmlFile the name of the `.html` file within the game directory.
  */
-public record Game(String name, String htmlFile) {
+public record Game(UUID id, String name, String htmlFile) {
 
     /**
      * Creates a {@link Game} instance from the given directory containing a `.html` file.
@@ -47,6 +48,6 @@ public record Game(String name, String htmlFile) {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("There is no `.html` file in this directory: " + directory.getAbsolutePath()));
 
-        return new Game(name, htmlFile.getName());
+        return new Game(UUID.randomUUID(), name, htmlFile.getName());
     }
 }

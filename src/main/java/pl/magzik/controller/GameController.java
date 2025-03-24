@@ -46,7 +46,7 @@ public class GameController {
     /**
      * Handles HTTP GET requests to display a list of all games.
      *
-     * <p>This method retrieves all games from the {@link GameRepository} and adds them to the model
+     * <p>This method retrieve§s all games from the {@link GameRepository} and adds them to the model
      * to be displayed in a Thymeleaf template.</p>
      *
      * @param model the model to populate with the list of games.
