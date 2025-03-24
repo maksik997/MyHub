@@ -105,7 +105,7 @@ public class MediaController {
     @GetMapping("/file/{filename}")
     public ResponseEntity<Resource> getMediaFile(/*@NotNull*/ @PathVariable(name = "filename") String filename) {
         try {
-            Media media = mediaRepository.findByName(filename);
+            Media media = mediaRepository.findByName(filename).get();
             File file = new File(media.path());
 
             if (!file.exists()) {

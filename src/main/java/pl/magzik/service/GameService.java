@@ -40,8 +40,4 @@ public class GameService {
         Objects.requireNonNull(name);
         return gameRepository.findByName(name);
     }
-
-    // TODO No.1:
-    //  Add Create, Update, Delete operation support.
-
 }

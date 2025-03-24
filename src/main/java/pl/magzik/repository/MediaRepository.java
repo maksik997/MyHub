@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.model.Media;
 import pl.magzik.utils.FileUtils;
@@ -27,6 +26,7 @@ public class MediaRepository {
 
     /* TODO:
     *   No.1 Implement all CRUD operations.
+    *   No.2 Extent's persistence
     * */
 
     private static final Logger log = LoggerFactory.getLogger(MediaRepository.class);
@@ -52,7 +52,17 @@ public class MediaRepository {
      * @return {@link List} of media files found.
      */
     public List<Media> findAll() {
-        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of).toList();
+        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of)
+                .sorted()
+                .toList();
+    }
+
+    /**
+     * Counts media files.
+     * @return Number of media files found.
+     * */
+    public long countAll() {
+        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of).count();
     }
 
     /**
