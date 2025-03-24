@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.*;
 
 /**
- * Repository class providing methods, to manage {@link Game} objects,
+ * Repository class providing methods, to manage {@link Game} objects.
  *
  * @author Maksymilian Strzelczak
  * @version 1.1
@@ -34,7 +34,7 @@ public class GameRepository {
     private String gameDirectory;
 
     /**
-     * Find a game with specified name.
+     * Finds a game with specified name.
      * @param name The name of the games.
      * @return An {@link Optional} of the game, or {@link Optional#empty()} if no game found.
      * @throws NullPointerException If given name is null.

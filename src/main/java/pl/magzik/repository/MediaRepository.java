@@ -1,9 +1,9 @@
 package pl.magzik.repository;
 
-import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.model.Media;
@@ -14,14 +14,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.stream.Collectors;
 
 /**
- * A repository for managing media files.
- * Provides functionalities to load, retrieve, and upload media files stored in a directory.
+ * Repository class providing methods, to manage {@link Media} objects.
+ *
+ * @author Maksymilian Strzelczak
+ * @version 1.1
+ * @see Media
  * */
-@Service
+@Repository
 public class MediaRepository {
 
     /* TODO:
@@ -34,26 +35,31 @@ public class MediaRepository {
     private String mediaDirectory;
 
     /**
-     * TODO...
+     * Finds a media file with specified name.
+     * @param name The name of the media file.
+     * @return An {@link Optional} of the media file, or {@link Optional#empty()} if no game found.
+     * @throws NullPointerException If given name is null.
+     */
+    public Optional<Media> findByName(String name) {
+        Objects.requireNonNull(name);
+        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of)
+                .filter(m -> m.fileName().equals(name))
+                .findFirst();
+    }
+
+    /**
+     * Finds all media in the {@link MediaRepository#mediaDirectory}.
+     * @return {@link List} of media files found.
      */
     public List<Media> findAll() {
         return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of).toList();
     }
 
     /**
-     * TODO...
+     * Saves a list of media files provided.
+     * @param files {@link List} of {@link MultipartFile} containing media files provided.
+     * @throws NullPointerException If the provided list is {@code null}.
      */
-    public Media findByName(String name) {
-        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of)
-                .filter(m -> m.fileName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Media not found."));
-    }
-
-    /**
-     * TODO...
-     */
-    /* TODO: REFACTOR */
     public void saveAll(List<MultipartFile> files) throws IOException {
         File uploadDirectory = new File(mediaDirectory);
         if (!uploadDirectory.exists()) {
