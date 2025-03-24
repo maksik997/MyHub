@@ -46,25 +46,36 @@
         </div>
 
         <!-- PAGINATION -->
-        <nav th:if="${totalCount > 0}"><ul>
-            <li th:if="${currentPage > 0}">
-                <a th:href="@{/media(page=${currentPage - 1}, size=10)}">
-                    «
-                </a>
-            </li>
+        <nav th:if="${totalCount > 0}">
+            <ul>
+                <li th:if="${currentPage > 0}">
+                    <a th:href="@{/media(page=${currentPage - 1}, size=10)}">
+                        «
+                    </a>
+                </li>
 
-            <li th:each="i : ${#numbers.sequence(1, totalPages)}">
-                <a th:href="@{/media(page=${i - 1}, size=10)}"
-                    th:classappend="${i - 1 == currentPage} ? 'active'">
-                    <span th:text="${i}">1</span>
-            </a></li>
 
-            <li th:if="${currentPage < totalPages - 1}">
-                <a th:href="@{/media(page=${currentPage + 1}, size=10)}">
-                    »
-                </a>
-            </li>
-        </ul></nav>
+                <li>
+                    <form onsubmit="changeSite(event)">
+                        <label>
+                            <datalist id="pages">
+                                <option th:each="i : ${#numbers.sequence(1, totalPages)}"
+                                        th:value="${i}">
+                            </datalist>
+                            <input id="page" list="pages" th:placeholder="${currentPage+1}"/>
+                        </label>
+                    </form>
+                </li>
+
+
+                <li th:if="${currentPage < totalPages - 1}">
+                    <a th:href="@{/media(page=${currentPage + 1}, size=10)}">
+                        »
+                    </a>
+                </li>
+            </ul>
+            <p>Total pages: <span th:text="${totalPages}"></span></p>
+        </nav>
     </main>
 
     <footer>
@@ -74,5 +85,11 @@
             2024
         </p>
     </footer>
+<script>
+    const changeSite = (event) => {
+        event.preventDefault();
+        location.href=`/media?page=${document.getElementById('page').value-1}&size=10`;
+    };
+</script>
 </body>
 </html>
