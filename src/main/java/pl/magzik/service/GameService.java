@@ -9,8 +9,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Service class providing interface for {@link GameRepository} class.
+ *
+ * @author Maksymilian Strzelczak
+ * @version 1.1
+ * */
 @Service
 public class GameService {
+
+    /* TODO:
+    *   No.1 CRUD operations
+    *           Another step into RESTful API.
+    * */
 
     private final GameRepository gameRepository;
 
