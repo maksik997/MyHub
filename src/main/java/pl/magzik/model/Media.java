@@ -1,7 +1,7 @@
 package pl.magzik.model;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.Contract;
+//import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public record Media(String fileName, MediaType type, String path) {
      * @return a new {@link Media} object representing the file.
      * @throws IllegalArgumentException if the file extension is not supported (not an image or video).
      */
-    public static @NotNull Media of(@NotNull File file) {
+    public static /*@NotNull*/ Media of(/*@NotNull*/ File file) {
         String fileName = file.getName();
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
@@ -47,8 +47,8 @@ public record Media(String fileName, MediaType type, String path) {
      *
      * @return the masked URL for the media file, e.g., "/api/media/file/image.jpg".
      */
-    @NotNull
-    @Contract(pure = true)
+    /*@NotNull
+    @Contract(pure = true)*/
     public String maskUrl() {
         return String.format("/media/file/%s", fileName);
     }
@@ -64,7 +64,7 @@ public record Media(String fileName, MediaType type, String path) {
      * @return the MIME type as a string for the current media file.
      * @throws IllegalArgumentException if the file extension is unsupported or invalid for the media type.
      */
-    public @NotNull String getMimeType() {
+    public /*@NotNull*/ String getMimeType() {
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
 
         if (type == MediaType.IMAGE) {

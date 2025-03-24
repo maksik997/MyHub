@@ -1,6 +1,6 @@
 package pl.magzik.controller;
 
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,12 +67,12 @@ public class MediaController {
      * @return the name of the view ("media")
      * @throws ResponseStatusException if {@code page} or {@code size} have invalid values
      */
-    @NotNull
+    /*@NotNull*/
     @GetMapping
     public String getMedia(
         @RequestParam(name = "page", defaultValue = "0") int page,
         @RequestParam(name = "size", defaultValue = "10") int size,
-        @NotNull Model model
+        /*@NotNull*/ Model model
     ) {
         if (page < 0 || size <= 0) {
             logger.warn("Provided request have invalid parameters. Page: {}, Size: {}", page, size);
@@ -101,9 +101,9 @@ public class MediaController {
      * or an error status if the file is not found or cannot be retrieved
      * @throws ResponseStatusException if the file does not exist or cannot be processed
      */
-    @NotNull
+    /*@NotNull*/
     @GetMapping("/file/{filename}")
-    public ResponseEntity<Resource> getMediaFile(@NotNull @PathVariable(name = "filename") String filename) {
+    public ResponseEntity<Resource> getMediaFile(/*@NotNull*/ @PathVariable(name = "filename") String filename) {
         try {
             Media media = mediaRepository.findMediaByFileName(filename);
             File file = new File(mediaRepository.getMediaDirectory(), media.fileName());
@@ -133,9 +133,9 @@ public class MediaController {
      * @param model the model to populate with an optional message
      * @return the name of the view ("upload")
      */
-    @NotNull
+    /*@NotNull*/
     @GetMapping("/upload")
-    public String showUploadView(@NotNull Model model) {
+    public String showUploadView(/*@NotNull*/ Model model) {
         model.addAttribute("message", "");
         return "upload";
     }
@@ -150,9 +150,9 @@ public class MediaController {
      * @param model the model to populate with a message indicating the success or failure of the upload
      * @return the name of the view ("upload")
      */
-    @NotNull
+    /*@NotNull*/
     @PostMapping("/upload")
-    public String uploadFiles(@RequestParam(name = "files") List<MultipartFile> files, @NotNull Model model) {
+    public String uploadFiles(@RequestParam(name = "files") List<MultipartFile> files, /*@NotNull*/ Model model) {
         if (files == null || files.isEmpty()) {
             model.addAttribute("message", "No files provided for upload.");
             return "upload";

@@ -1,8 +1,8 @@
 package pl.magzik.repository;
 
 import jakarta.annotation.PostConstruct;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.Contract;
+//import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,8 +45,8 @@ public class GameRepository {
      *
      * @return A list of {@link Game} objects currently managed by this repository.
      */
-    @NotNull
-    @Contract("-> new")
+    /*@NotNull
+    @Contract("-> new")*/
     public List<Game> getAllGames() {
         return List.copyOf(games);
     }
@@ -58,8 +58,8 @@ public class GameRepository {
      * @param name The name of the game to search for.
      * @return An {@link Optional} containing the game if found, or an empty {@link Optional} if no game matches the name.
      */
-    @NotNull
-    public Optional<Game> findGameByName(@NotNull String name) {
+    /*@NotNull*/
+    public Optional<Game> findGameByName(/*@NotNull*/ String name) {
         return games.stream()
             .filter(g -> g.name().equals(name))
             .findFirst();
@@ -97,7 +97,7 @@ public class GameRepository {
      * @throws NullPointerException If the provided {@code mainDirectory} is {@code null}.
      * @throws IllegalStateException If the provided {@code mainDirectory} doesn't exist, or isn't a directory, or does not allow reading.
      */
-    private boolean isMainDirectoryValid(@NotNull File mainDirectory) {
+    private boolean isMainDirectoryValid(/*@NotNull*/ File mainDirectory) {
         Objects.requireNonNull(mainDirectory, "Path to mainDirectory is null.");
         if (!mainDirectory.exists() || !mainDirectory.isDirectory()) {
             logger.error("Directory '{}' doesn't exist or is not a directory.", mainDirectory.getAbsolutePath());
@@ -126,7 +126,7 @@ public class GameRepository {
      * @return {@code true} if the directory contains exactly one HTML file; {@code false} otherwise.
      * @throws NullPointerException If the provided {@code directory} is {@code null}.
      */
-    private boolean isGameDirectoryValid(@NotNull File directory) {
+    private boolean isGameDirectoryValid(/*@NotNull*/ File directory) {
         Objects.requireNonNull(directory, "Path to directory is null.");
         File[] subFiles = directory.listFiles();
 

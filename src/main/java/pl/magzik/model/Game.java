@@ -1,7 +1,7 @@
 package pl.magzik.model;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.Contract;
+//import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.Arrays;
@@ -33,9 +33,9 @@ public record Game(String name, String htmlFile) {
      * @return a new {@link Game} object containing the directory name, `.html` file name, and full path to the file.
      * @throws IllegalArgumentException if the directory is unreadable, or if no `.html` file is found in the directory.
      * */
-    @NotNull
-    @Contract("_ -> new")
-    public static Game of(@NotNull File directory) {
+    /*@NotNull
+    @Contract("_ -> new")*/
+    public static Game of(/*@NotNull*/ File directory) {
         String name = directory.getName();
 
         File[] innerFiles = directory.listFiles();

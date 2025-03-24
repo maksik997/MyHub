@@ -1,6 +1,6 @@
 package pl.magzik.controller;
 
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class GameController {
      * @param gameRepository the repository that provides access to the games.
      */
     @Autowired
-    public GameController(@NotNull GameRepository gameRepository) {
+    public GameController(/*@NotNull*/ GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
 
@@ -52,9 +52,9 @@ public class GameController {
      * @param model the model to populate with the list of games.
      * @return the name of the Thymeleaf template to render, which will display the list of games.
      */
-    @NotNull
+    /*@NotNull*/
     @GetMapping("/games")
-    public String getAllGames(@NotNull Model model) {
+    public String getAllGames(/*@NotNull*/ Model model) {
         model.addAttribute("games", gameRepository.getAllGames().stream().map(Game::name).toList());
         return "games";
     }
@@ -70,9 +70,9 @@ public class GameController {
      * @return a redirection URL to the game's HTML page if the game is found.
      * @throws ResponseStatusException if the game with the specified name is not found, returning a 404 Not Found status.
      */
-    @NotNull
+    /*@NotNull*/
     @GetMapping("/games/{name}")
-    public String getGame(@NotNull @PathVariable(name = "name") String name) {
+    public String getGame(/*@NotNull*/ @PathVariable(name = "name") String name) {
         Optional<Game> optionalGame = gameRepository.findGameByName(name);
         if (optionalGame.isEmpty()) {
             logger.warn("Game {} not found", name);
