@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 import pl.magzik.model.Game;
-import pl.magzik.repository.GameService;
+import pl.magzik.repository.GameRepository;
 
 import java.util.Optional;
 
 /**
  * Controller responsible for handling HTTP requests related to games.
  * This controller provides endpoints for retrieving all games and details of a specific game.
- * The games are managed by the {@link GameService}.
+ * The games are managed by the {@link GameRepository}.
  *
  * <p>It includes two main functionalities:</p>
  * <ul>
@@ -31,22 +31,22 @@ public class GameController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
-    private final GameService gameService;
+    private final GameRepository gameRepository;
 
     /**
-     * Constructs a new {@link GameController} instance with the given {@link GameService}.
+     * Constructs a new {@link GameController} instance with the given {@link GameRepository}.
      *
-     * @param gameService the repository that provides access to the games.
+     * @param gameRepository the repository that provides access to the games.
      */
     @Autowired
-    public GameController(@NotNull GameService gameService) {
-        this.gameService = gameService;
+    public GameController(@NotNull GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
     }
 
     /**
      * Handles HTTP GET requests to display a list of all games.
      *
-     * <p>This method retrieves all games from the {@link GameService} and adds them to the model
+     * <p>This method retrieves all games from the {@link GameRepository} and adds them to the model
      * to be displayed in a Thymeleaf template.</p>
      *
      * @param model the model to populate with the list of games.
@@ -55,14 +55,14 @@ public class GameController {
     @NotNull
     @GetMapping("/games")
     public String getAllGames(@NotNull Model model) {
-        model.addAttribute("games", gameService.getAllGames().stream().map(Game::name).toList());
+        model.addAttribute("games", gameRepository.getAllGames().stream().map(Game::name).toList());
         return "games";
     }
 
     /**
      * Handles HTTP GET requests for a specific game identified by its name.
      *
-     * <p>This method searches for the game by its name using the {@link GameService}. If the game is found,
+     * <p>This method searches for the game by its name using the {@link GameRepository}. If the game is found,
      * it redirects to the game's HTML page. If the game is not found, it throws a {@link ResponseStatusException}
      * with a {@link HttpStatus#NOT_FOUND} status.</p>
      *
@@ -73,7 +73,7 @@ public class GameController {
     @NotNull
     @GetMapping("/games/{name}")
     public String getGame(@NotNull @PathVariable(name = "name") String name) {
-        Optional<Game> optionalGame = gameService.findGameByName(name);
+        Optional<Game> optionalGame = gameRepository.findGameByName(name);
         if (optionalGame.isEmpty()) {
             logger.warn("Game {} not found", name);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found.");

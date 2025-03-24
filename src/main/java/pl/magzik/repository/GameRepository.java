@@ -1,6 +1,5 @@
 package pl.magzik.repository;
 
-import jakarta.annotation.Nullable;
 import jakarta.annotation.PostConstruct;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -20,8 +19,8 @@ import java.util.*;
  * Games are loaded and stored in memory for later retrieval.
  * */
 @Service
-public class GameService {
-    private static final Logger logger = LoggerFactory.getLogger(GameService.class);
+public class GameRepository {
+    private static final Logger logger = LoggerFactory.getLogger(GameRepository.class);
 
     @Value("${game-dir}")
     private String gameDirectory;
