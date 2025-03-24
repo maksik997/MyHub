@@ -21,6 +21,11 @@ import java.util.Optional;
 @Service
 public class MediaService {
 
+    /* TODO:
+     *   No.1 CRUD operations
+     *           Another step into RESTful API.
+     * */
+
     private final MediaRepository mediaRepository;
 
     @Autowired
