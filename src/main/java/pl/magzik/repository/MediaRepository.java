@@ -20,22 +20,25 @@ import java.util.stream.Collectors;
  * */
 @Service
 public class MediaRepository {
-    private static final Logger logger = LoggerFactory.getLogger(MediaRepository.class);
+
+    private static final Logger log = LoggerFactory.getLogger(MediaRepository.class);
 
     @Value("${media-dir}")
     private String mediaDirectory;
-    
+
+    @Deprecated
     private Set<Media> media;
 
     /**
      * Initialises the repository by loading media files from the specified directory.
      */
     @PostConstruct
+    @Deprecated
     public void init() {
-        logger.info("Initialising Media repository...");
+        log.info("Initialising Media repository...");
         this.media = new ConcurrentSkipListSet<>(Comparator.comparing(Media::fileName, String.CASE_INSENSITIVE_ORDER));
-        this.media.addAll(findAllMedia());
-        logger.info("Loaded: {} media files. Media repository initialised.", media.size());
+        this.media.addAll(findAll());
+        log.info("Loaded: {} media files. Media repository initialised.", media.size());
     }
 
     /**
@@ -43,6 +46,7 @@ public class MediaRepository {
      *
      * @return the media directory path
      */
+    @Deprecated
     public String getMediaDirectory() {
         return mediaDirectory;
     }
@@ -53,11 +57,11 @@ public class MediaRepository {
      * @return a list of all media files in the directory
      * @throws RuntimeException if the directory does not exist or is invalid
      */
-    private List<Media> findAllMedia() {
+    private List<Media> findAll() {
         File mainDirectory = new File(mediaDirectory);
 
         if (!mainDirectory.exists() || !mainDirectory.isDirectory()) {
-            logger.error("Media directory '{}' doesn't exists or is not a directory.", mediaDirectory);
+            log.error("Media directory '{}' doesn't exists or is not a directory.", mediaDirectory);
             throw new RuntimeException("Media directory doesn't exists or is not a directory.");
         }
 
@@ -114,7 +118,7 @@ public class MediaRepository {
     public void uploadFiles(List<MultipartFile> files) throws IOException {
         File uploadDirectory = new File(mediaDirectory);
         if (!uploadDirectory.exists() && !uploadDirectory.mkdirs()) {
-            logger.error("Failed to create media directory: {}", mediaDirectory);
+            log.error("Failed to create media directory: {}", mediaDirectory);
             throw new IOException("Couldn't create media directory: " + mediaDirectory);
         }
 
@@ -128,7 +132,7 @@ public class MediaRepository {
                 file.transferTo(destination);
                 media.add(Media.of(destination));
             } catch (IOException e) {
-                logger.error("Failed to upload file: {}", filename, e);
+                log.error("Failed to upload file: {}", filename, e);
                 throw new IOException("Error uploading file: " + filename, e);
             }
         }
@@ -142,7 +146,7 @@ public class MediaRepository {
      */
     private boolean isFileValid(String filename) {
         if (filename == null || filename.isEmpty()) {
-            logger.warn("File skipped: no original filename provided.");
+            log.warn("File skipped: no original filename provided.");
             return false;
         }
         return true;
@@ -167,5 +171,14 @@ public class MediaRepository {
             }
         }
         return filename;
+    }
+
+    private boolean isMediaValid(File file) {
+        Objects.requireNonNull(file);
+
+        if (!file.exists()) {
+            log.warn("File '{}' already exists", file);
+        }
+        return true;
     }
 }

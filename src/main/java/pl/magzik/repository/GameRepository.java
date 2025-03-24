@@ -5,12 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import pl.magzik.model.Game;
+import pl.magzik.utils.FileUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * Repository class providing methods, to manage {@link Game} objects,
@@ -44,13 +42,9 @@ public class GameRepository {
     public Optional<Game> findByName(String name) {
         Objects.requireNonNull(name);
 
-        try {
-            return getFileStream()
-                    .filter(game -> game.name().equalsIgnoreCase(name))
-                    .findFirst();
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        return FileUtils.getFileStream(gameDirectory, this::isGameValid, Game::of)
+                .filter(game -> game.name().equalsIgnoreCase(name))
+                .findFirst();
     }
 
     /**
@@ -58,30 +52,7 @@ public class GameRepository {
      * @return {@link List} of games found.
      */
     public List<Game> findAll() {
-        try {
-            return getFileStream().toList();
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
-    private Stream<Game> getFileStream() throws IOException {
-        File parent = new File(gameDirectory);
-        if (!parent.exists() || !parent.isDirectory()) {
-            log.error("Provided directory '{}' is invalid.", parent);
-            throw new IllegalStateException("Invalid directory provided.");
-        }
-
-        File[] files = parent.listFiles();
-        if (files == null || files.length == 0) {
-            log.error("Provided directory '{}' is empty.", parent);
-            throw new IllegalStateException("Invalid directory provided.");
-        }
-
-        return Arrays.stream(files)
-                .filter(File::isDirectory)
-                .filter(this::isGameValid)
-                .map(Game::of);
+        return FileUtils.getFileStream(gameDirectory, this::isGameValid, Game::of).toList();
     }
 
     /**
@@ -94,6 +65,11 @@ public class GameRepository {
      */
     private boolean isGameValid(File directory) {
         Objects.requireNonNull(directory);
+
+        if (!directory.isDirectory()) {
+            log.warn("Directory '{}' is not a directory.", directory);
+            return false;
+        }
 
         File[] files = directory.listFiles();
         if (files == null || files.length == 0) {
