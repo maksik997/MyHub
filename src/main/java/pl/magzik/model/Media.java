@@ -1,10 +1,8 @@
 package pl.magzik.model;
 
-//import org.jetbrains.annotations.Contract;
-//import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -20,7 +18,7 @@ import java.util.List;
  * @param type the type of the media ({@link MediaType#IMAGE} or {@link MediaType#VIDEO}).
  * @param path the path to the media file.
  */
-public record Media(String fileName, MediaType type, String path) {
+public record Media(String fileName, MediaType type, String path) implements Comparable<Media> {
 
     /**
      * Creates a {@link Media} instance based on the provided file.
@@ -34,23 +32,11 @@ public record Media(String fileName, MediaType type, String path) {
      * @return a new {@link Media} object representing the file.
      * @throws IllegalArgumentException if the file extension is not supported (not an image or video).
      */
-    public static /*@NotNull*/ Media of(/*@NotNull*/ File file) {
+    public static Media of(File file) {
         String fileName = file.getName();
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         return new Media(fileName, MediaType.of(extension), file.toString());
-    }
-
-    /**
-     * Masks the media file's URL, returning a masked version of the URL
-     * for accessing the media file.
-     *
-     * @return the masked URL for the media file, e.g., "/api/media/file/image.jpg".
-     */
-    /*@NotNull
-    @Contract(pure = true)*/
-    public String maskUrl() {
-        return String.format("/media/file/%s", fileName);
     }
 
 
@@ -64,7 +50,7 @@ public record Media(String fileName, MediaType type, String path) {
      * @return the MIME type as a string for the current media file.
      * @throws IllegalArgumentException if the file extension is unsupported or invalid for the media type.
      */
-    public /*@NotNull*/ String getMimeType() {
+    public String getMimeType() {
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
 
         if (type == MediaType.IMAGE) {
@@ -88,6 +74,12 @@ public record Media(String fileName, MediaType type, String path) {
         }
 
         throw new IllegalArgumentException("Unsupported media type: " + type);
+    }
+
+    @Override
+    public int compareTo(Media media) {
+        Comparator<String> fileNameComparator = Comparator.naturalOrder();
+        return fileNameComparator.compare(this.fileName, media.fileName);
     }
 
     /**
