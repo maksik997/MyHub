@@ -79,13 +79,13 @@ public class MediaController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Both page and size should have positive or zero value.");
         }
 
-        int totalCount = mediaRepository.getMediaCount();
-        int totalPages = (int) Math.ceil((double) totalCount / size);
+//        int totalCount = mediaRepository.getMediaCount();
+//        int totalPages = (int) Math.ceil((double) totalCount / size);
 
-        model.addAttribute("media", mediaRepository.getPagedMedia(page, size));
+        model.addAttribute("media", mediaRepository.findAll(/*page, size*/));
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("totalCount", totalCount);
+        model.addAttribute("totalPages", 0);
+        model.addAttribute("totalCount", 0);
 
         return "media";
     }
@@ -105,11 +105,11 @@ public class MediaController {
     @GetMapping("/file/{filename}")
     public ResponseEntity<Resource> getMediaFile(/*@NotNull*/ @PathVariable(name = "filename") String filename) {
         try {
-            Media media = mediaRepository.findMediaByFileName(filename);
-            File file = new File(mediaRepository.getMediaDirectory(), media.fileName());
+            Media media = mediaRepository.findByName(filename);
+            File file = new File(media.path());
 
             if (!file.exists()) {
-                logger.warn("File not found: {}", filename);
+                logger.warn("File not found: {}", file);
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found: " + filename);
             }
 
@@ -159,7 +159,7 @@ public class MediaController {
         }
 
         try {
-            mediaRepository.uploadFiles(files);
+            mediaRepository.saveAll(files);
             logger.info("Successfully uploaded {} files.", files.size());
             model.addAttribute("message", "File uploaded successfully");
         } catch (IOException e) {
