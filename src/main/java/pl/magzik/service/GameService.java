@@ -14,6 +14,8 @@ import java.util.Optional;
  *
  * @author Maksymilian Strzelczak
  * @version 1.1
+ *
+ * @see GameRepository
  * */
 @Service
 public class GameService {

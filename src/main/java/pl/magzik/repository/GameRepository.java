@@ -17,6 +17,8 @@ import java.util.stream.Stream;
  *
  * @author Maksymilian Strzelczak
  * @version 1.1
+ *
+ * @see Game
  * */
 @Repository
 public class GameRepository {
