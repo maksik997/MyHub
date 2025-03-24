@@ -35,7 +35,7 @@ Step-by-step instructions:
 git clone https://github.com/maksik997/MyHub.git
 cd MyHub
 ```
-2. Configurate the app (See next section).
+2. Configure the app (See next section).
 3. Build project using Maven:
 ```bash
 mvn clean install

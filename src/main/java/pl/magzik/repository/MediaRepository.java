@@ -1,171 +1,97 @@
 package pl.magzik.repository;
 
-import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.model.Media;
+import pl.magzik.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.stream.Collectors;
 
 /**
- * A repository for managing media files.
- * Provides functionalities to load, retrieve, and upload media files stored in a directory.
+ * Repository class providing methods, to manage {@link Media} objects.
+ *
+ * @author Maksymilian Strzelczak
+ * @version 1.1
+ * @see Media
  * */
-@Service
+@Repository
 public class MediaRepository {
-    private static final Logger logger = LoggerFactory.getLogger(MediaRepository.class);
+
+    /* TODO:
+    *   No.1 Implement all CRUD operations.
+    *   No.2 Extent's persistence
+    * */
+
+    private static final Logger log = LoggerFactory.getLogger(MediaRepository.class);
 
     @Value("${media-dir}")
     private String mediaDirectory;
-    
-    private Set<Media> media;
 
     /**
-     * Initialises the repository by loading media files from the specified directory.
+     * Finds a media file with specified name.
+     * @param name The name of the media file.
+     * @return An {@link Optional} of the media file, or {@link Optional#empty()} if no game found.
+     * @throws NullPointerException If given name is null.
      */
-    @PostConstruct
-    public void init() {
-        logger.info("Initialising Media repository...");
-        this.media = new ConcurrentSkipListSet<>(Comparator.comparing(Media::fileName, String.CASE_INSENSITIVE_ORDER));
-        this.media.addAll(findAllMedia());
-        logger.info("Loaded: {} media files. Media repository initialised.", media.size());
+    public Optional<Media> findByName(String name) {
+        Objects.requireNonNull(name);
+        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of)
+                .filter(m -> m.fileName().equals(name))
+                .findFirst();
     }
 
     /**
-     * Returns the directory where media files are stored.
-     *
-     * @return the media directory path
+     * Finds all media in the {@link MediaRepository#mediaDirectory}.
+     * @return {@link List} of media files found.
      */
-    public String getMediaDirectory() {
-        return mediaDirectory;
+    public List<Media> findAll() {
+        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of)
+                .sorted()
+                .toList();
     }
 
     /**
-     * Scans the media directory for files and converts them into a list of {@link Media} objects.
-     *
-     * @return a list of all media files in the directory
-     * @throws RuntimeException if the directory does not exist or is invalid
-     */
-    private List<Media> findAllMedia() {
-        File mainDirectory = new File(mediaDirectory);
-
-        if (!mainDirectory.exists() || !mainDirectory.isDirectory()) {
-            logger.error("Media directory '{}' doesn't exists or is not a directory.", mediaDirectory);
-            throw new RuntimeException("Media directory doesn't exists or is not a directory.");
-        }
-
-        return Arrays.stream(Objects.requireNonNull(mainDirectory.listFiles()))
-            .map(Media::of)
-            .collect(Collectors.toList());
-    }
-
-    /**
-     * Retrieves a paginated list of media files.
-     *
-     * @param page the page number (starting from 0)
-     * @param size the number of media files per page
-     * @return a list of media files for the specified page
-     */
-    public List<Media> getPagedMedia(int page, int size) {
-        return media.stream()
-            .skip((long) page * size)
-            .limit(size)
-            .map(m -> new Media(m.fileName(), m.type(), m.maskUrl()))
-            .toList();
-    }
-
-    /**
-     * Retrieves total media files count.
-     *
-     * @return a total media count.
+     * Counts media files.
+     * @return Number of media files found.
      * */
-    public int getMediaCount() {
-        return media.size();
+    public long countAll() {
+        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of).count();
     }
 
     /**
-     * Finds a media file by its filename.
-     *
-     * @param filename the name of the file to search for
-     * @return the {@link Media} object representing the file
-     * @throws IllegalArgumentException if the file is not found
+     * Saves a list of media files provided.
+     * @param files {@link List} of {@link MultipartFile} containing media files provided.
+     * @throws NullPointerException If the provided list is {@code null}.
      */
-    public Media findMediaByFileName(String filename) {
-        return media.stream()
-            .filter(m -> m.fileName().equals(filename))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Media not found."));
-    }
-
-    /**
-     * Uploads multiple files to the media directory.
-     * Each file is checked for validity, assigned a unique filename if necessary, and added to the repository.
-     *
-     * @param files the list of files to upload
-     * @throws IOException if any file fails to upload or if the media directory cannot be created
-     */
-    public void uploadFiles(List<MultipartFile> files) throws IOException {
+    public void saveAll(List<MultipartFile> files) throws IOException {
         File uploadDirectory = new File(mediaDirectory);
-        if (!uploadDirectory.exists() && !uploadDirectory.mkdirs()) {
-            logger.error("Failed to create media directory: {}", mediaDirectory);
-            throw new IOException("Couldn't create media directory: " + mediaDirectory);
+        if (!uploadDirectory.exists()) {
+            log.error("Directory '{}' doesn't exists.", uploadDirectory);
+            throw new IOException("Media directory doesn't exists");
         }
 
-        for (var file : files) {
-            String filename = file.getOriginalFilename();
-            if (!isFileValid(filename)) continue;
+        for (MultipartFile file : files) {
+            String fileName = file.getOriginalFilename();
+            if (fileName == null || fileName.isEmpty()) { continue; }
 
-            try {
-                String uniqueFileName = getUniqueFilename(uploadDirectory, filename);
-                File destination = new File(uploadDirectory, uniqueFileName);
-                file.transferTo(destination);
-                media.add(Media.of(destination));
-            } catch (IOException e) {
-                logger.error("Failed to upload file: {}", filename, e);
-                throw new IOException("Error uploading file: " + filename, e);
-            }
+            Path destinationPath = Path.of(mediaDirectory, String.format("%s_%s", UUID.randomUUID(), fileName));
+            Files.copy(file.getInputStream(), destinationPath);
         }
     }
 
-    /**
-     * Validates the filename of a file.
-     *
-     * @param filename the filename to validate
-     * @return true if the filename is valid, false otherwise
-     */
-    private boolean isFileValid(String filename) {
-        if (filename == null || filename.isEmpty()) {
-            logger.warn("File skipped: no original filename provided.");
-            return false;
+    private boolean isMediaValid(File file) {
+        Objects.requireNonNull(file);
+
+        if (!file.exists()) {
+            log.warn("File '{}' already exists", file);
         }
         return true;
-    }
-
-    /**
-     * Generates a unique filename in the media directory if a file with the same name already exists.
-     *
-     * @param uploadDirectory the directory where the file will be stored
-     * @param filename the original filename
-     * @return a unique filename
-     */
-    private String getUniqueFilename(File uploadDirectory, String filename) {
-        File file = new File(uploadDirectory, filename);
-        if (file.exists()) {
-            String baseName = filename.substring(0, filename.lastIndexOf("."));
-            String extension = filename.substring(filename.lastIndexOf("."));
-            int ctr = 1;
-            while (file.exists()) {
-                filename = String.format("%s_%d%s", baseName, ctr++, extension);
-                file = new File(uploadDirectory, filename);
-            }
-        }
-        return filename;
     }
 }

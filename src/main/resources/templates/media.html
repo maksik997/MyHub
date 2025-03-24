@@ -36,13 +36,13 @@
 
         <div class="media-item" th:each="m : ${media}">
             <h1 th:text="${m.type}"></h1>
-            <img src="" alt="" th:src="${m.path}" th:alt="${m.fileName}" th:if="${m.type == T(pl.magzik.model.Media.MediaType).IMAGE}">
+            <img src="" alt="" th:src="@{/media/file/{fileName}(fileName=${m.fileName})}" th:alt="${m.fileName}" th:if="${m.type == T(pl.magzik.model.Media.MediaType).IMAGE}">
             <video controls th:if="${m.type == T(pl.magzik.model.Media.MediaType).VIDEO}">
-                <source th:src="${m.path}" src="">
+                <source th:src="@{/media/file/{fileName}(fileName=${m.fileName})}" src="">
                 Your browser does not support the video tag.
             </video>
             <p>Filename: <span th:text="${m.fileName}">NAME</span></p>
-            <a th:href="${m.path}" target="_blank">Open</a>
+            <a th:href="@{/media/file/{fileName}(fileName=${m.fileName})}" target="_blank">Open</a>
         </div>
 
         <!-- PAGINATION -->

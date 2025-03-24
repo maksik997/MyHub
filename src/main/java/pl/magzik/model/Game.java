@@ -1,10 +1,8 @@
 package pl.magzik.model;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Represents a game directory containing an HTML file, typically used to identify a game
@@ -21,6 +19,9 @@ import java.util.Arrays;
  *
  * @param name the name of the game directory (typically the directory name).
  * @param htmlFile the name of the `.html` file within the game directory.
+ *
+ * @author Maksymilian Strzelczak
+ * @version 1.0
  */
 public record Game(String name, String htmlFile) {
 
@@ -33,9 +34,9 @@ public record Game(String name, String htmlFile) {
      * @return a new {@link Game} object containing the directory name, `.html` file name, and full path to the file.
      * @throws IllegalArgumentException if the directory is unreadable, or if no `.html` file is found in the directory.
      * */
-    @NotNull
-    @Contract("_ -> new")
-    public static Game of(@NotNull File directory) {
+    public static Game of(File directory) {
+        Objects.requireNonNull(directory);
+
         String name = directory.getName();
 
         File[] innerFiles = directory.listFiles();
@@ -48,5 +49,6 @@ public record Game(String name, String htmlFile) {
             .orElseThrow(() -> new IllegalArgumentException("There is no `.html` file in this directory: " + directory.getAbsolutePath()));
 
         return new Game(name, htmlFile.getName());
+
     }
 }
