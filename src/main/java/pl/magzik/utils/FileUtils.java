@@ -10,6 +10,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * Utility class for the file management.
+ *
+ * @author Maksymilian Strzelczak
+ * @version 1.1
+ * */
 public class FileUtils {
 
     private static final Logger log = LoggerFactory.getLogger(FileUtils.class);

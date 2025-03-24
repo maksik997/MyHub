@@ -17,6 +17,9 @@ import java.util.List;
  * @param fileName the name of the media file (e.g., "image.jpg" or "video.mp4").
  * @param type the type of the media ({@link MediaType#IMAGE} or {@link MediaType#VIDEO}).
  * @param path the path to the media file.
+ *
+ * @author Maksymilian Strzelczak
+ * @version 1.0
  */
 public record Media(String fileName, MediaType type, String path) implements Comparable<Media> {
 

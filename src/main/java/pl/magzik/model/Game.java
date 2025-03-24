@@ -19,6 +19,9 @@ import java.util.Objects;
  *
  * @param name the name of the game directory (typically the directory name).
  * @param htmlFile the name of the `.html` file within the game directory.
+ *
+ * @author Maksymilian Strzelczak
+ * @version 1.0
  */
 public record Game(String name, String htmlFile) {
 
