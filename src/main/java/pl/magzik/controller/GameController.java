@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 import pl.magzik.model.Game;
 import pl.magzik.repository.GameRepository;
+import pl.magzik.service.GameService;
 
 import java.util.Optional;
+
+/* TODO:
+*   No.1 Transition to RESTful API*/
 
 /**
  * Controller responsible for handling HTTP requests related to games.
@@ -31,16 +35,25 @@ public class GameController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
-    private final GameRepository gameRepository;
+    @Deprecated
+    private GameRepository gameRepository;
+
+    private final GameService gameService;
 
     /**
      * Constructs a new {@link GameController} instance with the given {@link GameRepository}.
      *
      * @param gameRepository the repository that provides access to the games.
      */
-    @Autowired
+    @Deprecated
     public GameController(/*@NotNull*/ GameRepository gameRepository) {
         this.gameRepository = gameRepository;
+        this.gameService = null;
+    }
+
+    @Autowired
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
     }
 
     /**
@@ -55,7 +68,8 @@ public class GameController {
     /*@NotNull*/
     @GetMapping("/games")
     public String getAllGames(/*@NotNull*/ Model model) {
-        model.addAttribute("games", gameRepository.getAllGames().stream().map(Game::name).toList());
+        model.addAttribute("games", gameService.findAllGames().stream().map(Game::name).toList());
+//        model.addAttribute("games", gameRepository.getAllGames().stream().map(Game::name).toList());
         return "games";
     }
 
@@ -72,8 +86,9 @@ public class GameController {
      */
     /*@NotNull*/
     @GetMapping("/games/{name}")
-    public String getGame(/*@NotNull*/ @PathVariable(name = "name") String name) {
-        Optional<Game> optionalGame = gameRepository.findGameByName(name);
+    public String launchGame(/*@NotNull*/ @PathVariable(name = "name") String name) {
+//        Optional<Game> optionalGame = gameRepository.findGameByName(name);
+        Optional<Game> optionalGame = gameService.findGameByName(name);
         if (optionalGame.isEmpty()) {
             logger.warn("Game {} not found", name);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found.");

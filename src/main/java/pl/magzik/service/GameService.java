@@ -8,21 +8,24 @@ import pl.magzik.repository.GameRepository;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class GameService {
 
+    private final GameRepository gameRepository;
+
     @Autowired
-    private GameRepository gameRepository;
+    public GameService(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
 
     public List<Game> findAllGames() {
         return gameRepository.findAll();
     }
 
-    public Optional<Game> findGameById(UUID id) {
-        Objects.requireNonNull(id);
-        return gameRepository.findById(id);
+    public Optional<Game> findGameByName(String name) {
+        Objects.requireNonNull(name);
+        return gameRepository.findByName(name);
     }
 
     // TODO No.1:
