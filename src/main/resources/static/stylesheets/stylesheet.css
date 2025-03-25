@@ -132,20 +132,9 @@ header > div h2 {
 .dropdown .dropdown-content a:hover,
 .dropdown .dropdown-content a.selected {
     font-weight: bold;
-    background-color: var(--color-accent-2
-    );
+    background-color: var(--color-accent-1);
 }
 
-
-
-/*header > nav ul > li a:hover,
-header > nav ul > li a.selected {
-    *//*transform: translateY(-2px);
-    background-color: var(--color-accent-2);
-    font-weight: bold;*//*
-
-    background-color: #f1f1f1;
-}*/
 
 .dropdown:hover .dropdown-content {
     display: block;
@@ -186,14 +175,20 @@ main > div h1 {
 footer {
     width: 100%;
     background-color: var(--color-main);
-    margin-top: auto;
+/*    margin-top: auto;*/
+    padding: 10px 0;
+    font-size: 0.8em;
+    color: var(--color-accent-2);
 }
 
-footer > p {
+footer > * {
     margin: 0;
     text-align: center;
 }
 
-footer > p span {
+footer a {
+    color: inherit;
+    text-decoration: underline;
     font-weight: bold;
+    font-size: 0.9em;
 }
