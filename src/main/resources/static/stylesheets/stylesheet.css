@@ -23,7 +23,7 @@
 /* Main elements */
 
 * {
-    font-family: Verdana, sans-serif;
+    font-family: 'Fira Code', monospace;
     box-sizing: border-box;
 }
 
@@ -175,7 +175,6 @@ main > div h1 {
 footer {
     width: 100%;
     background-color: var(--color-main);
-/*    margin-top: auto;*/
     padding: 10px 0;
     font-size: 0.8em;
     color: var(--color-accent-2);
