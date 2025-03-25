@@ -32,7 +32,7 @@ public class FileUtils {
         File[] files = parentFile.listFiles();
         if (files == null || files.length == 0) {
             log.warn("Provided parent file '{}' is empty.", parent);
-            throw new IllegalStateException("Parent file doesn't contain any files.");
+            return Stream.empty();
         }
 
         return Arrays.stream(files)

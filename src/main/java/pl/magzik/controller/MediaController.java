@@ -60,7 +60,8 @@ public class MediaController {
         long totalCount = mediaService.countAllMedia();
         int totalPages = (int) Math.ceil((double) totalCount / size);
 
-        if (page >= totalPages) {
+        if (totalCount > 0 && page >= totalPages) {
+            log.warn("Provided page '{}' is greater than total page count '{}'", page, totalPages);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Page not found.");
         }
 
