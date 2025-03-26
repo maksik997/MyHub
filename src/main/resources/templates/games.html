@@ -36,17 +36,20 @@
     </header>
 
     <main>
+        <h1>Games:</h1>
         <div>
-            <h1>Games:</h1>
-            <p>Loaded: <span th:text="${games.size()}">Count</span> games</p>
+            <p>
+                Showing
+                <span style="font-weight: bold;" th:text="${games.size()}">Count</span>
+                elements.
+            </p>
+            <ul>
+                <li th:each="game : ${games}">
+                    <p th:text="${game}">Game name</p>
+                    <a th:href="@{/games/{name}(name=${game})}" target="_blank">▶ PLAY</a>
+                </li>
+            </ul>
         </div>
-
-        <ul>
-            <li th:each="game : ${games}">
-                <p th:text="${game}">Game name</p>
-                <a th:href="@{/games/{name}(name=${game})}" target="_blank"><i class="material-icons">arrow_forward</i></a>
-            </li>
-        </ul>
     </main>
 
     <footer>

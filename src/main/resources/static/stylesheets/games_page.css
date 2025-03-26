@@ -1,75 +1,70 @@
 @import url("colors.css");
 
+main {
+    padding: 20px;
+}
+
+main > h1 {
+    font-size: 1.4em;
+    text-transform: uppercase;
+}
+
 main > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    margin: 10px auto 0;
-    padding: 10px;
-    border-radius: 20px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
     background-color: var(--color-main);
     box-shadow: 2px 8px 10px var(--color-shadow);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
-main > div * {
-    display: inline-block;
+main div > p {
+    width: 100%;
+    padding: 10px 0;
     margin: 0;
-    padding: 0 0 5px;
-    font-size: 1.1rem;
+    border-bottom: 2px dashed var(--color-accent-4);
 }
 
-main > div h1 {
-    font-size: 1.7em;
-}
-
-main > ul {
-    padding: 0 20px;
-    margin: 10px 0;
+main ul {
+    padding: 0;
+    margin: 0;
     list-style-type: none;
+    width: 100%;
 }
 
-main > ul li {
+main ul li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 0;
-    padding: 30px;
-    background-color: var(--color-main);
-    box-shadow: 2px 8px 10px var(--color-shadow);
-    border-radius: 20px;
-    font-size: 1.3em;
-}
-
-main > ul li p {
-    font-weight: bold;
-}
-
-main > ul li a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 48px;
-    height: 48px;
     background-color: var(--color-accent-1);
-    box-shadow: 2px 8px 10px var(--color-shadow);
-    border-radius: 100%;
+    border-bottom: 1px dashed var(--color-accent-2);
+    padding: 10px 20px;
+}
+
+main ul li p {
+    text-transform: uppercase;
+}
+
+main ul li a {
+    padding: 5px 15px;
+    background-color: var(--color-accent-4);
     transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
 }
 
-main > ul li a:hover {
+main ul li a:hover {
     transform: translateY(-2px);
     background-color: var(--color-accent-2);
     font-weight: bold;
 }
 
-main > ul li a > i {
+main ul li a > i {
     font-size: 32px !important;
     transition: font-weight 0.3s ease;
 }
 
-main > ul li a:hover > i {
+main ul li a:hover > i {
     font-weight: bold;
 }
 
