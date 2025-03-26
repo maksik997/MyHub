@@ -15,7 +15,7 @@ main .card {
     align-items: center;
     flex-grow: 0;
     width: 400px;
-    min-height: 350px;
+    min-height: 250px;
     height: 100%;
     background-color: var(--color-main);
     border-radius: 5px;
