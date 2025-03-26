@@ -49,7 +49,7 @@ public class MediaController {
     @GetMapping
     public String getMedia(
         @RequestParam(name = "page", defaultValue = "0") int page,
-        @RequestParam(name = "size", defaultValue = "30") int size,
+        @RequestParam(name = "size", defaultValue = "10") int size,
         Model model
     ) {
         if (page < 0 || size <= 0) {
