@@ -180,3 +180,15 @@ footer a {
     font-weight: bold;
     font-size: 0.9em;
 }
+
+/* Special */
+
+.note {
+    display: inline-block;
+    background-color: var(--color-accent-2);
+    border-radius: 20px;
+    border: 2px dashed var(--color-accent-4);
+    padding: 20px;
+    margin: 0 auto;
+    box-shadow: 0 8px 12px var(--color-shadow);
+}

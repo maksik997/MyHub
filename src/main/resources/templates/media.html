@@ -78,7 +78,7 @@
             <div th:class="media-item" th:each="m : ${media}">
                 <div>
                     <h3 th:text="${m.type}"></h3>
-                    <a th:href="@{/media/file/{fileName}(fileName=${m.fileName})}" target="_blank">Open</a>
+                    <a th:href="@{/media/file/{fileName}(fileName=${m.fileName})}" target="_blank">📂 Open</a>
                 </div>
                 <p style="font-style: italic;" th:text="${m.fileName}">Filename></p>
 
