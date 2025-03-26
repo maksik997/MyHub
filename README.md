@@ -89,3 +89,8 @@ Using the application is straightforward.
 Simply open your browser, type localhost or your server's IP address, append the port number (e.g., localhost:8080), 
 and enjoy the application. 
 All available endpoints will be provided through the website interface.
+
+## Post Scriptum
+
+This great, and kind of obsolete documentation will changed, 
+when RESTful API is introduced into the project (~version `1.2-1.3`).
