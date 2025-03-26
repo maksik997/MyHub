@@ -159,17 +159,6 @@ main > div {
     box-shadow: 2px 8px 10px var(--color-shadow);
 }
 
-main > div * {
-    display: inline-block;
-    margin: 0;
-    padding: 0 0 5px;
-    font-size: 1.1rem;
-}
-
-main > div h1 {
-    font-size: 1.7em;
-}
-
 /* Footer */
 
 footer {
