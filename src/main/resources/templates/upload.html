@@ -18,16 +18,30 @@
             </div>
         </div>
 
-        <nav>
-            <ul>
-                <li><a th:href="@{/}">Start</a></li>
-                <li><a th:href="@{/games}">Games</a></li>
-                <li><a th:href="@{/media}">Gallery</a></li>
+        <nav class="dropdown">
+            <button class="dropdown-button">Menu ▼</button>
+            <ul class="dropdown-content">
+                <li>
+                    <a th:href="@{/}">Start</a>
+                </li>
+                <li>
+                    <a th:href="@{/games}">Games</a>
+                </li>
+                <li>
+                    <a th:href="@{/media}">Gallery</a>
+                </li>
             </ul>
         </nav>
     </header>
 
     <main>
+        <p class="note">
+            <b>Note from developer:</b><br>
+            This subpage will be moved to the "/media" page.<br>
+            In a future version, this subpage will be removed.<br>
+            Until then, it will remain as it is.
+        </p>
+
         <div>
             <h1>Upload media:</h1>
         </div>
@@ -44,11 +58,14 @@
     </main>
 
     <footer>
-        <p>
-            <span>Manage your entertainment!</span><br>
-            Created by: &copy; Magzik<br>
-            2024
-        </p>
+        <p>Site created with ❤️ by: &copy; Maksymilian Strzelczak</p>
+        <nav>
+            <a th:href="@{/}">Start</a>
+            <span>•</span>
+            <a th:href="@{/games}">Games</a>
+            <span>•</span>
+            <a th:href="@{/media}">Gallery</a>
+        </nav>
     </footer>
 </body>
 </html>

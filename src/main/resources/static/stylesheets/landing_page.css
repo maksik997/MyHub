@@ -13,14 +13,15 @@ main .card {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 350px;
-    width: 350px;
+    flex-grow: 0;
+    width: 400px;
+    min-height: 250px;
+    height: 100%;
     background-color: var(--color-main);
-    border-radius: 25px;
+    border-radius: 5px;
     padding: 20px;
     box-shadow: 2px 8px 10px var(--color-shadow);
-    text-align: center;
-    font-size: 1.2em;
+    position: relative;
 }
 
 main .card > * {
@@ -29,21 +30,46 @@ main .card > * {
 }
 
 main .card > h1 {
-    font-size: 1.5em;
+    font-size: 1.4em;
+    align-self: flex-start;
+    text-transform: uppercase;
 }
 
 main .card > a {
     width: 100%;
     padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 0.8em;
     background-color: var(--color-accent-1);
     box-shadow: 2px 8px 10px var(--color-shadow);
     text-align: center;
-    transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
-    border-radius: 15px;
+    transition: transform 0.3s ease, background 0.3s ease ease;
 }
 
 main .card > a:hover {
     transform: translateY(-2px);
     background-color: var(--color-accent-2);
-    font-weight: bold;
+}
+
+main .card .identifier {
+    box-sizing: border-box;
+    position: absolute;
+    top: 40px;
+    right: -5px;
+    padding: 5px 10px;
+    background-color: var(--color-accent-1);
+    font-size: 0.7em;
+    text-transform: uppercase;
+}
+
+main .card .production {
+    background-color: var(--color-accent-4);
+}
+
+main .card .development {
+    background-color: var(--color-accent-3);
+}
+
+main .card .planned {
+    background-color: var(--color-accent-2);
 }

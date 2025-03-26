@@ -1,35 +1,60 @@
 @import url('colors.css');
 
-main > div a {
+main {
+    padding: 20px;
+}
+
+main h1 {
+    font-size: 1.4em;
+    text-transform: uppercase;
+}
+
+main > nav {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
+}
+
+main a {
     padding: 10px 30px;
-    background-color: var(--color-accent-1);
-    box-shadow: 2px 8px 10px var(--color-shadow);
-    border-radius: 15px;
+    background-color: var(--color-accent-4);
+    border-radius: 5px;
     transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
 }
 
-main > div a:hover {
+main a:hover {
     transform: translateY(-2px);
     background-color: var(--color-accent-2);
     font-weight: bold;
 }
 
-main > .media-item {
-    width: 80%;
+main > .media-library {
+    width: 100%;
     padding: 20px;
-    margin: 20px auto;
+    border-radius: 5px;
+    background-color: var(--color-main);
+    box-shadow: 2px 8px 10px var(--color-shadow);
 }
 
-main > .media-item img,
-main > .media-item video {
-    max-width: 100%;
-    max-height: 60vh;
+main .media-item {
+    width: 100%;
+    background-color: var(--color-accent-1);
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--color-accent-2);
 }
 
-main > .media-item p {
+main .media-item > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main .media-item > img,
+main .media-item > video {
+    width: 100%;
+}
+
+main .media-item p {
     width: 100%;
     white-space: nowrap;
     word-wrap: break-word;
@@ -38,15 +63,26 @@ main > .media-item p {
     text-align: left;
 }
 
-main > .media-item p span {
+main .media-item p span {
     font-style: italic;
 }
 
-main > nav {
-    margin: 40px 0;
+/* PAGINATION */
+
+main .media-library .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 2px dashed var(--color-accent-4);
+    padding: 10px;
 }
 
-main > nav ul {
+main .media-library .top-bar p {
+    margin: 0;
+}
+
+main .media-library nav ul {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,40 +93,36 @@ main > nav ul {
     padding: 0;
 }
 
-main > nav ul li {
+main .media-library nav ul li {
     display: flex;
     align-items: center;
 }
 
-main > nav ul li a,
-main > nav ul li input {
+main .media-library nav ul li a,
+main .media-library nav ul li input {
     padding: 10px 15px;
-    background-color: var(--color-accent-1);
-    box-shadow: 2px 8px 10px var(--color-shadow);
-    border-radius: 15px;
-    transition: transform 0.3s ease, background 0.3s ease, font-weight 0.3s ease;
+    background-color: var(--color-accent-2);
+    border-radius: 5px;
+    transition: background 0.3s ease ease;
     text-decoration: none;
     color: inherit;
 }
 
-main > nav ul li a:hover,
-/* main > nav ul li a.active, */
-main > nav ul li input:hover {
-    transform: translateY(-2px);
-    background-color: var(--color-accent-2);
-    font-weight: bold;
+main .media-library nav ul li a:hover,
+main .media-library nav ul li input:hover {
+    background-color: var(--color-accent-1);
 }
 
-main > nav ul li form {
+main .media-library nav ul li form {
     margin: 0;
 }
 
-main > nav ul li label {
+main .media-library nav ul li label {
     display: flex;
     align-items: center;
 }
 
-main > nav ul li input {
+main .media-library nav ul li input {
     width: 80px;
     text-align: center;
     border: none;
@@ -99,18 +131,18 @@ main > nav ul li input {
     margin: 0 5px;
 }
 
-main > nav ul li input:focus {
+main .media-library nav ul li input:focus {
     outline: 2px solid var(--color-accent-2);
 }
 
-main > nav ul li a,
-main > nav ul li input {
+main .media-library nav ul li a,
+main .media-library nav ul li input {
     display: inline-flex;
     justify-content: center;
     align-items: center;
 }
 
-main > nav p {
+main .media-library nav p {
     text-align: center;
     margin-top: 10px;
     font-size: 14px;

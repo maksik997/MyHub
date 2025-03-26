@@ -18,32 +18,58 @@
             </div>
         </div>
 
-        <nav><ul>
-            <li><a class="selected" th:href="@{/}">Start</a></li>
-            <li><a th:href="@{/games}">Games</a></li>
-            <li><a th:href="@{/media}">Gallery</a></li>
-        </ul></nav>
+        <nav class="dropdown">
+            <button class="dropdown-button">Menu ▼</button>
+            <ul class="dropdown-content">
+                <li>
+                    <a class="selected" th:href="@{/}">Start</a>
+                </li>
+                <li>
+                    <a th:href="@{/games}">Games</a>
+                </li>
+                <li>
+                    <a th:href="@{/media}">Gallery</a>
+                </li>
+            </ul>
+        </nav>
     </header>
 
     <main>
         <div class="card">
             <h1>Games</h1>
+            <p class="identifier production">Production</p>
             <p>Discover and play your favourite games from our collection.</p>
             <a th:href="@{/games}">Explore games</a>
         </div>
         <div class="card">
             <h1>Gallery</h1>
+            <p class="identifier production">Production</p>
             <p>Browse through an exciting gallery of images and videos.</p>
             <a th:href="@{/media}">Explore gallery</a>
+        </div>
+        <div class="card">
+            <h1>Files</h1>
+            <p class="identifier planned">Planned</p>
+            <p>Manage your files easily.</p>
+            <a href="#">W.I.P</a>
+        </div>
+        <div class="card">
+            <h1>Studies</h1>
+            <p class="identifier planned">Planned</p>
+            <p>Study manager migration.</p>
+            <a href="#">W.I.P</a>
         </div>
     </main>
 
     <footer>
-        <p>
-            <span>Manage your entertainment!</span><br>
-            Created by: &copy; Magzik<br>
-            2024
-        </p>
+        <p>Site created with ❤️ by: &copy; Maksymilian Strzelczak</p>
+        <nav>
+            <a th:href="@{/}">Start</a>
+            <span>•</span>
+            <a th:href="@{/games}">Games</a>
+            <span>•</span>
+            <a th:href="@{/media}">Gallery</a>
+        </nav>
     </footer>
 </body>
 </html>
