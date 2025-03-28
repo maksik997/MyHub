@@ -1,4 +1,7 @@
 # MyHub
+
+**!!! PENDING UPDATE !!!**
+
 This web application, built using the Spring Framework and Thymeleaf,
 is designed to help you easily manage your entertainment in a simple and efficient way.
 Instead of relying on a traditional database, the application leverages the filesystem of the server to store data.
