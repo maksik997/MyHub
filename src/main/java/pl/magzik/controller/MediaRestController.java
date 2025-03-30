@@ -123,7 +123,7 @@ public class MediaRestController {
      *     }</pre>
      * </p>
      *
-     * @param bulkMediaUploadDTO A {@link BulkMediaUploadDTO} containing the media files and their metadata.
+     * @param bulkMediaUploadDTO A {@link BulkMediaUploadDTO} containing the media files and their metadata. Must not be null.
      * @return A {@link ResponseEntity} containing a list of {@link MediaDTO} representing the newly created media records.
      * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#BAD_REQUEST}
      *                                  if the given <b>bulkMediaUploadDTO</b> is invalid.
@@ -153,7 +153,7 @@ public class MediaRestController {
      *     }</pre>
      * </p>
      *
-     * @param fileName The current name of the media file to update.
+     * @param fileName The current name of the media file to update. Must not be null.
      * @param mediaUpdateDTO A {@link MediaUpdateDTO} containing the updated metadata (e.g., new file name).
      * @return A {@link ResponseEntity} containing updated media record wrapped in {@link MediaDTO}.
      * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#NOT_FOUND}
@@ -176,15 +176,26 @@ public class MediaRestController {
      *     Removes the media record and deletes the associated file from storage.
      *     This operation is irreversible.
      * </p>
+     * <p>
+     *     Example response format:
+     *     <pre>{@code
+     *          {
+     *              "message" : "The media file has been successfully deleted."
+     *          }
+     *     }</pre>
+     * </p>
      *
-     * @param fileName The name of the media file to delete.
-     * @return A {@link ResponseEntity} confirming the successful deletion.
-     * @throws ResponseStatusException If no media file exists with the given name,
-     *                                  or the deletion operation fails.
+     * @param fileName The name of the media file to delete. Must not be null.
+     * @return A {@link ResponseEntity} containing a confirmation message upon successful deletion.
+     * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#NOT_FOUND}
+     *                                  if the given <b>fileName</b> does not correspond to any media file in the system.
+     * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#INTERNAL_SERVER_ERROR}
+     *                                  if delete operation fails.
      * */
     @DeleteMapping("/{fileName}")
-    public ResponseEntity<?> deleteMedia(String fileName) {
+    public ResponseEntity<String> deleteMedia(
+            @PathVariable String fileName
+    ) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
-
 }
