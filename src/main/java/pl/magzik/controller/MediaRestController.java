@@ -2,15 +2,18 @@ package pl.magzik.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.magzik.service.MediaService;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.core.io.Resource;
+import pl.magzik.service.MediaService;
+import pl.magzik.dto.MediaDTO;
+
+import java.util.List;
 
 /**
  * REST Controller responsible for handling media-related operations.
  * <p>
  *     Provides endpoints for managing media files, including retrieval, uploading, updating, and deletion.
- *     Ensures a structured and secure data exchange through {@link MediaDTO}.
+ *     Ensures a structured and secure data exchange through different Data Transfer Object of the {@link pl.magzik.model.Media} record.
  * </p>
  *
  * @since 1.2
@@ -24,14 +27,43 @@ public class MediaRestController {
      * Retrieves all media records stored in the system.
      * <p>
      *      This method fetches media records from {@link MediaService}
-     *      and returns them as a list of {@link MediaDTO},
+     *      and returns them as a paginated list of {@link MediaDTO},
      *      ensuring a safe and structured data representation for the user.
      * </p>
+     * <p>
+     *     This method supports pagination. The user should provide the following query parameters:
+     *     <ul>
+     *         <li><b>page</b> - The index of the requested page (zero-based). Defaults to {@code 0}.</li>
+     *         <li><b>size</b> - The number of media items per page. Defaults to {@code 10}.</li>
+     *     </ul>
+     * </p>
+     * <p>
+     *     Example response format:
+     *     <pre>{@code
+     *      {
+     *          "content": [...],
+     *          "page": 0,
+     *          "size": 10,
+     *          "totalPages": 3,
+     *          "totalElements": 25
+     *      }
+     *     }</pre>
+     * </p>
      *
-     * @return A {@link ResponseEntity} containing a list of all available media wrapped in {@link MediaDTO}.
+     * @param page Index of the requested page (zero-based). Defaults to {@code 0}. Must be non-negative.
+     * @param size Number of items per page. Defaults to {@code 10}. Must be positive.
+     * @return A {@link ResponseEntity} containing a paginated list of media wrapped in {@link MediaDTO},
+     *         along with pagination metadata (current page, size, total page count, total count).
+     * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#BAD_REQUEST}
+     *         if <b>page</b> is negative or <b>size</b> is zero/negative.
+     * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#NOT_FOUND}
+     *         if <b>page</b> is greater than the total available pages.
      * */
     @GetMapping
-    public ResponseEntity<?> getAllMedia() {
+    public ResponseEntity<List<MediaDTO>> getAllMedia(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
@@ -53,13 +85,13 @@ public class MediaRestController {
     }
 
     /**
-     * Uploads a new media file and registers it in the system.\
+     * Uploads a new media files and registers them in the system.
      *
      * <p>
-     *     Processes the uploaded media file, stores it securely,
-     *     and creates a corresponding media record in the extent (currently referring to file system storage,
-     *     but may include database storage in the future)..
-     *     The request must include a valid {@link MediaDTO} containing the file resource.
+     *     Processes the uploaded media files, stores it securely,
+     *     and creates a corresponding media records in the extent (currently referring to file system storage,
+     *     but may include database storage in the future).
+     *     The request must include a valid list of {@link MediaDTO} containing the file resource.
      * </p>
      *
      * @param mediaDTO A {@link MediaDTO} containing the media file and its metadata.
