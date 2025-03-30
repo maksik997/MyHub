@@ -3,10 +3,10 @@ package pl.magzik.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.core.io.Resource;
 import pl.magzik.service.MediaService;
 import pl.magzik.dto.MediaDTO;
 import pl.magzik.dto.MediaResourceDTO;
+import pl.magzik.dto.BulkMediaUploadDTO;
 
 import java.util.List;
 
@@ -105,21 +105,34 @@ public class MediaRestController {
     }
 
     /**
-     * Uploads a new media files and registers them in the system.
+     * Uploads new media files and registers them in the system.
      *
      * <p>
-     *     Processes the uploaded media files, stores it securely,
-     *     and creates a corresponding media records in the extent (currently referring to file system storage,
+     *     Processes the uploaded media files, stores them securely,
+     *     and creates corresponding media records in the storage system (currently using file system storage,
      *     but may include database storage in the future).
-     *     The request must include a valid list of {@link MediaDTO} containing the file resource.
+     *     The request must include a valid {@link BulkMediaUploadDTO} containing the file resources.
+     * </p>
+     * <p>
+     *     Example response format:
+     *     <pre>{@code
+     *          {
+     *              "content" : [...List<MediaDTO>...]
+     *          }
+     *     }</pre>
      * </p>
      *
-     * @param mediaDTO A {@link MediaDTO} containing the media file and its metadata.
-     * @return A {@link ResponseEntity} containing the newly created media record wrapped in a {@link MediaDTO}.
-     * @throws ResponseStatusException If the upload fails due to an invalid request or storage error.
+     * @param bulkMediaUploadDTO A {@link BulkMediaUploadDTO} containing the media files and their metadata.
+     * @return A {@link ResponseEntity} containing a list of {@link MediaDTO} representing the newly created media records.
+     * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#BAD_REQUEST}
+     *                                  if the given <b>bulkMediaUploadDTO</b> is invalid.
+     * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#INTERNAL_SERVER_ERROR}
+     *                                  if the save operation fails.
      * */
     @PostMapping
-    public ResponseEntity<?> addMedia() {
+    public ResponseEntity<List<MediaDTO>> addMedia(
+            @RequestBody BulkMediaUploadDTO bulkMediaUploadDTO
+    ) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
