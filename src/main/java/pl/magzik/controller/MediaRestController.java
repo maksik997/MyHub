@@ -6,6 +6,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.core.io.Resource;
 import pl.magzik.service.MediaService;
 import pl.magzik.dto.MediaDTO;
+import pl.magzik.dto.MediaResourceDTO;
 
 import java.util.List;
 
@@ -71,16 +72,35 @@ public class MediaRestController {
      * Retrieves and serves a media file as a downloadable resource.
      * <p>
      *     Searches for a media file associated with the given file name in {@link MediaService}.
-     *     If found, returns the file as a {@link Resource} stream with appropriate headers,
+     *     If found, returns the file as a {@link MediaResourceDTO} class with appropriate headers,
      *     allowing the client to download or display it.
      * </p>
+     * <p>
+     *     Example response format:
+     *     <pre>{@code
+     *          {
+     *              "metadata": [...MediaDTO...],
+     *              "resource": [...binary file data...]
+     *          }
+     *     }</pre>
+     * </p>
+     * <p>
+     *     This method sets HTTP headers such as:
+     *     <ul>
+     *         <li>{@code Content-Type} - dynamically set based on the file type  (e.g., "image/jpeg", "video/mp4").</li>
+     *         <li>{@code Content-Disposition} - statically set to "attachment" to trigger download behavior.</li>
+     *     </ul>
+     * </p>
      *
-     * @param fileName The name of the media file to retrieve.
-     * @return A {@link ResponseEntity} containing a {@link Resource} with the media file data.
-     * @throws ResponseStatusException If the requested file does not exist.
+     * @param fileName The name of the media file to retrieve. Must not be null.
+     * @return A {@link ResponseEntity} containing a {@link MediaResourceDTO} with the media file resource and metadata ({@link MediaDTO}).
+     * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#NOT_FOUND}
+     *                                  if <b>fileName</b> does not correspond to any existing file.
      * */
     @GetMapping("/{fileName}")
-    public ResponseEntity<?> getMedia(String fileName) {
+    public ResponseEntity<MediaResourceDTO> getMedia(
+            @PathVariable String fileName
+    ) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 

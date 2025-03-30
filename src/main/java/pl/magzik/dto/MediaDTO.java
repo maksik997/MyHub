@@ -1,7 +1,7 @@
 package pl.magzik.dto;
 
 /**
- * TODO...
+ * TODO... <br>
  * MediaDTO - for getting all data from Media.
  *
  * @author Maksymilian Strzelczak
