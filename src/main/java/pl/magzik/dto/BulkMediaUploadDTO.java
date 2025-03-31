@@ -1,11 +1,14 @@
 package pl.magzik.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
 /**
- * TODO...<br>
- * BulkMediaUploadDTO - for upload the media file.
+ * Data Transfer Object used for handling bulk media file uploads to the system.
  *
  * @author Maksymilian Strzelczak
  * @since 1.2
  * */
-public class BulkMediaUploadDTO {
+public record BulkMediaUploadDTO(List<MultipartFile> files) {
 }
