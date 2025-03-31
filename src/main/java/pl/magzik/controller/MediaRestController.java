@@ -133,7 +133,7 @@ public class MediaRestController {
     ) {
         log.debug("Downloading media file...");
         Media media = mediaService.findMediaByName(fileName) ///< Handles file existence check
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File '%s' doesn't exists".formatted(fileName)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File '%s' doesn't exist".formatted(fileName)));
         File file = new File(media.path());
         Resource resource = new FileSystemResource(file);
 
@@ -217,7 +217,7 @@ public class MediaRestController {
     ) {
         log.debug("Deleting the file...");
         Media media = mediaService.findMediaByName(fileName) ///< Handles file existence check
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File '%s' doesn't exists".formatted(fileName)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File '%s' doesn't exist".formatted(fileName)));
 
         try {
             mediaService.delete(media);
