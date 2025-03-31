@@ -40,4 +40,12 @@ public class GameService {
         Objects.requireNonNull(name);
         return gameRepository.findByName(name);
     }
+
+    public Game saveGame() {
+
+    }
+
+    public void deleteGame() {
+
+    }
 }
