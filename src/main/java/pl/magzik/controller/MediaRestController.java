@@ -153,13 +153,13 @@ public class MediaRestController {
      *     Example response format:
      *     <pre>{@code
      *          {
-     *              "content" : [...List<MediaDTO>...]
+     *              "content" : [...List<MultipartFile>...]
      *          }
      *     }</pre>
      * </p>
      *
      * @param bulkMediaUploadDTO A {@link BulkMediaUploadDTO} containing the media files and their metadata. Must not be null.
-     * @return A {@link ResponseEntity} containing a list of {@link MediaDTO} representing the newly created media records.
+     * @return A {@link ResponseEntity} containing a list of {@link MultipartFile} representing the newly created media records.
      * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#BAD_REQUEST}
      *                                  if the given <b>bulkMediaUploadDTO</b> is invalid.
      * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#INTERNAL_SERVER_ERROR}
