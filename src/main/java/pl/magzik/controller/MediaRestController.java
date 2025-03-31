@@ -85,7 +85,8 @@ public class MediaRestController {
         }
 
         long totalElements = mediaService.countAllMedia();
-        int totalPages = (int) Math.ceil((double) totalElements/size);
+        int totalPages = (int) ((totalElements + size - 1) / size); // equivalent of `(int) Math.ceil((double) totalElements/size)`
+        if (totalPages == 0) { totalPages = 1; }
         if (page != 0 && page >= totalPages) {
             log.warn("Requested page out of bounds. 'page={}'; 'totalPages={}'", page, totalPages);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Requested page out of bounds.");
