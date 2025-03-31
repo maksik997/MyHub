@@ -3,15 +3,19 @@ package pl.magzik.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.magzik.dto.*;
+import pl.magzik.model.Media;
 import pl.magzik.service.MediaService;
 
+import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * REST Controller responsible for handling media-related operations.
@@ -105,17 +109,8 @@ public class MediaRestController {
      * Retrieves and serves a media file as a downloadable resource.
      * <p>
      *     Searches for a media file associated with the given file name in {@link MediaService}.
-     *     If found, returns the file as a {@link MediaResourceDTO} class with appropriate headers,
-     *     allowing the client to download or display it.
-     * </p>
-     * <p>
-     *     Example response format:
-     *     <pre>{@code
-     *          {
-     *              "metadata": [...MediaDTO...],
-     *              "resource": [...binary file data...]
-     *          }
-     *     }</pre>
+     *     If found, returns the file as a {@link Resource} class with appropriate headers,
+     *     allowing the client to download it.
      * </p>
      * <p>
      *     This method sets HTTP headers such as:
@@ -126,15 +121,23 @@ public class MediaRestController {
      * </p>
      *
      * @param fileName The name of the media file to retrieve. Must not be null.
-     * @return A {@link ResponseEntity} containing a {@link MediaResourceDTO} with the media file resource and metadata ({@link MediaDTO}).
+     * @return A {@link ResponseEntity} containing a {@link Resource} with the media file resource.
      * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#NOT_FOUND}
      *                                  if <b>fileName</b> does not correspond to any existing file.
      * */
     @GetMapping("/{fileName}")
-    public ResponseEntity<MediaResourceDTO> getMedia(
+    public ResponseEntity<Resource> getMedia(
             @PathVariable String fileName
     ) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Media media = mediaService.findMediaByName(fileName) ///< Handles file existence check
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File '%s doesn't exists".formatted(fileName)));
+        File file = new File(media.path());
+        Resource resource = new FileSystemResource(file);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, media.getMimeType())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment")
+                .body(resource);
     }
 
     /**
