@@ -186,37 +186,6 @@ public class MediaRestController {
         return ResponseEntity.ok(new StringResponse("The files have been uploaded successfully."));
     }
 
-    /**
-     * Updates the metadata of an existing media file.
-     *
-     * <p>
-     *     This method allows renaming the specified media file while preserving its content.
-     *     Currently, only file name updates are supported.
-     * </p>
-     * <p>
-     *     Example response format:
-     *     <pre>{@code
-     *          {
-     *              "content" : [...MediaDTO...]
-     *          }
-     *     }</pre>
-     * </p>
-     *
-     * @param fileName The current name of the media file to update. Must not be null.
-     * @param mediaUpdateDTO A {@link MediaUpdateDTO} containing the updated metadata (e.g., new file name).
-     * @return A {@link ResponseEntity} containing updated media record wrapped in {@link MediaDTO}.
-     * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#NOT_FOUND}
-     *                                  if the given <b>fileName</b> does not correspond to any media file in the system.
-     * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#INTERNAL_SERVER_ERROR}
-     *                                  if the update operation fails.
-     * */
-    @PutMapping("/{fileName}")
-    public ResponseEntity<MediaDTO> updateMedia(
-            @PathVariable String fileName,
-            @RequestBody MediaUpdateDTO mediaUpdateDTO
-    ) {
-        throw new UnsupportedOperationException("Not implemented yet.");
-    }
 
     /**
      * Deletes a media file from the system.
