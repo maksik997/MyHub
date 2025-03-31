@@ -7,13 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pl.magzik.dto.*;
 import pl.magzik.service.MediaService;
-import pl.magzik.dto.MediaDTO;
-import pl.magzik.dto.MediaResourceDTO;
-import pl.magzik.dto.BulkMediaUploadDTO;
-import pl.magzik.dto.MediaUpdateDTO;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * REST Controller responsible for handling media-related operations.
@@ -69,13 +67,14 @@ public class MediaRestController {
      * @param size Number of items per page. Defaults to {@code 10}. Must be positive.
      * @return A {@link ResponseEntity} containing a paginated list of media wrapped in {@link MediaDTO},
      *         along with pagination metadata (current page, size, total page count, total count).
+     *         All wrapped in the {@link PaginatedMediaResponse}.
      * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#BAD_REQUEST}
      *         if <b>page</b> is negative or <b>size</b> is zero/negative.
      * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#NOT_FOUND}
      *         if <b>page</b> is greater than the total available pages.
      * */
     @GetMapping
-    public ResponseEntity<List<MediaDTO>> getAllMedia(
+    public ResponseEntity<PaginatedMediaResponse> getAllMedia(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
@@ -85,7 +84,20 @@ public class MediaRestController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request parameters.");
         }
 
-        throw new UnsupportedOperationException("Not implemented yet.");
+        long totalElements = mediaService.countAllMedia();
+        int totalPages = (int) Math.ceil((double) totalElements/size);
+        if (page != 0 && page >= totalPages) {
+            log.warn("Requested page out of bounds. 'page={}'; 'totalPages={}'", page, totalPages);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Requested page out of bounds.");
+        }
+
+        List<MediaDTO> mediaList = mediaService.findAllMedia(page, size)
+                .stream()
+                .map(m -> new MediaDTO(m.fileName(), m.type()))
+                .toList();
+
+        PaginatedMediaResponse response = new PaginatedMediaResponse(mediaList, page, size, totalPages, totalElements);
+        return ResponseEntity.ok(response);
     }
 
     /**
