@@ -9,12 +9,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import pl.magzik.dto.*;
 import pl.magzik.model.Media;
 import pl.magzik.service.MediaService;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -129,6 +131,7 @@ public class MediaRestController {
     public ResponseEntity<Resource> getMedia(
             @PathVariable String fileName
     ) {
+        log.debug("Downloading media file...");
         Media media = mediaService.findMediaByName(fileName) ///< Handles file existence check
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File '%s doesn't exists".formatted(fileName)));
         File file = new File(media.path());
@@ -147,29 +150,40 @@ public class MediaRestController {
      *     Processes the uploaded media files, stores them securely,
      *     and creates corresponding media records in the storage system (currently using file system storage,
      *     but may include database storage in the future).
-     *     The request must include a valid {@link BulkMediaUploadDTO} containing the file resources.
      * </p>
      * <p>
      *     Example response format:
      *     <pre>{@code
      *          {
-     *              "content" : [...List<MultipartFile>...]
+     *              "message" : "The files have been uploaded successfully."
      *          }
      *     }</pre>
      * </p>
      *
-     * @param bulkMediaUploadDTO A {@link BulkMediaUploadDTO} containing the media files and their metadata. Must not be null.
-     * @return A {@link ResponseEntity} containing a list of {@link MultipartFile} representing the newly created media records.
+     * @param files A {@link List} of {@link MultipartFile} containing the media files. Must not be null or empty.
+     * @return A {@link ResponseEntity} containing a confirmation message upon successful upload.
      * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#BAD_REQUEST}
-     *                                  if the given <b>bulkMediaUploadDTO</b> is invalid.
+     *                                  if the given <b>files</b> is invalid.
      * @throws ResponseStatusException with {@link org.springframework.http.HttpStatus#INTERNAL_SERVER_ERROR}
      *                                  if the save operation fails.
      * */
     @PostMapping
-    public ResponseEntity<List<MediaDTO>> addMedia(
-            @RequestBody BulkMediaUploadDTO bulkMediaUploadDTO
+    public ResponseEntity<StringResponse> addMedia(
+            @RequestParam List<MultipartFile> files
     ) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (files == null || files.isEmpty()) {
+            log.warn("Provided file list is invalid. 'files={}'", files);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provided file list is invalid.");
+        }
+
+        try {
+            mediaService.saveAll(files);
+        } catch (IOException e) {
+            log.error("File upload operation failed. 'message={}'", e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "File upload operation failed.");
+        }
+
+        return ResponseEntity.ok(new StringResponse("The files have been uploaded successfully."));
     }
 
     /**
