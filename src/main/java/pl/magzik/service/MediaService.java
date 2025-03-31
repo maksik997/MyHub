@@ -53,4 +53,9 @@ public class MediaService {
         Objects.requireNonNull(files);
         mediaRepository.saveAll(files);
     }
+
+    public void delete(Media media) throws IOException {
+        Objects.requireNonNull(media);
+        mediaRepository.delete(media);
+    }
 }
