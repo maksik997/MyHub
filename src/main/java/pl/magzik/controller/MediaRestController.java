@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * REST Controller responsible for handling media-related operations.
  * <p>
- *     Provides endpoints for managing media files, including retrieval, uploading, updating, and deletion.
- *     Ensures a structured and secure data exchange through different Data Transfer Object of the {@link pl.magzik.model.Media} record.
+ *     Provides endpoints for managing media files, including retrieval, uploading, and deletion.
+ *     Ensures a structured and secure data exchange through different Data Transfer Object of the {@link Media} record.
  * </p>
  *
  * @since 1.2
