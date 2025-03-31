@@ -86,6 +86,22 @@ public class MediaRepository {
         }
     }
 
+    public void delete(Media media) throws IOException {
+        Objects.requireNonNull(media);
+
+        Path mediaPath = Path.of(media.path());
+        if (!mediaPath.startsWith(mediaDirectory)) {
+            log.warn("Security alert! Path traversal attempt has been detected and blocked. 'path={}'", mediaPath);
+            throw new SecurityException("Security alert! Path traversal attempt has been detected and blocked.");
+        }
+        if (!Files.exists(mediaPath)) {
+            log.warn("Invalid 'media={}' object. Missing valid attribute: 'path'.", mediaPath);
+            throw new IllegalArgumentException("Invalid media object. Missing valid attribute: 'path'.");
+        }
+
+        Files.delete(mediaPath);
+    }
+
     private boolean isMediaValid(File file) {
         Objects.requireNonNull(file);
 
