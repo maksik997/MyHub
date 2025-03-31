@@ -2,6 +2,7 @@ package pl.magzik.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -71,6 +72,11 @@ public class MediaRestController {
             @RequestParam(defaultValue = "10") int size
     ) {
         log.debug("Getting all media available in the system.");
+        if (page < 0 || size <= 0) {
+            log.warn("Invalid request parameters. 'page={}'; 'size={}'", page, size);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request parameters.");
+        }
+
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
