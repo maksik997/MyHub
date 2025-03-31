@@ -133,7 +133,7 @@ public class MediaRestController {
     ) {
         log.debug("Downloading media file...");
         Media media = mediaService.findMediaByName(fileName) ///< Handles file existence check
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File '%s doesn't exists".formatted(fileName)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File '%s' doesn't exists".formatted(fileName)));
         File file = new File(media.path());
         Resource resource = new FileSystemResource(file);
 
@@ -171,6 +171,7 @@ public class MediaRestController {
     public ResponseEntity<StringResponse> addMedia(
             @RequestParam List<MultipartFile> files
     ) {
+        log.debug("Adding new files...");
         if (files == null || files.isEmpty()) {
             log.warn("Provided file list is invalid. 'files={}'", files);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provided file list is invalid.");
@@ -211,9 +212,20 @@ public class MediaRestController {
      *                                  if delete operation fails.
      * */
     @DeleteMapping("/{fileName}")
-    public ResponseEntity<String> deleteMedia(
+    public ResponseEntity<StringResponse> deleteMedia(
             @PathVariable String fileName
     ) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        log.debug("Deleting the file...");
+        Media media = mediaService.findMediaByName(fileName) ///< Handles file existence check
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File '%s' doesn't exists".formatted(fileName)));
+
+        try {
+            mediaService.delete(media);
+        } catch (IOException e) {
+            log.error("File deletion operation failed. 'message={}'", e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "File deletion operation failed.");
+        }
+
+        return ResponseEntity.ok(new StringResponse("The media file has been successfully deleted."));
     }
 }
