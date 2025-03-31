@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+import pl.magzik.dto.GameDTO;
+import pl.magzik.dto.GameListResponse;
 import pl.magzik.model.Game;
 import pl.magzik.service.GameService;
+
+import java.util.List;
 
 /**
  * REST Controller responsible for handling game-related operations.
@@ -54,7 +58,14 @@ public class GameRestController {
      * */
     @GetMapping
     public ResponseEntity<?> getAllGames() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        List<GameDTO> gameList = gameService.findAllGames()
+                .stream()
+                .map(g -> new GameDTO(g.name(), g.htmlFile()))
+                .toList();
+
+        GameListResponse response = new GameListResponse(gameList);
+
+        return ResponseEntity.ok(response);
     }
 
     /**
