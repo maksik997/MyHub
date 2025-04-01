@@ -80,7 +80,7 @@ public class GameRestController {
      *     <ul>
      *         <li>All games must be uploaded as {@code .zip} archive.</li>
      *         <li>The archive must contain exactly one single top-level directory, <b>inside</b> which there must be exactly one `.html` file.</li>
-     *         <li>Game name will be inferred from the archive name (e.g., for archive `Mega_Game.zip` the inferred name will be `Mega Game`)</li>
+     *         <li>Game name must be inferred from the archive name (e.g., for archive `Mega_Game.zip` the inferred name will be `Mega Game`)</li>
      *     </ul>
      * </p>
      * <p>

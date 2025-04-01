@@ -1,9 +1,13 @@
 package pl.magzik.utils;
 
+import net.lingala.zip4j.ZipFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
@@ -39,4 +43,24 @@ public class FileUtils {
                 .filter(predicate)
                 .map(function);
     }
+
+    public static Path unzipArchive(Path archive, Path destination, String requiredExtension) throws IOException {
+        // I don't like this method.
+        if (!Files.exists(destination) || Files.isRegularFile(destination)) {
+            throw new IllegalArgumentException("Given destination directory doesn't exist or is not a directory.");
+        }
+        if (!Files.exists(archive) || !Files.isRegularFile(archive)) {
+            throw new IllegalArgumentException("Given zip archive doesn't exist, or is not a regular file.");
+        }
+
+        try (ZipFile zipFile = new ZipFile(archive.toFile())) {
+            zipFile.extractAll(destination.toString());
+        }
+
+        return Path.of(archive.getFileName().toString()
+                .split("\\.")[0]
+                .replaceAll("_", " ")
+        );
+    }
+
 }
