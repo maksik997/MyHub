@@ -1,6 +1,7 @@
 package pl.magzik.utils;
 
 import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ import java.util.stream.Stream;
  * Utility class for the file management.
  *
  * @author Maksymilian Strzelczak
- * @version 1.1
+ * @since 1.1
  * */
 public class FileUtils {
 
@@ -44,23 +45,26 @@ public class FileUtils {
                 .map(function);
     }
 
-    public static Path unzipArchive(Path archive, Path destination, String requiredExtension) throws IOException {
-        // I don't like this method.
-        if (!Files.exists(destination) || Files.isRegularFile(destination)) {
-            throw new IllegalArgumentException("Given destination directory doesn't exist or is not a directory.");
+    /**
+     * Extracts the given {@code zip} archive to the provided destination directory.
+     *
+     * @param archive A {@link Path} to the {@code zip} archive. Must not be null.
+     * @param destination A {@link Path} to the destination directory. Must not be null.
+     * @throws IOException if archive extraction fails.
+     * */
+    public static void unzipArchive(Path archive, Path destination) throws IOException {
+        Objects.requireNonNull(archive);
+        Objects.requireNonNull(destination);
+        if (!Files.exists(destination) || !Files.isDirectory(destination)) {
+            throw new IllegalArgumentException("Provided destination directory does not exist or is not a directory.");
         }
         if (!Files.exists(archive) || !Files.isRegularFile(archive)) {
-            throw new IllegalArgumentException("Given zip archive doesn't exist, or is not a regular file.");
+            throw new IllegalArgumentException("Provided archive doesn't exists or is not a file.");
         }
 
         try (ZipFile zipFile = new ZipFile(archive.toFile())) {
             zipFile.extractAll(destination.toString());
         }
-
-        return Path.of(archive.getFileName().toString()
-                .split("\\.")[0]
-                .replaceAll("_", " ")
-        );
     }
 
 }

@@ -61,6 +61,8 @@ public class GameRepository {
     }
 
     public Game save(MultipartFile gameFile) throws IOException {
+        // TODO: Correct this method.
+
         Path gameDirectoryPath = Path.of(gameDirectory);
         // Upload the archive
         String archiveName = gameFile.getOriginalFilename();
@@ -78,7 +80,7 @@ public class GameRepository {
         // Create temporary directory
         Path temporaryGameDirectory = gameDirectoryPath.resolve(UUID.randomUUID().toString());
         Files.createDirectories(temporaryGameDirectory);
-        FileUtils.unzipArchive(archivePath, temporaryGameDirectory, ".html");
+        FileUtils.unzipArchive(archivePath, temporaryGameDirectory);
         Files.delete(archivePath);
 
         // Validate extracted game files
