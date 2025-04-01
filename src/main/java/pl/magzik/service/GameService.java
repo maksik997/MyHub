@@ -2,9 +2,11 @@ package pl.magzik.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.model.Game;
 import pl.magzik.repository.GameRepository;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,11 +43,11 @@ public class GameService {
         return gameRepository.findByName(name);
     }
 
-    public Game saveGame() {
-
+    public Game saveGame(MultipartFile file) throws IOException {
+        return gameRepository.save(file);
     }
 
-    public void deleteGame() {
-
+    public void deleteGame(String fileName) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }
