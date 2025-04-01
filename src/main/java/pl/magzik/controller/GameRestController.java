@@ -3,6 +3,7 @@ package pl.magzik.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +14,12 @@ import pl.magzik.dto.GameListResponse;
 import pl.magzik.model.Game;
 import pl.magzik.service.GameService;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * REST Controller responsible for handling game-related operations.
@@ -101,7 +107,13 @@ public class GameRestController {
     public ResponseEntity<?> addGame(
             @RequestParam MultipartFile game
     ) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        try {
+            Game createdGame = gameService.saveGame(game);
+            return ResponseEntity.ok(new GameDTO(createdGame.name(), createdGame.htmlFile()));
+        } catch (IOException e) {
+            log.error("Couldn't save provided game files. 'message={}'", e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Game upload failure.");
+        }
     }
 
     /**
