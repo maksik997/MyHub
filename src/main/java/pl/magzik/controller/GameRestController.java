@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 import pl.magzik.dto.GameDTO;
 import pl.magzik.dto.GameListResponse;
+import pl.magzik.dto.StringResponse;
 import pl.magzik.model.Game;
 import pl.magzik.service.GameService;
 
@@ -109,7 +110,7 @@ public class GameRestController {
     ) {
         try {
             Game createdGame = gameService.saveGame(game);
-            return ResponseEntity.ok(new GameDTO(createdGame.name(), createdGame.htmlFile()));
+            return ResponseEntity.ok(new StringResponse("The game has been successfully uploaded."));
         } catch (IOException e) {
             log.error("Couldn't save provided game files. 'message={}'", e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Game upload failure.");
