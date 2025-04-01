@@ -77,6 +77,7 @@ public class GameRepository {
 
         // Create temporary directory
         Path temporaryGameDirectory = gameDirectoryPath.resolve(UUID.randomUUID().toString());
+        Files.createDirectories(temporaryGameDirectory);
         FileUtils.unzipArchive(archivePath, temporaryGameDirectory, ".html");
         Files.delete(archivePath);
 
@@ -90,9 +91,9 @@ public class GameRepository {
 
         // Move game files
         Path gamePath = topLevelFiles[0].toPath();
-        Files.move(gamePath, gameDirectoryPath);
         String gameName = gamePath.getFileName().toString();
-        Files.delete(gamePath);
+        Files.move(gamePath, gameDirectoryPath.resolve(gameName));
+        Files.delete(temporaryGameDirectory);
 
         // Return game record if existed, or throw an exception
         return findByName(gameName)
