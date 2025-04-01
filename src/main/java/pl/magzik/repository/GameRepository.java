@@ -4,10 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.model.Game;
 import pl.magzik.utils.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -53,6 +58,45 @@ public class GameRepository {
      */
     public List<Game> findAll() {
         return FileUtils.getFileStream(gameDirectory, this::isGameValid, Game::of).toList();
+    }
+
+    public Game save(MultipartFile gameFile) throws IOException {
+        Path gameDirectoryPath = Path.of(gameDirectory);
+        // Upload the archive
+        String archiveName = gameFile.getOriginalFilename();
+        if (archiveName == null || archiveName.isBlank()) {
+            log.warn("Provided game archive is invalid, or doesn't exists. 'archive={}'", archiveName);
+            throw new IllegalArgumentException("Provided game archive is invalid, or doesn't exists.");
+        }
+        Path archivePath = gameDirectoryPath.resolve(archiveName);
+        if (Files.exists(archivePath)) {
+            log.warn("Provided game archive already exists in the system. 'archive={}'", archiveName);
+            throw new FileAlreadyExistsException("Provided game archive already exists in the system.");
+        }
+        Files.copy(gameFile.getInputStream(), archivePath);
+
+        // Create temporary directory
+        Path temporaryGameDirectory = gameDirectoryPath.resolve(UUID.randomUUID().toString());
+        FileUtils.unzipArchive(archivePath, temporaryGameDirectory, ".html");
+        Files.delete(archivePath);
+
+        // Validate extracted game files
+        File[] topLevelFiles = temporaryGameDirectory.toFile().listFiles();
+        if (topLevelFiles == null || topLevelFiles.length != 1) {
+            log.warn("Provided game archive is invalid, or corrupted. 'topLeveFiles.length'={}", topLevelFiles != null ? topLevelFiles.length : "none");
+            throw new IllegalArgumentException("Provided game archive is invalid, or corrupted.");
+        }
+        // TODO: inside structure validation
+
+        // Move game files
+        Path gamePath = topLevelFiles[0].toPath();
+        Files.move(gamePath, gameDirectoryPath);
+        String gameName = gamePath.getFileName().toString();
+        Files.delete(gamePath);
+
+        // Return game record if existed, or throw an exception
+        return findByName(gameName)
+                .orElseThrow(() -> new IllegalStateException("Game upload failure."));
     }
 
     /**
