@@ -10,10 +10,12 @@ import pl.magzik.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Repository class providing methods, to manage {@link Game} objects.
@@ -60,10 +62,9 @@ public class GameRepository {
         return FileUtils.getFileStream(gameDirectory, this::isGameValid, Game::of).toList();
     }
 
-    public Game save(MultipartFile gameFile) throws IOException {
-        // TODO: Correct this method.
-
+    public void save(MultipartFile gameFile) throws IOException {
         Path gameDirectoryPath = Path.of(gameDirectory);
+
         // Upload the archive
         String archiveName = gameFile.getOriginalFilename();
         if (archiveName == null || archiveName.isBlank()) {
@@ -89,17 +90,38 @@ public class GameRepository {
             log.warn("Provided game archive is invalid, or corrupted. 'topLeveFiles.length'={}", topLevelFiles != null ? topLevelFiles.length : "none");
             throw new IllegalArgumentException("Provided game archive is invalid, or corrupted.");
         }
-        // TODO: inside structure validation
+        Path gamePath = topLevelFiles[0].toPath();
+        if (!isGameValid(gamePath.toFile())) {
+            log.warn("Provide game does not meet format requirements.");
+            delete(temporaryGameDirectory);
+            throw new IllegalArgumentException("Provided game does not meet format requirements.");
+        }
 
         // Move game files
-        Path gamePath = topLevelFiles[0].toPath();
         String gameName = gamePath.getFileName().toString();
         Files.move(gamePath, gameDirectoryPath.resolve(gameName));
         Files.delete(temporaryGameDirectory);
+    }
 
-        // Return game record if existed, or throw an exception
-        return findByName(gameName)
-                .orElseThrow(() -> new IllegalStateException("Game upload failure."));
+    public void delete(Game game) throws IOException {
+        Path gameDirectoryPath = Path.of(gameDirectory).resolve(game.name());
+        delete(gameDirectoryPath);
+    }
+
+    private void delete(Path path) throws IOException {
+        try (Stream<Path> files = Files.walk(path)) {
+            files.sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(f -> {
+                    try {
+                        Files.deleteIfExists(f.toPath());
+                    } catch (IOException e) {
+                        throw new UncheckedIOException(e);
+                    }
+                });
+        } catch (UncheckedIOException e) {
+            throw e.getCause();
+        }
     }
 
     /**

@@ -43,8 +43,8 @@ public class GameService {
         return gameRepository.findByName(name);
     }
 
-    public Game saveGame(MultipartFile file) throws IOException {
-        return gameRepository.save(file);
+    public void saveGame(MultipartFile file) throws IOException {
+        gameRepository.save(file);
     }
 
     public void deleteGame(String fileName) {
