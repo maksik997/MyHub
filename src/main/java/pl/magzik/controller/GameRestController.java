@@ -104,7 +104,6 @@ public class GameRestController {
             @RequestParam MultipartFile game
     ) {
         try {
-            // TODO: Validate game files.
             gameService.saveGame(game);
             return ResponseEntity.ok(new StringResponse("The game has been successfully uploaded."));
         } catch (IOException e) {
@@ -142,6 +141,12 @@ public class GameRestController {
     public ResponseEntity<?> deleteGame(
             @PathVariable String gameName
     ) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        try {
+            gameService.deleteGame(gameName);
+            return ResponseEntity.ok(new StringResponse("The game has been successfully deleted."));
+        } catch (IOException e) {
+            log.error("Couldn't delete provided game files. 'message={}'", e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Game deletion failed.");
+        }
     }
 }

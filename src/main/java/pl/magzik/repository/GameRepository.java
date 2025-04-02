@@ -104,11 +104,13 @@ public class GameRepository {
     }
 
     public void delete(Game game) throws IOException {
+        Objects.requireNonNull(game);
         Path gameDirectoryPath = Path.of(gameDirectory).resolve(game.name());
         delete(gameDirectoryPath);
     }
 
     private void delete(Path path) throws IOException {
+        Objects.requireNonNull(path);
         try (Stream<Path> files = Files.walk(path)) {
             files.sorted(Comparator.reverseOrder())
                 .map(Path::toFile)

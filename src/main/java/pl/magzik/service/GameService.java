@@ -47,7 +47,10 @@ public class GameService {
         gameRepository.save(file);
     }
 
-    public void deleteGame(String fileName) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    public void deleteGame(String fileName) throws IOException {
+        Objects.requireNonNull(fileName);
+        Game game = gameRepository.findByName(fileName)
+                .orElseThrow(() -> new IllegalArgumentException("Provided game doesn't exists."));
+        gameRepository.delete(game);
     }
 }
