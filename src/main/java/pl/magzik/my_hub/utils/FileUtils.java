@@ -1,7 +1,6 @@
-package pl.magzik.utils;
+package pl.magzik.my_hub.utils;
 
 import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

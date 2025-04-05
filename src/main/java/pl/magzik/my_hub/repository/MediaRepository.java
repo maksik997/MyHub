@@ -1,12 +1,12 @@
-package pl.magzik.repository;
+package pl.magzik.my_hub.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
-import pl.magzik.model.Media;
-import pl.magzik.utils.FileUtils;
+import pl.magzik.my_hub.model.Media;
+import pl.magzik.my_hub.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;

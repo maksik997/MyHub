@@ -1,10 +1,10 @@
-package pl.magzik.service;
+package pl.magzik.my_hub.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pl.magzik.model.Media;
-import pl.magzik.repository.MediaRepository;
+import pl.magzik.my_hub.model.Media;
+import pl.magzik.my_hub.repository.MediaRepository;
 
 import java.io.IOException;
 import java.util.List;

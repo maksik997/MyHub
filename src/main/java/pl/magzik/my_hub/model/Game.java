@@ -1,4 +1,4 @@
-package pl.magzik.model;
+package pl.magzik.my_hub.model;
 
 import java.io.File;
 import java.util.Arrays;

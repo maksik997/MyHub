@@ -1,4 +1,4 @@
-package pl.magzik.controller;
+package pl.magzik.my_hub.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
-import pl.magzik.dto.GameDTO;
-import pl.magzik.dto.GameListResponse;
-import pl.magzik.dto.StringResponse;
-import pl.magzik.model.Game;
-import pl.magzik.service.GameService;
+import pl.magzik.my_hub.dto.GameDTO;
+import pl.magzik.my_hub.dto.GameListResponse;
+import pl.magzik.my_hub.dto.StringResponse;
+import pl.magzik.my_hub.model.Game;
+import pl.magzik.my_hub.service.GameService;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,4 +1,4 @@
-package pl.magzik.configuration;
+package pl.magzik.my_hub.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package pl.magzik.controller;
+package pl.magzik.my_hub.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
-import pl.magzik.model.Game;
-import pl.magzik.service.GameService;
+import pl.magzik.my_hub.model.Game;
+import pl.magzik.my_hub.service.GameService;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package pl.magzik;
+package pl.magzik.my_hub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

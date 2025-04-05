@@ -1,4 +1,4 @@
-package pl.magzik.dto;
+package pl.magzik.my_hub.dto;
 
 import java.util.List;
 

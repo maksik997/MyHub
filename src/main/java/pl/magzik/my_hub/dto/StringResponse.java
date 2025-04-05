@@ -1,4 +1,4 @@
-package pl.magzik.dto;
+package pl.magzik.my_hub.dto;
 
 /**
  * Data Transfer Object used for handling message responses outside the system.

@@ -1,10 +1,10 @@
-package pl.magzik.service;
+package pl.magzik.my_hub.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pl.magzik.model.Game;
-import pl.magzik.repository.GameRepository;
+import pl.magzik.my_hub.model.Game;
+import pl.magzik.my_hub.repository.GameRepository;
 
 import java.io.IOException;
 import java.util.List;
