@@ -6,16 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
 import pl.magzik.my_hub.dto.GameDTO;
-import pl.magzik.my_hub.dto.GameListResponse;
 import pl.magzik.my_hub.dto.StringResponse;
 import pl.magzik.my_hub.model.Game;
 import pl.magzik.my_hub.service.GameService;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * REST Controller responsible for handling game-related operations.
@@ -38,6 +35,7 @@ public class GameRestController {
     @Autowired
     public GameRestController(GameService gameService) {
         this.gameService = gameService;
+        log.info("Game REST controller has been initialized.");
     }
 
     /**
@@ -55,19 +53,11 @@ public class GameRestController {
      *     }</pre>
      * </p>
      *
-     * @return A {@link ResponseEntity} containing a {@link GameListResponse} object,
-     *         which includes a list of {@link GameDTO} representing the available games.
+     * @return A {@link ResponseEntity} containing a {@link List} of {@link GameDTO} representing the available games.
      * */
     @GetMapping
-    public ResponseEntity<?> getAllGames() {
-        List<GameDTO> gameList = gameService.findAllGames()
-                .stream()
-                .map(g -> new GameDTO(g.name(), g.htmlFile()))
-                .toList();
-
-        GameListResponse response = new GameListResponse(gameList);
-
-        return ResponseEntity.ok(response);
+    public ResponseEntity<List<GameDTO>> getAllGames() {
+        return ResponseEntity.ok(gameService.findAllGames());
     }
 
     /**
@@ -96,20 +86,12 @@ public class GameRestController {
      *
      * @param game A {@link MultipartFile} containing the game `.zip` archive. Must not be null.
      * @return A {@link ResponseEntity} containing a confirmation message upon successful upload.
-     * @throws ResponseStatusException with {@link HttpStatus#BAD_REQUEST} if the given <b>game</b> is invalid.
-     * @throws ResponseStatusException with {@link HttpStatus#INTERNAL_SERVER_ERROR} if the save operation fails.
      * */
     @PostMapping
-    public ResponseEntity<StringResponse> addGame(
-            @RequestParam MultipartFile game
-    ) {
-        try {
-            gameService.saveGame(game);
-            return ResponseEntity.ok(new StringResponse("The game has been successfully uploaded."));
-        } catch (IOException e) {
-            log.error("Couldn't save provided game files. 'message={}'", e.getMessage(), e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Game upload failure.");
-        }
+    public ResponseEntity<StringResponse> addGame(@RequestParam MultipartFile game) {
+        // Will throw exception if upload operation fails.
+        gameService.saveGame(Objects.requireNonNull(game));
+        return ResponseEntity.ok(new StringResponse("The game has been successfully uploaded."));
     }
 
     /**
@@ -132,21 +114,11 @@ public class GameRestController {
      *
      * @param gameName The name of the game file to delete. Must not be null.
      * @return A {@link ResponseEntity} containing a confirmation message upon successful deletion.
-     * @throws ResponseStatusException with {@link HttpStatus#NOT_FOUND}
-     *                                  if the given <b>gameName</b> doesn't correspond to any game file in the system.
-     * @throws ResponseStatusException with {@link HttpStatus#INTERNAL_SERVER_ERROR}
-     *                                  if delete operation fails.
      * */
     @DeleteMapping("/{gameName}")
-    public ResponseEntity<?> deleteGame(
-            @PathVariable String gameName
-    ) {
-        try {
-            gameService.deleteGame(gameName);
-            return ResponseEntity.ok(new StringResponse("The game has been successfully deleted."));
-        } catch (IOException e) {
-            log.error("Couldn't delete provided game files. 'message={}'", e.getMessage(), e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Game deletion failed.");
-        }
+    public ResponseEntity<StringResponse> deleteGame(@PathVariable String gameName) {
+        // Will throw exception if delete operation fails.
+        gameService.deleteGame(Objects.requireNonNull(gameName));
+        return ResponseEntity.ok(new StringResponse("The game has been successfully deleted."));
     }
 }

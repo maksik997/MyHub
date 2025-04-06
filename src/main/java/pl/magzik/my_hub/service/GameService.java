@@ -3,10 +3,12 @@ package pl.magzik.my_hub.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pl.magzik.my_hub.dto.GameDTO;
 import pl.magzik.my_hub.model.Game;
 import pl.magzik.my_hub.repository.GameRepository;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,8 +36,11 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public List<Game> findAllGames() {
-        return gameRepository.findAll();
+    public List<GameDTO> findAllGames() {
+        return gameRepository.findAll()
+                .stream()
+                .map(g -> new GameDTO(g.name(), g.htmlFile()))
+                .toList();
     }
 
     public Optional<Game> findGameByName(String name) {
@@ -43,14 +48,23 @@ public class GameService {
         return gameRepository.findByName(name);
     }
 
-    public void saveGame(MultipartFile file) throws IOException {
-        gameRepository.save(file);
+    public void saveGame(MultipartFile file) {
+        try {
+            gameRepository.save(file);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
-    public void deleteGame(String fileName) throws IOException {
+    public void deleteGame(String fileName) {
         Objects.requireNonNull(fileName);
         Game game = gameRepository.findByName(fileName)
                 .orElseThrow(() -> new IllegalArgumentException("Provided game doesn't exists."));
-        gameRepository.delete(game);
+
+        try {
+            gameRepository.delete(game);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 }
