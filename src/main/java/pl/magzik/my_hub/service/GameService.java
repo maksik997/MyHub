@@ -1,5 +1,7 @@
 package pl.magzik.my_hub.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -7,14 +9,12 @@ import pl.magzik.my_hub.dto.GameDTO;
 import pl.magzik.my_hub.model.Game;
 import pl.magzik.my_hub.repository.GameRepository;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Service class providing interface for {@link GameRepository} class.
+ * Service layer that acts as an interface to the {@link GameRepository}.
  *
  * @author Maksymilian Strzelczak
  * @version 1.1
@@ -24,22 +24,20 @@ import java.util.Optional;
 @Service
 public class GameService {
 
-    /* TODO:
-    *   No.1 CRUD operations
-    *           Another step into RESTful API.
-    * */
+    private static final Logger log = LoggerFactory.getLogger(GameService.class);
 
     private final GameRepository gameRepository;
 
     @Autowired
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
+        log.info("Game service has been initialized.");
     }
 
     public List<GameDTO> findAllGames() {
         return gameRepository.findAll()
                 .stream()
-                .map(g -> new GameDTO(g.name(), g.htmlFile()))
+                .map(GameDTO::of)
                 .toList();
     }
 
@@ -49,22 +47,14 @@ public class GameService {
     }
 
     public void saveGame(MultipartFile file) {
-        try {
-            gameRepository.save(file);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        Objects.requireNonNull(file);
+        gameRepository.save(file);
     }
 
     public void deleteGame(String fileName) {
         Objects.requireNonNull(fileName);
         Game game = gameRepository.findByName(fileName)
                 .orElseThrow(() -> new IllegalArgumentException("Provided game doesn't exists."));
-
-        try {
-            gameRepository.delete(game);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        gameRepository.delete(game);
     }
 }

@@ -62,54 +62,58 @@ public class GameRepository {
         return FileUtils.getFileStream(gameDirectory, this::isGameValid, Game::of).toList();
     }
 
-    public void save(MultipartFile gameFile) throws IOException {
-        Path gameDirectoryPath = Path.of(gameDirectory);
+    public void save(MultipartFile gameFile) {
+        try {
+            Path gameDirectoryPath = Path.of(gameDirectory);
 
-        // Upload the archive
-        String archiveName = gameFile.getOriginalFilename();
-        if (archiveName == null || archiveName.isBlank()) {
-            log.warn("Provided game archive is invalid, or doesn't exists. 'archive={}'", archiveName);
-            throw new IllegalArgumentException("Provided game archive is invalid, or doesn't exists.");
-        }
-        Path archivePath = gameDirectoryPath.resolve(archiveName);
-        if (Files.exists(archivePath)) {
-            log.warn("Provided game archive already exists in the system. 'archive={}'", archiveName);
-            throw new FileAlreadyExistsException("Provided game archive already exists in the system.");
-        }
-        Files.copy(gameFile.getInputStream(), archivePath);
+            // Upload the archive
+            String archiveName = gameFile.getOriginalFilename();
+            if (archiveName == null || archiveName.isBlank()) {
+                log.warn("Provided game archive is invalid, or doesn't exists. 'archive={}'", archiveName);
+                throw new IllegalArgumentException("Provided game archive is invalid, or doesn't exists.");
+            }
+            Path archivePath = gameDirectoryPath.resolve(archiveName);
+            if (Files.exists(archivePath)) {
+                log.warn("Provided game archive already exists in the system. 'archive={}'", archiveName);
+                throw new FileAlreadyExistsException("Provided game archive already exists in the system.");
+            }
+            Files.copy(gameFile.getInputStream(), archivePath);
 
-        // Create temporary directory
-        Path temporaryGameDirectory = gameDirectoryPath.resolve(UUID.randomUUID().toString());
-        Files.createDirectories(temporaryGameDirectory);
-        FileUtils.unzipArchive(archivePath, temporaryGameDirectory);
-        Files.delete(archivePath);
+            // Create temporary directory
+            Path temporaryGameDirectory = gameDirectoryPath.resolve(UUID.randomUUID().toString());
+            Files.createDirectories(temporaryGameDirectory);
+            FileUtils.unzipArchive(archivePath, temporaryGameDirectory);
+            Files.delete(archivePath);
 
-        // Validate extracted game files
-        File[] topLevelFiles = temporaryGameDirectory.toFile().listFiles();
-        if (topLevelFiles == null || topLevelFiles.length != 1) {
-            log.warn("Provided game archive is invalid, or corrupted. 'topLeveFiles.length'={}", topLevelFiles != null ? topLevelFiles.length : "none");
-            throw new IllegalArgumentException("Provided game archive is invalid, or corrupted.");
-        }
-        Path gamePath = topLevelFiles[0].toPath();
-        if (!isGameValid(gamePath.toFile())) {
-            log.warn("Provide game does not meet format requirements.");
-            delete(temporaryGameDirectory);
-            throw new IllegalArgumentException("Provided game does not meet format requirements.");
-        }
+            // Validate extracted game files
+            File[] topLevelFiles = temporaryGameDirectory.toFile().listFiles();
+            if (topLevelFiles == null || topLevelFiles.length != 1) {
+                log.warn("Provided game archive is invalid, or corrupted. 'topLeveFiles.length'={}", topLevelFiles != null ? topLevelFiles.length : "none");
+                throw new IllegalArgumentException("Provided game archive is invalid, or corrupted.");
+            }
+            Path gamePath = topLevelFiles[0].toPath();
+            if (!isGameValid(gamePath.toFile())) {
+                log.warn("Provide game does not meet format requirements.");
+                delete(temporaryGameDirectory);
+                throw new IllegalArgumentException("Provided game does not meet format requirements.");
+            }
 
-        // Move game files
-        String gameName = gamePath.getFileName().toString();
-        Files.move(gamePath, gameDirectoryPath.resolve(gameName));
-        Files.delete(temporaryGameDirectory);
+            // Move game files
+            String gameName = gamePath.getFileName().toString();
+            Files.move(gamePath, gameDirectoryPath.resolve(gameName));
+            Files.delete(temporaryGameDirectory);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
-    public void delete(Game game) throws IOException {
+    public void delete(Game game) {
         Objects.requireNonNull(game);
         Path gameDirectoryPath = Path.of(gameDirectory).resolve(game.name());
         delete(gameDirectoryPath);
     }
 
-    private void delete(Path path) throws IOException {
+    private void delete(Path path) {
         Objects.requireNonNull(path);
         try (Stream<Path> files = Files.walk(path)) {
             files.sorted(Comparator.reverseOrder())
@@ -121,8 +125,8 @@ public class GameRepository {
                         throw new UncheckedIOException(e);
                     }
                 });
-        } catch (UncheckedIOException e) {
-            throw e.getCause();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 

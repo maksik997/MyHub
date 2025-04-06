@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
+import pl.magzik.my_hub.dto.GameDTO;
 import pl.magzik.my_hub.model.Game;
 import pl.magzik.my_hub.service.GameService;
 
@@ -53,7 +54,7 @@ public class GameController {
     public String getAllGames(Model model) {
         List<String> games = gameService.findAllGames()
                                         .stream()
-                                        .map(Game::name)
+                                        .map(GameDTO::name)
                                         .toList();
         model.addAttribute("games", games);
         return "games";
