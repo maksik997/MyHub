@@ -27,6 +27,7 @@ public class MediaRepository {
     /* TODO:
     *   No.1 Implement all CRUD operations.
     *   No.2 Extent's persistence
+    *   No.3 - This class is quiet a mess right now. Will be fixed with JPA one day.
     * */
 
     private static final Logger log = LoggerFactory.getLogger(MediaRepository.class);

@@ -33,6 +33,7 @@ public class GameRepository {
     *           Because there is no database - it has to be addressed manually.
     *   No.2 - CRUD operations
     *           Could be a solid step to RESTful API.
+    *   No.3 - This class is quiet a mess right now. Will be fixed with JPA one day.
     *  */
 
     private static final Logger log = LoggerFactory.getLogger(GameRepository.class);
