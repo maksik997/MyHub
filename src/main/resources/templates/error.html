@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub - Error page</title>
+    <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div>
+            <img th:src="@{/images/logo.png}" src="" alt="logo.png">
+            <div>
+                <h1>MyHub</h1>
+                <h2>Welcome to the Hub.</h2>
+            </div>
+        </div>
+
+        <nav class="dropdown">
+            <button class="dropdown-button">Menu ▼</button>
+            <ul class="dropdown-content">
+                <li>
+                    <a class="selected" th:href="@{/}">Start</a>
+                </li>
+                <li>
+                    <a th:href="@{/games}">Games</a>
+                </li>
+                <li>
+                    <a th:href="@{/media}">Gallery</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Unfortunately an error has occurred 😢.</h1>
+        <pre>Status: <span th:text="${status}">[Status]</span></pre>
+        <pre>Message: <span th:text="${message}">[Message]</span></pre>
+    </main>
+
+    <footer>
+        <p>Site created with ❤️ by: &copy; Maksymilian Strzelczak</p>
+        <nav>
+            <a th:href="@{/}">Start</a>
+            <span>•</span>
+            <a th:href="@{/games}">Games</a>
+            <span>•</span>
+            <a th:href="@{/media}">Gallery</a>
+        </nav>
+    </footer>
+</body>
+</html>
