@@ -42,7 +42,7 @@ public class MediaRepository {
      */
     public Optional<Media> findByName(String name) {
         Objects.requireNonNull(name);
-        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of)
+        return FileUtils.getFilesInDirectory(mediaDirectory, this::isMediaValid, Media::of)
                 .filter(m -> m.fileName().equals(name))
                 .findFirst();
     }
@@ -52,7 +52,7 @@ public class MediaRepository {
      * @return {@link List} of media files found.
      */
     public List<Media> findAll() {
-        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of)
+        return FileUtils.getFilesInDirectory(mediaDirectory, this::isMediaValid, Media::of)
                 .sorted()
                 .toList();
     }
@@ -62,7 +62,7 @@ public class MediaRepository {
      * @return Number of media files found.
      * */
     public long countAll() {
-        return FileUtils.getFileStream(mediaDirectory, this::isMediaValid, Media::of).count();
+        return FileUtils.getFilesInDirectory(mediaDirectory, this::isMediaValid, Media::of).count();
     }
 
     /**

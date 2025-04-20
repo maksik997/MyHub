@@ -42,7 +42,7 @@ public class GameRepository {
     public Optional<Game> findByName(String name) {
         Objects.requireNonNull(name);
 
-        return FileUtils.getFileStream(gameDirectory, this::isGameValid, Game::of)
+        return FileUtils.getFilesInDirectory(gameDirectory, this::isGameValid, Game::of)
                 .filter(game -> game.name().equalsIgnoreCase(name))
                 .findFirst();
     }
@@ -52,7 +52,7 @@ public class GameRepository {
      * @return {@link List} of games found.
      */
     public List<Game> findAll() {
-        return FileUtils.getFileStream(gameDirectory, this::isGameValid, Game::of).toList();
+        return FileUtils.getFilesInDirectory(gameDirectory, this::isGameValid, Game::of).toList();
     }
 
     /**
