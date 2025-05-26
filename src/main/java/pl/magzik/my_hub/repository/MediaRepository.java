@@ -1,12 +1,12 @@
-package pl.magzik.repository;
+package pl.magzik.my_hub.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
-import pl.magzik.model.Media;
-import pl.magzik.utils.FileUtils;
+import pl.magzik.my_hub.model.Media;
+import pl.magzik.my_hub.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +27,7 @@ public class MediaRepository {
     /* TODO:
     *   No.1 Implement all CRUD operations.
     *   No.2 Extent's persistence
+    *   No.3 - This class is quiet a mess right now. Will be fixed with JPA one day.
     * */
 
     private static final Logger log = LoggerFactory.getLogger(MediaRepository.class);
@@ -84,6 +85,22 @@ public class MediaRepository {
             Path destinationPath = Path.of(mediaDirectory, String.format("%s_%s", UUID.randomUUID(), fileName));
             Files.copy(file.getInputStream(), destinationPath);
         }
+    }
+
+    public void delete(Media media) throws IOException {
+        Objects.requireNonNull(media);
+
+        Path mediaPath = Path.of(media.path());
+        if (!mediaPath.startsWith(mediaDirectory)) {
+            log.warn("Security alert! Path traversal attempt has been detected and blocked. 'path={}'", mediaPath);
+            throw new SecurityException("Security alert! Path traversal attempt has been detected and blocked.");
+        }
+        if (!Files.exists(mediaPath)) {
+            log.warn("Invalid 'media={}' object. Missing valid attribute: 'path'.", mediaPath);
+            throw new IllegalArgumentException("Invalid media object. Missing valid attribute: 'path'.");
+        }
+
+        Files.delete(mediaPath);
     }
 
     private boolean isMediaValid(File file) {

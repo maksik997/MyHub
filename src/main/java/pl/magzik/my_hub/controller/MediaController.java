@@ -1,4 +1,4 @@
-package pl.magzik.controller;
+package pl.magzik.my_hub.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-import pl.magzik.model.Media;
-import pl.magzik.service.MediaService;
+import pl.magzik.my_hub.model.Media;
+import pl.magzik.my_hub.service.MediaService;
 
 import java.io.File;
 import java.io.IOException;

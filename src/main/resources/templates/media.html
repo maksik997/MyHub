@@ -82,8 +82,8 @@
                 </div>
                 <p style="font-style: italic;" th:text="${m.fileName}">Filename></p>
 
-                <img src="" alt="" th:src="@{/media/file/{fileName}(fileName=${m.fileName})}" th:alt="${m.fileName}" th:if="${m.type == T(pl.magzik.model.Media.MediaType).IMAGE}">
-                <video controls th:if="${m.type == T(pl.magzik.model.Media.MediaType).VIDEO}">
+                <img src="" alt="" th:src="@{/media/file/{fileName}(fileName=${m.fileName})}" th:alt="${m.fileName}" th:if="${m.type == T(pl.magzik.my_hub.model.Media.MediaType).IMAGE}">
+                <video controls th:if="${m.type == T(pl.magzik.my_hub.model.Media.MediaType).VIDEO}">
                     <source th:src="@{/media/file/{fileName}(fileName=${m.fileName})}" src="">
                     Your browser does not support the video tag.
                 </video>

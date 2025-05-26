@@ -1,9 +1,13 @@
-package pl.magzik.utils;
+package pl.magzik.my_hub.utils;
 
+import net.lingala.zip4j.ZipFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
@@ -14,7 +18,7 @@ import java.util.stream.Stream;
  * Utility class for the file management.
  *
  * @author Maksymilian Strzelczak
- * @version 1.1
+ * @since 1.1
  * */
 public class FileUtils {
 
@@ -39,4 +43,27 @@ public class FileUtils {
                 .filter(predicate)
                 .map(function);
     }
+
+    /**
+     * Extracts the given {@code zip} archive to the provided destination directory.
+     *
+     * @param archive A {@link Path} to the {@code zip} archive. Must not be null.
+     * @param destination A {@link Path} to the destination directory. Must not be null.
+     * @throws IOException if archive extraction fails.
+     * */
+    public static void unzipArchive(Path archive, Path destination) throws IOException {
+        Objects.requireNonNull(archive);
+        Objects.requireNonNull(destination);
+        if (!Files.exists(destination) || !Files.isDirectory(destination)) {
+            throw new IllegalArgumentException("Provided destination directory does not exist or is not a directory.");
+        }
+        if (!Files.exists(archive) || !Files.isRegularFile(archive)) {
+            throw new IllegalArgumentException("Provided archive doesn't exists or is not a file.");
+        }
+
+        try (ZipFile zipFile = new ZipFile(archive.toFile())) {
+            zipFile.extractAll(destination.toString());
+        }
+    }
+
 }

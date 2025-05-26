@@ -1,4 +1,4 @@
-package pl.magzik;
+package pl.magzik.my_hub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Maksymilian Strzleczak
  * */
 @SpringBootApplication
-public class MyHub {
+public class MyHubApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MyHub.class, args);
+        SpringApplication.run(MyHubApplication.class, args);
     }
 }
