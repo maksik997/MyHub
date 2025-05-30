@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub - Studies</title>
+    <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/components.css}" rel="stylesheet">
+    <!-- TODO: Stylesheet for this page -->
+</head>
+<body>
+
+    <header>
+        <div>
+            <img th:src="@{/images/logo.png}" src="" alt="logo.png">
+            <div>
+                <h1>MyHub</h1>
+                <h2>Welcome to the Hub.</h2>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a th:href="@{/}" class="menu-button">
+                Home
+            </a>
+            <a class="menu-button"
+               th:href="@{/games}">
+                Games
+            </a>
+            <a class="menu-button"
+               th:href="@{/media}">
+                Gallery
+            </a>
+
+            <div class="dropdown menu-button">
+                <button class="dropdown-button">...</button>
+                <ul class="dropdown-content">
+                    <li>
+                        <a class="selected">Studies</a>
+                    </li>
+                    <li>
+                        <a href="#">Files (W.I.P)</a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+        <h1>Studies:</h1>
+
+        <!-- PAGINATION/SORTING PANEL -->
+        <div>
+            <p>
+                Found
+                <span th:if="${subjects != null}"
+                      th:text="${subjects.size()}">#</span>
+                <span th:if="${subjects == null}">0</span>
+                subjects.
+            </p>
+
+            <nav>
+                <form action="#" id="filters-form" onsubmit="handleFilters(event)">
+                    <h2>Sort & Filter</h2>
+
+                    <!-- SORTING -->
+                    <label for="sort-by">Sort by</label>
+                    <select name="sort-by" id="sort-by"> <!-- TODO: Sort columns -->
+                        <option value="" disabled>Select sorting column</option>
+                        <option value="#" selected>Option 1</option>
+                    </select>
+
+                    <label for="order-by">Order by:</label>
+                    <select name="order-by" id="order-by">
+                        <option value="" disabled>Select sorting order</option>
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+
+                    <!-- FILTERING -->
+                    <label for="name-of">Search: </label>
+                    <input type="search"
+                           placeholder="Code"
+                           name="name-of"
+                           id="name-of"
+                           min="2"
+                           max="4"/>
+
+                    <!-- PAGINATION -->
+                    <div> <!-- TODO: th:if="${page.number == 0}" -->
+                        <button onclick="changePage(event, false)"
+                                th:disabled="${page.first}">«</button>
+                        <label>
+                            <input th:value="${page.number}"
+                                   type="number"
+                                   name="page"
+                                   min="1"
+                                   step="1"
+                                   required
+                                   id="page"/>
+                        </label>
+                        <button onclick="changePage(event, true)"
+                                th:disabled="${page.last}">»</button>
+                    </div>
+                    <input type="hidden"
+                           id="size"
+                           name="size"
+                           th:value="${page.size}"/>
+
+                    <button type="submit">Submit</button>
+                    <button type="reset">Reset</button>
+                </form>
+            </nav>
+        </div>
+
+        <!-- SUBJECTS -->
+        <div>
+            <p th:if="${subjects == null}">
+                No subjects have been found.
+            </p>
+            <table th:if="${subjects != null}">
+            <!--<table>-->
+                <tr>
+                    <th>Code</th> <!-- 2 to 4 alphanumeric characters -->
+                    <th>Name</th> <!-- With ellipsis -->
+                    <th>Number of files</th> <!-- Given from backend -->
+                    <th>Details</th> <!-- Show details -->
+                </tr>
+                <tr>
+                    <td>Code</td>
+                    <td>Name</td>
+                    <td># files</td>
+                    <td>
+                        <a>Details</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <p>Site created with ❤️ by: &copy; Maksymilian Strzelczak</p>
+        <nav>
+            <a th:href="@{/}">Start</a>
+            <span>•</span>
+            <a th:href="@{/games}">Games</a>
+            <span>•</span>
+            <a th:href="@{/media}">Gallery</a>
+        </nav>
+    </footer>
+
+    <script>
+        /* TODO: Move to .js file */
+        'use strict';
+
+        const changePage = (event, isAscending) => {
+            event.preventDefault();
+
+            const pageField = document.getElementById("page");
+            if (!pageField) {
+                console.error("Page field not found.");
+                return;
+            }
+
+            const value = parseInt(pageField.value) + parseInt(isAscending ? +1 : -1);
+            if (value <= 0) {
+                console.debug("New value out of bounds.");
+                return;
+            }
+
+            // Set new value
+            pageField.value = value;
+
+            // Continue with event
+            const form = document.getElementById("filters-form");
+            if (form) { handleFilters(event); }
+            else { console.error("Form is undefined."); }
+        };
+
+        const handleFilters = (event) => {
+            event.preventDefault();
+
+            const baseUrl = "/studies";
+
+            // Get data
+            const page = document.getElementById("page").value || 1; /// <- Fallback
+            const size = document.getElementById("size").value || 10; /// <- Fallback
+            const sort = document.getElementById("sort-by").value;
+            const order = document.getElementById("order-by").value;
+            const name = document.getElementById("name-of").value;
+
+            // Build url
+            let url = `${baseUrl}?page=${page - 1}&size=${size}`;
+            if (sort && order) {
+                url += `&sort=${encodeURIComponent(sort)},${order}`;
+            }
+            if (name) {
+                url += `&nameOf=${encodeURIComponent(name)}`;
+            }
+
+            // Send request
+            location.href = url;
+        };
+
+    </script>
+
+</body>
+</html>
