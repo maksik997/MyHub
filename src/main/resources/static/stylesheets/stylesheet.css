@@ -88,58 +88,6 @@ header > div h2 {
     font-weight: normal;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown .dropdown-button {
-    background-color: var(--color-accent-1);
-    color: var(--color-font);
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.dropdown .dropdown-button:hover {
-    background-color: var(--color-accent-2);
-}
-
-.dropdown .dropdown-content {
-    display: none;
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    background-color: var(--color-main);
-    color: var(--color-font);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    z-index: 1;
-    border-radius: 5px;
-    overflow: hidden;
-    list-style-type: none;
-}
-
-.dropdown .dropdown-content a {
-    color: var(--color-font);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown .dropdown-content a:hover,
-.dropdown .dropdown-content a.selected {
-    font-weight: bold;
-    background-color: var(--color-accent-1);
-}
-
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
 /* Main */
 
 main {

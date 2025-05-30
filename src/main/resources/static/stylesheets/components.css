@@ -1,0 +1,148 @@
+@import url('colors.css');
+
+/* MENU BUTTON */
+
+.menu { /* To make buttons look natural */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.menu-button {
+    display: inline-block;
+    box-sizing: content-box;
+    position: relative;
+
+    padding: 5px 10px;
+
+    background: transparent;
+    color: var(--color-font);
+    border: 0;
+    border-right: 2px solid var(--color-accent-2);
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.menu-button:last-child {
+    border-right: 0;
+}
+
+.menu-button::after {
+    position: absolute;
+    left:0;
+    bottom:0;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--color-accent-4);
+    box-shadow: 0 4px 12px var(--color-accent-4);
+
+    transition: width 0.2s ease;
+
+    content: "";
+}
+
+.menu-button::focus {
+    outline: 2px solid var(--color-accent-4);
+    outline-offset: 2px;
+}
+
+.menu-button:hover::after,
+.menu-button.selected:after {
+    width: 100%;
+}
+
+.menu-button.selected {
+    cursor: initial;
+}
+
+/* DROPDOWN */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown .dropdown-button {
+    background-color: transparent;
+    color: var(--color-font);
+    border: 0;
+}
+
+.dropdown .dropdown-button::after {
+    content: " ▼";
+}
+
+.dropdown:hover .dropdown-button::after {
+    content: " ▲";
+}
+
+.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+
+    min-width: 160px;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--color-main);
+    color: var(--color-font);
+    border: 2px solid var(--color-accent-2);
+    border-radius: 5px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+
+    list-style-type: none;
+    overflow: hidden;
+    text-align: center;
+}
+
+.dropdown .dropdown-content li {
+    border-bottom: 1px solid var(--color-accent-2);
+}
+
+.dropdown .dropdown-content li:last-child {
+    border-bottom: 0;
+}
+
+.dropdown .dropdown-content a {
+    display: block;
+
+    padding: 12px 16px;
+
+    color: var(--color-font);
+
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown .dropdown-content a::before,
+.dropdown .dropdown-content a::after {
+    content: " ○ ";
+}
+
+.dropdown .dropdown-content a:hover,
+.dropdown .dropdown-content a.selected {
+    background-color: var(--color-accent-1);
+    color: var(--color-accent-4);
+
+    font-weight: bold;
+}
+
+.dropdown .dropdown-button:focus,
+.dropdown .dropdown-content:focus {
+    outline: 2px solid var(--color-accent-4);
+    outline-offset: 2px;
+}
+
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+    display: block;
+}

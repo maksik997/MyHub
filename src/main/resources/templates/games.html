@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
     <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/components.css}" rel="stylesheet">
     <link th:href="@{/stylesheets/games_page.css}" rel="stylesheet">
 </head>
 <body>
@@ -19,19 +20,32 @@
             </div>
         </div>
 
-        <nav class="dropdown">
-            <button class="dropdown-button">Menu ▼</button>
-            <ul class="dropdown-content">
-                <li>
-                    <a th:href="@{/}">Start</a>
-                </li>
-                <li>
-                    <a class="selected" th:href="@{/games}">Games</a>
-                </li>
-                <li>
-                    <a th:href="@{/media}">Gallery</a>
-                </li>
-            </ul>
+        <nav class="menu">
+
+            <a class="menu-button"
+               th:href="@{/}">
+                Home
+            </a>
+            <a class="menu-button selected">
+                Games
+            </a>
+            <a class="menu-button"
+               th:href="@{/media}">
+                Gallery
+            </a>
+
+            <div class="dropdown menu-button">
+                <button class="dropdown-button">...</button>
+                <ul class="dropdown-content">
+                    <li>
+                        <a href="#">Studies (W.I.P)</a>
+                    </li>
+                    <li>
+                        <a href="#">Files (W.I.P)</a>
+                    </li>
+                </ul>
+            </div>
+
         </nav>
     </header>
 
