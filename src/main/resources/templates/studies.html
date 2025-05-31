@@ -51,8 +51,8 @@
     <main>
         <h1>Studies:</h1>
 
-        <!-- PAGINATION/SORTING PANEL -->
-        <div>
+        <!-- TOP PANEL -->
+        <div class="filter-panel">
             <p>
                 Found
                 <span th:if="${subjects != null}"
@@ -61,26 +61,41 @@
                 subjects.
             </p>
 
-            <nav>
-                <form action="#" id="filters-form" onsubmit="handleFilters(event)">
-                    <h2>Sort & Filter</h2>
+            <form class="filter-form"
+                  action="#"
+                  id="filters-form"
+                  onsubmit="handleFilters(event)">
+                <h2>Sort & Filter</h2> <!-- <-- Normally hidden -->
 
-                    <!-- SORTING -->
-                    <label for="sort-by">Sort by</label>
-                    <select name="sort-by" id="sort-by"> <!-- TODO: Sort columns -->
+                <!-- SORTING -->
+                <div>
+                    <label for="sort-by">Sort by</label><br />
+                    <select name="sort-by" id="sort-by">
                         <option value="" disabled>Select sorting column</option>
-                        <option value="#" selected>Option 1</option>
-                    </select>
+                        <option th:each="option : ${sortOptions}"
+                                th:value="${option.key}"
+                                th:text="${option.value}"
+                                th:selected="${option.key == sortBy}">Sort option</option>
+                    </select><br />
 
-                    <label for="order-by">Order by:</label>
+                    <label for="order-by">Order by:</label><br />
                     <select name="order-by" id="order-by">
                         <option value="" disabled>Select sorting order</option>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
+                        <option value="asc"
+                                th:selected="${orderBy == 'asc'}">
+                            Ascending
+                        </option>
+                        <option value="desc"
+                                th:selected="${orderBy == 'desc'}">
+                            Descending
+                        </option>
                     </select>
+                </div>
 
+                <!-- FILTERING & PAGINATION-->
+                <div>
                     <!-- FILTERING -->
-                    <label for="name-of">Search: </label>
+                    <label for="name-of">Search: </label><br />
                     <input type="search"
                            placeholder="Code"
                            name="name-of"
@@ -89,30 +104,33 @@
                            max="4"/>
 
                     <!-- PAGINATION -->
-                    <div> <!-- TODO: th:if="${page.number == 0}" -->
+                    <div th:if="${page.totalPages > 0}">
+                        <label for="page">Page:</label><br />
+
                         <button onclick="changePage(event, false)"
                                 th:disabled="${page.first}">«</button>
-                        <label>
-                            <input th:value="${page.number}"
-                                   type="number"
-                                   name="page"
-                                   min="1"
-                                   step="1"
-                                   required
-                                   id="page"/>
-                        </label>
+                        <input th:value="${page.number}"
+                               type="number"
+                               name="page"
+                               min="1"
+                               step="1"
+                               required
+                               id="page"/>
                         <button onclick="changePage(event, true)"
-                                th:disabled="${page.last}">»</button>
+                                th:disabled="${page.last}">»</button><br />
                     </div>
                     <input type="hidden"
                            id="size"
                            name="size"
                            th:value="${page.size}"/>
+                </div>
 
-                    <button type="submit">Submit</button>
+                <div class="filter-control">
+                    <button type="submit">Submit</button><br />
                     <button type="reset">Reset</button>
-                </form>
-            </nav>
+                </div>
+
+            </form>
         </div>
 
         <!-- SUBJECTS -->
@@ -126,12 +144,16 @@
                     <th>Code</th> <!-- 2 to 4 alphanumeric characters -->
                     <th>Name</th> <!-- With ellipsis -->
                     <th>Number of files</th> <!-- Given from backend -->
+                    <th>Creation date</th>
+                    <th>Modification date</th>
                     <th>Details</th> <!-- Show details -->
                 </tr>
                 <tr>
                     <td>Code</td>
                     <td>Name</td>
                     <td># files</td>
+                    <td>Creation date</td>
+                    <td>Modification date</td>
                     <td>
                         <a>Details</a>
                     </td>

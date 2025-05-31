@@ -146,3 +146,104 @@
 .dropdown:focus-within .dropdown-content {
     display: block;
 }
+
+/* FILTER PANEL */
+
+.filter-panel {
+    width: 100%;
+}
+
+.filter-panel .filter-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    width: 100%;
+}
+
+.filter-panel .filter-form h2 {
+    display: none;
+}
+
+.filter-panel .filter-form > div {
+    padding: 10px 20px;
+
+    text-align: center;
+}
+
+.filter-panel .filter-form input,
+.filter-panel .filter-form select,
+.filter-panel .filter-form button {
+    padding: 10px;
+
+    background: var(--color-accent-1);
+    color: var(--color-font);
+    border: 0;
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    border-radius: 5px;
+
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.filter-panel .filter-form input:focus,
+.filter-panel .filter-form select:focus,
+.filter-panel .filter-form button:focus {
+    outline: 0;
+}
+
+.filter-panel .filter-form input,
+.filter-panel .filter-form select {
+    border: 2px solid var(--color-accent-1);
+
+    transition: border 0.2s ease;
+}
+
+.filter-panel .filter-form input:hover,
+.filter-panel .filter-form input:focus,
+.filter-panel .filter-form select:hover,
+.filter-panel .filter-form select:focus {
+    border-color: var(--color-accent-4);
+}
+
+.filter-panel .filter-form button {
+    cursor: pointer;
+
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.filter-panel .filter-form button:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-accent-2);
+}
+
+.filter-panel .filter-form .filter-control button {
+    width: 120px;
+
+    margin: 5px;
+}
+
+.filter-panel .filter-form button:disabled {
+    background: var(--color-main);
+
+    cursor: initial;
+}
+
+.filter-panel .filter-form button:disabled:hover {
+    transform: none;
+    background-color: var(--color-main);
+}
+
+.filter-panel .filter-form input[type="number"] {
+    width: 50px;
+
+    -moz-appearance: textfield;
+}
+
+.filter-panel .filter-form input[type="number"]::-webkit-outer-spin-button,
+.filter-panel .filter-form input[type="number"]::-webkit-inner-spin-button {
+    margin: 0;
+
+    -webkit-appearance: none;
+}
