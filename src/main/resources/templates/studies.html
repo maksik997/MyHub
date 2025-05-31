@@ -7,7 +7,7 @@
     <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
     <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
     <link th:href="@{/stylesheets/components.css}" rel="stylesheet">
-    <!-- TODO: Stylesheet for this page -->
+    <link th:href="@{/stylesheets/studies_page.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -109,7 +109,7 @@
 
                         <button onclick="changePage(event, false)"
                                 th:disabled="${page.first}">«</button>
-                        <input th:value="${page.number}"
+                        <input th:value="${page.number + 1}"
                                type="number"
                                name="page"
                                min="1"
@@ -134,30 +134,45 @@
         </div>
 
         <!-- SUBJECTS -->
-        <div>
+        <div class="subjects">
             <p th:if="${subjects == null}">
                 No subjects have been found.
             </p>
-            <table th:if="${subjects != null}">
-            <!--<table>-->
-                <tr>
-                    <th>Code</th> <!-- 2 to 4 alphanumeric characters -->
-                    <th>Name</th> <!-- With ellipsis -->
-                    <th>Number of files</th> <!-- Given from backend -->
-                    <th>Creation date</th>
-                    <th>Modification date</th>
-                    <th>Details</th> <!-- Show details -->
-                </tr>
-                <tr>
-                    <td>Code</td>
-                    <td>Name</td>
-                    <td># files</td>
-                    <td>Creation date</td>
-                    <td>Modification date</td>
-                    <td>
-                        <a>Details</a>
-                    </td>
-                </tr>
+            <table class="table" th:if="${subjects != null}">
+                <thead>
+                    <tr>
+                        <th>Code</th> <!-- 2 to 4 alphanumeric characters -->
+                        <th>Name</th> <!-- With ellipsis -->
+                        <th>Number of files</th> <!-- Given from backend -->
+                        <th>Creation date</th>
+                        <th>Modification date</th>
+                        <th>Details</th> <!-- Show details -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="subject : ${page.content}">
+                        <td th:text="${subject.code}">
+                            Code
+                        </td>
+                        <td th:text="${subject.name}">
+                            Name
+                        </td>
+                        <td th:text="${subject.files.size()}">
+                            # files
+                        </td>
+                        <td th:text="${subject.creationDate}">
+                            Creation date
+                        </td>
+                        <td th:text="${subject.modificationDate}">
+                            Modification date
+                        </td>
+                        <td>
+                            <a th:href="@{/studies/{id}(id=${subject.id})}">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </main>
@@ -207,7 +222,7 @@
             const baseUrl = "/studies";
 
             // Get data
-            const page = document.getElementById("page").value || 1; /// <- Fallback
+            const page = document.getElementById("page").value || 0; /// <- Fallback
             const size = document.getElementById("size").value || 10; /// <- Fallback
             const sort = document.getElementById("sort-by").value;
             const order = document.getElementById("order-by").value;

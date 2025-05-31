@@ -1,0 +1,14 @@
+@import url('colors.css');
+
+main {
+    padding: 20px;
+}
+
+main > h1 {
+    font-size: 1.4em;
+    text-transform: uppercase;
+}
+
+main .subjects {
+    width: 100%;
+}
