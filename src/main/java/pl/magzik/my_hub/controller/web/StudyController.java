@@ -24,7 +24,6 @@ public class StudyController {
         Map<String, String> sortOptions = new HashMap<>();
         sortOptions.put("code", "Code");
         sortOptions.put("name", "Name");
-        sortOptions.put("fileCount", "Number of files");
         sortOptions.put("creationDate", "Creation date");
         sortOptions.put("modificationDate", "Modification date");
         model.addAttribute("sortOptions", sortOptions);

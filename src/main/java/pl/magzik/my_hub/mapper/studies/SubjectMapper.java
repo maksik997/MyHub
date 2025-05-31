@@ -1,9 +1,6 @@
 package pl.magzik.my_hub.mapper.studies;
 
-import org.mapstruct.IterableMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 import pl.magzik.my_hub.dto.studies.SubjectDto;
 import pl.magzik.my_hub.dto.studies.SubjectRequest;
 import pl.magzik.my_hub.model.studies.Subject;
@@ -29,5 +26,11 @@ public interface SubjectMapper {
     @Mapping(target = "modificationDate", ignore = true)
     @Mapping(target = "files", ignore = true)
     Subject toEntity(SubjectRequest request);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "creationDate", ignore = true)
+    @Mapping(target = "modificationDate", ignore = true)
+    @Mapping(target = "files", ignore = true)
+    void updateEntity(SubjectRequest request, @MappingTarget Subject subject);
 
 }
