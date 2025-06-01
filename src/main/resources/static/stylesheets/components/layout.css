@@ -1,0 +1,130 @@
+/*
+ Author: © Maksymilian Strzelczak 01.06.2025
+
+ General layout stylesheet
+ */
+@import url("../colors.css");
+
+/* Animations */
+
+@keyframes loopyLogoLoop {
+    0%, 100% {
+        rotate: 360deg;
+    }
+    50% {
+        rotate: 0deg;
+    }
+}
+
+/* Styles */
+
+/* Header */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px;
+
+    background: var(--color-main);
+    color: var(--color-font);
+}
+
+.header .header-title-panel {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.header .header-title-panel .logo {
+    width: 64px;
+    height: 64px;
+
+    filter: grayscale(100%) brightness(255);
+    animation: loopyLogoLoop 6s ease-in-out infinite;
+}
+
+.header .header-title-panel .titles {
+    margin: 0 10px;
+}
+
+.header .header-title-panel .titles .title,
+.header .header-title-panel .titles .subtitle {
+    margin: 0;
+    padding: 0;
+}
+
+.header .header-title-panel .titles .title {
+    font-size: 1.8em;
+    letter-spacing: 0.1em;
+}
+
+.header .header-title-panel .titles .subtitle {
+    margin: 0 15px;
+
+    font-size: 1.2em;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.header .header-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.header .header-navigation .button {
+    display: inline-block;
+    box-sizing: content-box;
+    position: relative;
+
+    padding: 5px 10px;
+
+    background: transparent;
+    color: var(--color-font);
+    box-shadow: none;
+    border: 0;
+    border-right: 2px solid var(--color-accent-2);
+    border-radius: 0;
+
+    font-size: 1em;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.header .header-navigation .button:last-child {
+    border-right: 0;
+}
+
+.header .header-navigation .button::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--color-accent-4);
+    box-shadow: 0 4px 12px var(--color-accent-4);
+
+    transition: width 0.2s ease;
+
+    content: "";
+}
+
+.header .header-navigation .button:hover {
+    transform: none;
+}
+
+.header .header-navigation .button:hover::after,
+.header .header-navigation .button.selected::after {
+    width: 100%;
+}
+
+.header .header-navigation .button.selected {
+    cursor: initial;
+}
+
+/* TODO: Footer */

@@ -4,35 +4,42 @@
 
 <!-- HEADER -->
 
-<header th:fragment="header(page)">
+<header th:fragment="header(page)"
+        class="header">
 
-    <div>
-        <img th:src="@{/images/logo.png}" src="" alt="logo.png">
-        <div>
-            <h1>MyHub</h1>
-            <h2>Welcome to the Hub.</h2>
+    <div class="header-title-panel">
+
+        <img th:src="@{/images/logo.png}"
+             src=""
+             alt="logo"
+             class="logo">
+
+        <div class="titles">
+            <h1 class="title">MyHub</h1>
+            <h2 class="subtitle">Welcome to the Hub.</h2>
         </div>
+
     </div>
 
-    <nav class="menu">
+    <nav class="header-navigation">
 
         <a th:href="${page != 'home'} ? @{/} : null"
            th:classappend="${page == 'home'} ? ' selected'"
-           class="menu-button">
+           class="button">
             Home
         </a>
         <a th:href="${page != 'games'} ? @{/games} : null"
            th:classappend="${page == 'games'} ? ' selected'"
-           class="menu-button">
+           class="button">
             Games
         </a>
         <a th:href="${page != 'media'} ? @{/media} : null"
            th:classappend="${page == 'media'} ? ' selected'"
-           class="menu-button">
+           class="button">
             Gallery
         </a>
 
-        <div class="dropdown menu-button">
+        <div class="dropdown button">
             <button class="dropdown-button">...</button>
             <ul class="dropdown-content">
                 <li>
@@ -40,12 +47,21 @@
                        th:classappend="${page == 'studies'} ? ' selected'">Studies</a>
                 </li>
                 <li>
-                    <a href="#">Files (W.I.P)</a>
+                    <ul> <!-- TODO: NESTED DROPDOWN MENUS -->
+                        <li>
+                            <a href="#">###</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="${page != 'files'} ? @{/files} : null"
+                       th:classappend="${page == 'files'} ? ' selected'">Files</a>
                 </li>
             </ul>
         </div>
 
     </nav>
+
 </header>
 
 <!-- FOOTER -->

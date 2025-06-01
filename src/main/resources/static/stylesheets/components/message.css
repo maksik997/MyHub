@@ -3,6 +3,7 @@
 
  Message component stylesheet.
  */
+@import url("../colors.css");
 
 .message {
     width: 100%;

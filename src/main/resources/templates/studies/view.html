@@ -7,8 +7,9 @@
     <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
     <!-- GENERAL -->
     <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
-    <!-- MESSAGE -->
+    <!-- COMPONENTS -->
     <link th:href="@{/stylesheets/components.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/components/layout.css}" rel="stylesheet">
     <link th:href="@{/stylesheets/components/message.css}" rel="stylesheet">
     <!-- TEMPLATE SPECIFIC -->
     <link th:href="@{/stylesheets/update_subject.css}" rel="stylesheet">
@@ -33,13 +34,18 @@
 
         <div th:replace="~{ components :: message(${ message }) }"></div>
 
-        <div>
-            <p>Subject info:</p>
-        </div>
+        <form method="post"
+              th:action="@{/studies/{id}/delete(id=${subject.id})}"
+              class="delete-form add-form">
+            <h2>Danger zone</h2>
+
+            <button type="submit">Delete</button>
+        </form>
 
         <form method="post"
               th:action="@{/studies/{id}/update(id=${subject.id})}"
               class="add-form">
+            <h2>Subject info:</h2>
 
             <label for="code">Code</label><br />
             <input type="text"
@@ -80,14 +86,12 @@
             </div>
         </form>
 
-        <form method="post"
-              class="delete-form"
-              th:action="@{/studies/{id}/delete(id=${subject.id})}">
-            <button type="submit">Delete</button>
-        </form>
+
 
         <div>
             <p>File list</p>
+
+            <p>Work in progress...</p>
             <!-- TODO: File list -->
         </div>
 
