@@ -97,13 +97,13 @@
             <label for="description">Description</label><br />
             <textarea name="description"
                       id="description"
-                      th:value="${subject.description}"
+                      th:text="${subject.description}"
                       maxlength="500"></textarea><br />
 
             <label for="creation-date">Creation date</label><br />
             <input type="text"
                    id="creation-date"
-                   th:value="${#temporals.format(subject.modificationDate, 'dd-MM-yyyy HH:mm')}"
+                   th:value="${#temporals.format(subject.creationDate, 'dd-MM-yyyy HH:mm')}"
                    readonly/><br />
 
             <label for="modification-date">Modification date</label><br />
