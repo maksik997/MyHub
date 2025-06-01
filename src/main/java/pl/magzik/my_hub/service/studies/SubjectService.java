@@ -1,5 +1,6 @@
 package pl.magzik.my_hub.service.studies;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +51,11 @@ public class SubjectService {
         Objects.requireNonNull(subjectRequest);
 
         log.debug("Save new subject has been called.");
+
+        String code = subjectRequest.code();
+        if (subjectRepository.existsByCode(code)) {
+            throw new EntityExistsException("Subject '%s' already exists.".formatted(code));
+        }
 
         var subject = subjectMapper.toEntity(subjectRequest);
         subject = subjectRepository.save(subject);

@@ -4,6 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.magzik.my_hub.model.studies.Subject;
 
+import java.util.Optional;
+
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
+
+    boolean existsByCode(String code);
+
 }

@@ -2,6 +2,7 @@ package pl.magzik.my_hub.dto.studies;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.UniqueElements;
 
 public record SubjectRequest(
 
