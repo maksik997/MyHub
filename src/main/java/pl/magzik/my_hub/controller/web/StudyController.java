@@ -49,6 +49,10 @@ public class StudyController {
         model.addAttribute("sortBy", order != null ? order.getProperty() : "");
         model.addAttribute("orderBy",  order != null ? order.getDirection().name().toLowerCase() : "");
 
+        if (!model.containsAttribute("message")) {
+            model.addAttribute("message");
+        }
+
         var page = subjectService.findAllSubjects(pageable);
         model.addAttribute("page", page);
 
@@ -60,7 +64,6 @@ public class StudyController {
             @PathVariable Integer id,
             Model model
     ) {
-
         var subject = subjectService.findSubjectById(id);
         model.addAttribute("subject", subject);
 
@@ -98,7 +101,7 @@ public class StudyController {
         }
 
         var subject = subjectService.saveSubject(subjectRequest);
-        redirectAttributes.addAttribute("message", "Subject '%s' has been successfully added.".formatted(subject.code()));
+        redirectAttributes.addFlashAttribute("message", "Subject '%s' has been successfully added.".formatted(subject.code()));
 
         return "redirect:/studies/" + subject.id();
     }
