@@ -1,3 +1,8 @@
+/*
+Author: Maksymilian Strzelczak, 2025
+
+This file contains styles for generally used components.
+*/
 @import url('colors.css');
 
 /* MENU BUTTON */
@@ -256,7 +261,7 @@
 
 /* TABLE */
 
-table {
+.table-panel {
     width: 100%;
 
     margin: 20px 0;
@@ -272,28 +277,28 @@ table {
     overflow: hidden;
 }
 
-table thead {
+.table-panel thead {
     background: var(--color-accent-2);
 
     font-weight: bold;
     text-align: left;
 }
 
-table th,
-table td {
+.table-panel th,
+.table-panel td {
     padding: 12px 16px;
     border-bottom: 1px solid var(--color-accent-3);
 }
 
-table td {
+.table-panel td {
     vertical-align: middle;
 }
 
-table tbody tr:last-child td {
+.table-panel tbody tr:last-child td {
     border-bottom: none;
 }
 
-table a {
+.table-panel a {
     display: inline-block;
 
     margin: 0 4px;
@@ -311,8 +316,131 @@ table a {
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
-table a:hover {
+.table-panel a:hover {
     background: var(--color-accent-3);
 
     transform: translateY(-2px);
+}
+
+/* BUTTON */
+
+.button {
+    padding: 10px 30px;
+
+    background-color: var(--color-accent-4);
+    color: var(--color-font);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    border-radius: 5px;
+    border: 0;
+    outline: 0;
+
+    font-size: 0.8em;
+
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.button:hover {
+    background: var(--color-accent-2);
+
+    transform: translateY(-2px);
+}
+
+/* ADDITION FORM */
+
+.response-message {
+    width: 100%;
+}
+
+.response-message h1 {
+    box-sizing: border-box;
+
+    width: 100%;
+
+    margin: 15px 0;
+    padding: 0 25px;
+
+    font-size: 1.2em;
+    text-align: left;
+}
+
+.response-message p {
+    width: 100%;
+
+    padding: 0 35px;
+}
+
+.add-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    margin: 0 auto;
+    padding: 20px 0;
+
+    background: var(--color-main);
+    box-shadow: 0 4px 12px var(--color-shadow);
+    border-radius: 10px;
+
+}
+
+.add-form label {
+    padding: 5px;
+
+    font-size: 0.8em;
+}
+
+.add-form input,
+.add-form textarea,
+.add-form button {
+    width: 80%;
+
+    padding: 10px;
+
+    background: var(--color-accent-1);
+    color: var(--color-font);
+    border: 2px solid transparent;
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    border-radius: 5px;
+
+    font-size: 0.8em;
+    text-align: center;
+
+    transition: border 0.2s ease;
+}
+
+.add-form input:hover,
+.add-form textarea:hover,
+.add-form input:focus,
+.add-form textarea:focus {
+    border: 2px solid var(--color-accent-4);
+}
+
+.add-form input:focus,
+.add-form textarea:focus {
+    outline: 0;
+}
+
+.add-form button {
+    margin: 40px 0 15px;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.add-form button:hover {
+    background: var(--color-accent-2);
+}
+
+.add-form textarea {
+    min-height: 2em;
+
+    resize: vertical;
+}
+
+.add-form button {
+
 }

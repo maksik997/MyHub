@@ -7,7 +7,7 @@
     <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
     <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
     <link th:href="@{/stylesheets/components.css}" rel="stylesheet">
-    <link th:href="@{/stylesheets/studies_page.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/studies.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -51,7 +51,7 @@
     <main>
         <nav>
             <h1>Studies:</h1>
-            <a href="#">New subject</a>
+            <a class="button" th:href="@{/studies/add}">New subject</a>
         </nav>
 
         <!-- FILTER & SORT PANEL -->
@@ -59,9 +59,7 @@
              class="filter-panel">
             <p>
                 Found
-                <span th:if="${subjects != null}"
-                      th:text="${subjects.size()}">#</span>
-                <span th:if="${subjects == null}">0</span>
+                <span th:text="${page.totalElements}">#</span>
                 subjects.
             </p>
 
@@ -139,15 +137,14 @@
 
         <!-- SUBJECTS -->
         <div class="subjects">
-            <p th:if="${subjects == null}">
+            <p th:if="${page.totalElements == 0}">
                 No subjects have been found.
             </p>
-            <table class="table" th:if="${subjects != null}">
+            <table class="table-panel" th:if="${page.totalElements > 0}">
                 <thead>
                     <tr>
                         <th>Code</th> <!-- 2 to 4 alphanumeric characters -->
                         <th>Name</th> <!-- With ellipsis -->
-                        <th>Number of files</th> <!-- Given from backend -->
                         <th>Creation date</th>
                         <th>Modification date</th>
                         <th>Details</th> <!-- Show details -->
@@ -161,13 +158,10 @@
                         <td th:text="${subject.name}">
                             Name
                         </td>
-                        <td th:text="${subject.files.size()}">
-                            # files
-                        </td>
-                        <td th:text="${subject.creationDate}">
+                        <td th:text="${#temporals.format(subject.creationDate, 'dd-MM-yyyy HH:mm')}">
                             Creation date
                         </td>
-                        <td th:text="${subject.modificationDate}">
+                        <td th:text="${#temporals.format(subject.modificationDate, 'dd-MM-yyyy HH:mm')}">
                             Modification date
                         </td>
                         <td>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub - Studies</title>
+    <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/components.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/add_subject.css}" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <div>
+        <img th:src="@{/images/logo.png}" src="" alt="logo.png">
+        <div>
+            <h1>MyHub</h1>
+            <h2>Welcome to the Hub.</h2>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a th:href="@{/}" class="menu-button">
+            Home
+        </a>
+        <a class="menu-button"
+           th:href="@{/games}">
+            Games
+        </a>
+        <a class="menu-button"
+           th:href="@{/media}">
+            Gallery
+        </a>
+
+        <div class="dropdown menu-button">
+            <button class="dropdown-button">...</button>
+            <ul class="dropdown-content">
+                <li>
+                    <a th:href="@{/studies}">Studies</a>
+                </li>
+                <li>
+                    <a href="#">Files (W.I.P)</a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+</header>
+
+<main>
+    <nav>
+        <h1>New subject</h1>
+        <a class="button"
+           th:href="@{/studies}">Back</a>
+    </nav>
+
+    <div class="response-message"
+         th:if="${message != null}">
+        <h1>Response:</h1>
+        <p th:text="${message}"></p>
+    </div>
+
+    <form method="post"
+          class="add-form"
+          th:object="${subject}">
+
+        <label for="code">Code</label><br />
+        <input type="text"
+               name="code"
+               id="code"
+               minlength="2"
+               maxlength="4"
+               th:field="*{code}"
+               required/><br />
+
+        <label for="name">Name</label><br />
+        <input type="text"
+               name="name"
+               id="name"
+               minlength="3"
+               maxlength="100"
+               th:field="*{name}"
+               required/><br />
+
+        <label for="description">Description (optional)</label><br />
+        <textarea name="description"
+              id="description"
+              maxlength="500"
+              th:field="*{description}"></textarea><br />
+
+
+        <button type="submit">Save</button>
+
+    </form>
+
+</main>
+
+<footer>
+    <p>Site created with ❤️ by: &copy; Maksymilian Strzelczak</p>
+    <nav>
+        <a th:href="@{/}">Start</a>
+        <span>•</span>
+        <a th:href="@{/games}">Games</a>
+        <span>•</span>
+        <a th:href="@{/media}">Gallery</a>
+    </nav>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+@import url('colors.css');
+
+main {
+    padding: 20px;
+}
+
+main > nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main > nav h1 {
+    font-size: 1.4em;
+    text-transform: uppercase;
+}
+
+main .subjects {
+    width: 100%;
+}
