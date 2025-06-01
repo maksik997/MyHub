@@ -7,10 +7,6 @@
     - footer styles
     - loopyLogoLoop animation
  */
-@import url("../colors.css");
-
-/* Animations */
-
 @keyframes loopyLogoLoop {
     0%, 100% {
         rotate: 360deg;
@@ -19,10 +15,6 @@
         rotate: 0deg;
     }
 }
-
-/* Styles */
-
-/* Header */
 
 .header {
     display: flex;
@@ -130,8 +122,6 @@
 .header .header-navigation .button.selected {
     cursor: initial;
 }
-
-/* Footer */
 
 .footer {
     width: 100%;
