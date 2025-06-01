@@ -49,10 +49,14 @@
     </header>
 
     <main>
-        <h1>Studies:</h1>
+        <nav>
+            <h1>Studies:</h1>
+            <a href="#">New subject</a>
+        </nav>
 
-        <!-- TOP PANEL -->
-        <div class="filter-panel">
+        <!-- FILTER & SORT PANEL -->
+        <div th:if="${page.totalPages > 0}"
+             class="filter-panel">
             <p>
                 Found
                 <span th:if="${subjects != null}"
@@ -104,7 +108,7 @@
                            max="4"/>
 
                     <!-- PAGINATION -->
-                    <div th:if="${page.totalPages > 0}">
+                    <div>
                         <label for="page">Page:</label><br />
 
                         <button onclick="changePage(event, false)"

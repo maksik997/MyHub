@@ -4,9 +4,38 @@ main {
     padding: 20px;
 }
 
-main > h1 {
+main > nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main > nav h1 {
     font-size: 1.4em;
     text-transform: uppercase;
+}
+
+main > nav a {
+    padding: 10px 30px;
+
+    background-color: var(--color-accent-4);
+    color: var(--color-font);
+    box-shadow: 2px 8px 10px var(--color-shadow);
+    border-radius: 5px;
+    border: 0;
+    outline: 0;
+
+    font-size: 0.8em;
+
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+main > nav a:hover {
+    background-color: var(--color-accent-2);
+
+    transform: translateY(-2px);
 }
 
 main .subjects {
