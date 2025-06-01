@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+
+<!-- TODO: ADD MORE LAYOUT COMPONENTS -->
+
+<header th:fragment="header(page)">
+    <div>
+        <img th:src="@{/images/logo.png}" src="" alt="logo.png">
+        <div>
+            <h1>MyHub</h1>
+            <h2>Welcome to the Hub.</h2>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a th:href="${page != 'home'} ? @{/} : null"
+           th:classappend="${page == 'home'} ? ' selected'"
+           class="menu-button">
+            Home
+        </a>
+        <a th:href="${page != 'games'} ? @{/games} : null"
+           th:classappend="${page == 'games'} ? ' selected'"
+           class="menu-button">
+            Games
+        </a>
+        <a th:href="${page != 'media'} ? @{/media} : null"
+           th:classappend="${page == 'media'} ? ' selected'"
+           class="menu-button">
+            Gallery
+        </a>
+
+        <div class="dropdown menu-button">
+            <button class="dropdown-button">...</button>
+            <ul class="dropdown-content">
+                <li>
+                    <a th:href="${page != 'studies'} ? @{/studies} : null"
+                       th:classappend="${page == 'studies'} ? ' selected'">Studies</a>
+                </li>
+                <li>
+                    <a href="#">Files (W.I.P)</a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+</header>
+
+</body>
+</html>

@@ -11,7 +11,9 @@
 </head>
 <body>
 
-    <header>
+    <header th:replace="layout :: header('studies/view')"></header>
+
+    <!--<header>
         <div>
             <img th:src="@{/images/logo.png}" src="" alt="logo.png">
             <div>
@@ -46,7 +48,7 @@
             </div>
 
         </nav>
-    </header>
+    </header>-->
 
     <main>
 
@@ -112,11 +114,12 @@
 
             <div>
                 <button type="submit">Update</button>
-                <a th:href="@{/studies/{id}/delete(id=${subject.id})}">
-                    Delete
-                </a>
             </div>
-
+        </form>
+        <form method="post"
+              class="delete-form"
+              th:action="@{/studies/{id}/delete(id=${subject.id})}">
+            <button type="submit">Delete</button>
         </form>
 
         <div>

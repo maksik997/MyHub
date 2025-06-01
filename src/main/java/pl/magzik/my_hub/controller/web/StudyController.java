@@ -64,7 +64,7 @@ public class StudyController {
         var subject = subjectService.findSubjectById(id);
         model.addAttribute("subject", subject);
 
-        return "studies/subject";
+        return "studies/view";
     }
 
     @GetMapping("/add")
@@ -72,8 +72,10 @@ public class StudyController {
         Objects.requireNonNull(model);
 
         var empty = new SubjectRequest(null, null, null);
-        model.addAttribute("subject", empty);
-        return "add_subject";
+        if (!model.containsAttribute("subject")) {
+            model.addAttribute("subject", empty);
+        }
+        return "studies/add";
     }
 
 
@@ -90,7 +92,9 @@ public class StudyController {
         Objects.requireNonNull(model);
 
         if (handleValidation(bindingResult, model)) {
-            return "add_subject";
+            redirectAttributes.addFlashAttribute("subject", subjectRequest);
+            redirectAttributes.addFlashAttribute("message", model.getAttribute("message"));
+            return "studies/add";
         }
 
         var subject = subjectService.saveSubject(subjectRequest);
@@ -131,7 +135,7 @@ public class StudyController {
         return "redirect:/studies/" + id;
     }
 
-    @GetMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public String deleteSubject(
             @PathVariable Integer id,
             RedirectAttributes redirectAttributes,
