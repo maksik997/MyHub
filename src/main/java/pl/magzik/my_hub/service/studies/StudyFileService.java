@@ -111,7 +111,7 @@ public class StudyFileService {
         results.stream()
                 .filter(StudyFileUploadResult::success)
                 .map(StudyFileUploadResult::fileName)
-                .map(fn -> createStudyFile(fn, subjectDirectory))
+                .map(fn -> createStudyFile(fn, subjectDirectory, subject))
                 .forEach(studyFileRepository::save);
 
         return results;
@@ -177,9 +177,10 @@ public class StudyFileService {
     }
 
     @SneakyThrows
-    private StudyFile createStudyFile(String fileName, Path subjectDirectory) {
+    private StudyFile createStudyFile(String fileName, Path subjectDirectory, Subject subject) {
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(subjectDirectory);
+        Objects.requireNonNull(subject);
 
         Path uploadDirectory = Path.of(studyFileUploadDirectory);
         Path filePath = subjectDirectory.resolve(fileName);
@@ -188,6 +189,7 @@ public class StudyFileService {
         studyFile.setName(fileName);
         studyFile.setPath(uploadDirectory.relativize(filePath).toString());
         studyFile.setType(Files.probeContentType(filePath)); /// <- Sneaky throw
+        studyFile.setSubject(subject);
         return studyFile;
     }
 
