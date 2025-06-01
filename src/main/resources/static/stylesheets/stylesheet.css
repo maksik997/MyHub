@@ -1,6 +1,9 @@
-@import url('colors.css');
+/*
+    Author: © Maksymilian Strzelczak, 2025
 
-/* Animations */
+    General stuff.
+ */
+@import url('colors.css');
 
 @keyframes backgroundAnimation {
     0%, 100% {
@@ -10,8 +13,6 @@
         background-position: 100% 50%;
     }
 }
-
-/* Main elements */
 
 * {
     font-family: 'Fira Code', monospace;
@@ -40,13 +41,11 @@ a {
     text-decoration: none;
 }
 
-/* Main */
-
 main {
     flex-grow: 1;
 }
 
-main > div {
+main > div { /* TODO: Refactor */
     display: flex;
     flex-direction: column;
     justify-content: center;
