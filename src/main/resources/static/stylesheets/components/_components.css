@@ -1,0 +1,12 @@
+/*
+ Author: © Maksymilian Strzelczak 02.06.2025
+
+ Batch file with all the components available
+ */
+@import url("../colors.css");
+
+@import url("../components.css"); /* TODO: <- to delete */
+
+@import url("layout.css");
+@import url("message.css");
+@import url("note.css");
