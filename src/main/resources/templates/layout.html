@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
 
-<!-- TODO: ADD MORE LAYOUT COMPONENTS -->
+<!-- HEADER -->
 
 <header th:fragment="header(page)">
+
     <div>
         <img th:src="@{/images/logo.png}" src="" alt="logo.png">
         <div>
@@ -14,6 +15,7 @@
     </div>
 
     <nav class="menu">
+
         <a th:href="${page != 'home'} ? @{/} : null"
            th:classappend="${page == 'home'} ? ' selected'"
            class="menu-button">
@@ -45,6 +47,21 @@
 
     </nav>
 </header>
+
+<!-- FOOTER -->
+
+<footer th:fragment="footer()">
+
+    <p>Site created with ❤️ by: &copy; Maksymilian Strzelczak</p>
+    <nav>
+        <a th:href="@{/}">Start</a>
+        <span>•</span>
+        <a th:href="@{/games}">Games</a>
+        <span>•</span>
+        <a th:href="@{/media}">Gallery</a>
+    </nav>
+
+</footer>
 
 </body>
 </html>
