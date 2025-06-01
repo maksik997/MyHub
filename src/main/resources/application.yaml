@@ -1,0 +1,22 @@
+### MY HUB CONFIGURATION ###
+game-dir: temporary/games # Deprecated syntax
+media-dir: temporary/pictures # Deprecated syntax
+
+my-hub:
+  studies-directory: temporary/studies
+
+### SPRING CONFIGURATION ###
+spring:
+  profiles:
+    active: dev
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  thymeleaf:
+    encoding: UTF-8
+  servlet: # FILES CONFIGURATION
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 10GB

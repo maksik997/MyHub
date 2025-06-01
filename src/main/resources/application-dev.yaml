@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:myhub
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+logging:
+  level:
+    pl:
+      magzik: DEBUG
+    org:
+      springframework: INFO
+      hibernate: INFO
