@@ -54,6 +54,12 @@
             <a class="button" th:href="@{/studies/add}">New subject</a>
         </nav>
 
+        <div class="response-message"
+             th:if="${message != null}">
+            <h1>Response:</h1>
+            <p th:text="${message}"></p>
+        </div>
+
         <!-- FILTER & SORT PANEL -->
         <div th:if="${page.totalPages > 0}"
              class="filter-panel">

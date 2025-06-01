@@ -1,0 +1,34 @@
+@import url('colors.css');
+
+main {
+    padding: 20px;
+}
+
+main > nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main > nav h1 {
+    font-size: 1.4em;
+    text-transform: uppercase;
+}
+
+main .add-form {
+    width: 100%;
+}
+
+main .add-form div:last-child {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    width: 80%;
+}
+
+.add-form button,
+.add-form a {
+    width: calc(50% - 20px);
+}

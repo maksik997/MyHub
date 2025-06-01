@@ -395,7 +395,8 @@ This file contains styles for generally used components.
 
 .add-form input,
 .add-form textarea,
-.add-form button {
+.add-form button,
+.add-form a {
     width: 80%;
 
     padding: 10px;
@@ -424,14 +425,18 @@ This file contains styles for generally used components.
     outline: 0;
 }
 
-.add-form button {
+.add-form button,
+.add-form a {
+    display: inline-block;
+
     margin: 40px 0 15px;
 
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
-.add-form button:hover {
+.add-form button:hover,
+.add-form a:hover {
     background: var(--color-accent-2);
 }
 

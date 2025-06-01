@@ -7,7 +7,7 @@
     <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
     <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
     <link th:href="@{/stylesheets/components.css}" rel="stylesheet">
-    <link th:href="@{/stylesheets/add_subject.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/update_subject.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -51,9 +51,15 @@
     <main>
 
         <nav>
-            <h1>New subject</h1>
+            <h1>
+                Subject:
+                <span>Name</span>
+            </h1>
+
             <a class="button"
-               th:href="@{/studies}">Back</a>
+               th:href="@{/studies}">
+                Back
+            </a>
         </nav>
 
         <div class="response-message"
@@ -62,38 +68,61 @@
             <p th:text="${message}"></p>
         </div>
 
+        <div>
+            <p>Subject info:</p>
+        </div>
+
         <form method="post"
-              class="add-form"
-              th:object="${subject}">
+              th:action="@{/studies/{id}/update(id=${subject.id})}"
+              class="add-form">
 
             <label for="code">Code</label><br />
             <input type="text"
                    name="code"
                    id="code"
+                   th:value="${subject.code}"
                    minlength="2"
-                   maxlength="4"
-                   th:field="*{code}"
-                   required/><br />
+                   maxlength="4"/><br />
 
             <label for="name">Name</label><br />
             <input type="text"
                    name="name"
                    id="name"
+                   th:value="${subject.name}"
                    minlength="3"
-                   maxlength="100"
-                   th:field="*{name}"
-                   required/><br />
+                   maxlength="100"/><br />
 
-            <label for="description">Description (optional)</label><br />
+            <label for="description">Description</label><br />
             <textarea name="description"
-                  id="description"
-                  maxlength="500"
-                  th:field="*{description}"></textarea><br />
+                      id="description"
+                      th:value="${subject.description}"
+                      maxlength="500"></textarea><br />
 
+            <label for="creation-date">Creation date</label><br />
+            <input type="text"
+                   id="creation-date"
+                   th:value="${#temporals.format(subject.modificationDate, 'dd-MM-yyyy HH:mm')}"
+                   readonly/><br />
 
-            <button type="submit">Save</button>
+            <label for="modification-date">Modification date</label><br />
+            <input type="text"
+                   id="modification-date"
+                   th:value="${#temporals.format(subject.modificationDate, 'dd-MM-yyyy HH:mm')}"
+                   readonly/><br />
+
+            <div>
+                <button type="submit">Update</button>
+                <a th:href="@{/studies/{id}/delete(id=${subject.id})}">
+                    Delete
+                </a>
+            </div>
 
         </form>
+
+        <div>
+            <p>File list</p>
+            <!-- TODO: File list -->
+        </div>
 
     </main>
 
