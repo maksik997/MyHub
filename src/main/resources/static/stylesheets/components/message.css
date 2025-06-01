@@ -1,0 +1,29 @@
+/*
+ Author: © Maksymilian Strzelczak 01.06.2025
+
+ Message component stylesheet.
+ */
+
+.message {
+    width: 100%;
+
+    margin: 10px 0 20px;
+}
+
+.message .message-title {
+    box-sizing: border-box;
+
+    width: 100%;
+
+    margin: 15px 0;
+    padding: 0 25px;
+
+    font-size: 1.2em;
+    text-align: left;
+}
+
+.message .message-content {
+    width: 100%;
+
+    padding: 0 35px;
+}

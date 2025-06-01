@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyHub - Studies</title>
     <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <!-- GENERAL -->
     <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <!-- MESSAGE -->
     <link th:href="@{/stylesheets/components.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/components/message.css}" rel="stylesheet">
+    <!-- TEMPLATE SPECIFIC -->
     <link th:href="@{/stylesheets/add_subject.css}" rel="stylesheet">
 </head>
 <body>
@@ -56,11 +60,7 @@
                th:href="@{/studies}">Back</a>
         </nav>
 
-        <div class="response-message"
-             th:if="${message != null}">
-            <h1>Response:</h1>
-            <p th:text="${message}"></p>
-        </div>
+        <div th:replace="~{ components :: message(${ message }) }"></div>
 
         <form method="post"
               class="add-form"

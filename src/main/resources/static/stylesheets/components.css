@@ -348,7 +348,7 @@ This file contains styles for generally used components.
 
 /* ADDITION FORM */
 
-.response-message {
+/*.response-message {
     width: 100%;
 }
 
@@ -368,7 +368,7 @@ This file contains styles for generally used components.
     width: 100%;
 
     padding: 0 35px;
-}
+}*/
 
 .add-form {
     display: flex;

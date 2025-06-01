@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+
+<!-- Message component
+Params:
+    - msg - A nullable message to be displayed.
+Note:
+    - Should replace div 'th:replace=~{ components :: message('This is my message!') }
+
+    © Maksymilian Strzelczak, 01.06.2025
+-->
+<div th:fragment="message(msg)"
+     th:if="${msg != null}"
+     class="message">
+    <h1 class="message-title">
+        Message:
+    </h1>
+
+    <p th:text="${msg}"
+       class="message-content"></p>
+</div>
+
+</body>
+</html>
