@@ -16,42 +16,7 @@
 </head>
 <body>
 
-    <header>
-        <div>
-            <img th:src="@{/images/logo.png}" src="" alt="logo.png">
-            <div>
-                <h1>MyHub</h1>
-                <h2>Welcome to the Hub.</h2>
-            </div>
-        </div>
-
-        <nav class="menu">
-            <a th:href="@{/}" class="menu-button">
-                Home
-            </a>
-            <a class="menu-button"
-               th:href="@{/games}">
-                Games
-            </a>
-            <a class="menu-button"
-               th:href="@{/media}">
-                Gallery
-            </a>
-
-            <div class="dropdown menu-button">
-                <button class="dropdown-button">...</button>
-                <ul class="dropdown-content">
-                    <li>
-                        <a class="selected">Studies</a>
-                    </li>
-                    <li>
-                        <a href="#">Files (W.I.P)</a>
-                    </li>
-                </ul>
-            </div>
-
-        </nav>
-    </header>
+    <header th:replace="~{ layout :: header('studies') }"></header>
 
     <main>
         <nav>
@@ -183,16 +148,7 @@
         </div>
     </main>
 
-    <footer>
-        <p>Site created with ❤️ by: &copy; Maksymilian Strzelczak</p>
-        <nav>
-            <a th:href="@{/}">Start</a>
-            <span>•</span>
-            <a th:href="@{/games}">Games</a>
-            <span>•</span>
-            <a th:href="@{/media}">Gallery</a>
-        </nav>
-    </footer>
+    <footer th:replace="~{ layout :: footer() }"></footer>
 
     <script>
         /* TODO: Move to .js file */

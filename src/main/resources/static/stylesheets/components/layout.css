@@ -1,7 +1,11 @@
 /*
  Author: © Maksymilian Strzelczak 01.06.2025
 
- General layout stylesheet
+ General layout stylesheet.
+ Contains:
+    - header styles
+    - footer styles
+    - loopyLogoLoop animation
  */
 @import url("../colors.css");
 
@@ -127,4 +131,30 @@
     cursor: initial;
 }
 
-/* TODO: Footer */
+/* Footer */
+
+.footer {
+    width: 100%;
+
+    padding: 10px 0;
+
+    background: var(--color-main);
+    color: var(--color-accent-2);
+
+    font-size: 0.8em;
+}
+
+.footer .footer-note,
+.footer .footer-navigation {
+    margin: 0;
+
+    text-align: center;
+}
+
+.footer .footer-navigation .link {
+    color: inherit;
+    text-decoration: underline;
+
+    font-weight: bold;
+    font-size: 0.9em;
+}

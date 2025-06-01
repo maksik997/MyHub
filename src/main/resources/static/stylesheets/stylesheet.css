@@ -107,28 +107,6 @@ main > div {
     box-shadow: 2px 8px 10px var(--color-shadow);
 }
 
-/* Footer */
-
-footer {
-    width: 100%;
-    background-color: var(--color-main);
-    padding: 10px 0;
-    font-size: 0.8em;
-    color: var(--color-accent-2);
-}
-
-footer > * {
-    margin: 0;
-    text-align: center;
-}
-
-footer a {
-    color: inherit;
-    text-decoration: underline;
-    font-weight: bold;
-    font-size: 0.9em;
-}
-
 /* Special */
 
 .note {

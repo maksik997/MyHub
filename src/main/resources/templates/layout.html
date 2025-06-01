@@ -66,15 +66,28 @@
 
 <!-- FOOTER -->
 
-<footer th:fragment="footer()">
+<footer th:fragment="footer()"
+        class="footer">
 
-    <p>Site created with ❤️ by: &copy; Maksymilian Strzelczak</p>
-    <nav>
-        <a th:href="@{/}">Start</a>
+    <p class="footer-note">
+        Site created with ❤️ by: &copy; Maksymilian Strzelczak
+    </p>
+
+    <nav class="footer-navigation">
+        <a th:href="@{/}"
+            class="link">Start</a>
         <span>•</span>
-        <a th:href="@{/games}">Games</a>
+        <a th:href="@{/games}"
+           class="link">Games</a>
         <span>•</span>
-        <a th:href="@{/media}">Gallery</a>
+        <a th:href="@{/media}"
+           class="link">Gallery</a>
+        <span>•</span>
+        <a th:href="@{/studies}"
+           class="link">Studies</a>
+        <span>•</span>
+        <a th:href="@{/files}"
+           class="link">Files</a>
     </nav>
 
 </footer>

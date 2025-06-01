@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyHub</title>
     <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <!-- GENERAL -->
     <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <!-- COMPONENTS -->
     <link th:href="@{/stylesheets/components.css}" rel="stylesheet">
     <link th:href="@{/stylesheets/components/layout.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/components/message.css}" rel="stylesheet">
+    <!-- TEMPLATE SPECIFIC -->
     <link th:href="@{/stylesheets/landing_page.css}" rel="stylesheet">
 </head>
 <body>
@@ -41,15 +45,7 @@
         </div>
     </main>
 
-    <footer>
-        <p>Site created with ❤️ by: &copy; Maksymilian Strzelczak</p>
-        <nav>
-            <a th:href="@{/}">Start</a>
-            <span>•</span>
-            <a th:href="@{/games}">Games</a>
-            <span>•</span>
-            <a th:href="@{/media}">Gallery</a>
-        </nav>
-    </footer>
+    <footer th:replace="~{ layout :: footer() }"></footer>
+
 </body>
 </html>
