@@ -33,7 +33,7 @@ public class StudyController {
         Objects.requireNonNull(pageable);
         Objects.requireNonNull(model);
 
-        Map<String, String> sortOptions = new TreeMap<>();
+        Map<String, String> sortOptions = new LinkedHashMap<>();
         sortOptions.put("name", "Name");
         sortOptions.put("code", "Code");
         sortOptions.put("creationDate", "Creation date");
