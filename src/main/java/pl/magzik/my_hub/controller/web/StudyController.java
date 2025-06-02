@@ -33,9 +33,9 @@ public class StudyController {
         Objects.requireNonNull(pageable);
         Objects.requireNonNull(model);
 
-        Map<String, String> sortOptions = new HashMap<>();
-        sortOptions.put("code", "Code");
+        Map<String, String> sortOptions = new TreeMap<>();
         sortOptions.put("name", "Name");
+        sortOptions.put("code", "Code");
         sortOptions.put("creationDate", "Creation date");
         sortOptions.put("modificationDate", "Modification date");
         model.addAttribute("sortOptions", sortOptions);

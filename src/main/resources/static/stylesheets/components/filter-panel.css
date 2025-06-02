@@ -1,0 +1,117 @@
+/*
+ Author: Maksymilian Strzelczak, 02.06.2025
+
+ Filter & sort component styling.
+*/
+.filter-panel {
+    width: 100%;
+}
+
+.filter-panel .filter-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    width: 100%;
+}
+
+.filter-panel .filter-form .controls {
+    margin: 0 5px;
+    padding: 20px;
+
+    text-align: center;
+}
+
+.filter-panel .filter-form .controls > * {
+    min-width: 150px;
+    max-width: 200px;
+
+    margin: 10px 0;
+}
+
+.filter-panel .filter-form .controls label {
+    padding: 5px;
+
+    font-size: 0.8em;
+}
+
+.filter-panel .filter-form .controls input,
+.filter-panel .filter-form .controls select,
+.filter-panel .filter-form .controls button {
+    max-width: 200px;
+
+    padding: 10px;
+
+    background: var(--color-accent-1);
+    color: var(--color-font);
+    border: 0;
+    box-shadow: 0 8px 12px var(--color-shadow);
+    border-radius: 5px;
+
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.filter-panel .filter-form .controls input:focus,
+.filter-panel .filter-form .controls select:focus,
+.filter-panel .filter-form .controls button:focus {
+    outline: 0;
+}
+
+.filter-panel .filter-form .controls input,
+.filter-panel .filter-form .controls select {
+    border: 2px solid var(--color-accent-1);
+
+    transition: border 0.2s ease;
+}
+
+.filter-panel .filter-form .controls input:hover,
+.filter-panel .filter-form .controls input:focus,
+.filter-panel .filter-form .controls select:hover,
+.filter-panel .filter-form .controls select:focus {
+    border-color: var(--color-accent-4);
+}
+
+.filter-panel .filter-form .controls button {
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.filter-panel .filter-form .controls button:disabled {
+    background: var(--color-main);
+    box-shadow: none;
+
+    cursor: initial;
+}
+
+.filter-panel .filter-form .controls button:hover {
+    background: var(--color-accent-2);
+
+    transform: translateY(-2px);
+}
+
+.filter-panel .filter-form .controls button:hover:disabled {
+    background: var(--color-main);
+
+    transform: none;
+}
+
+.filter-panel .filter-form .form-controls button {
+    width: 120px;
+
+    margin: 5px;
+}
+
+.filter-panel .filter-form .controls input[type="number"] {
+    width: 50px;
+
+    -moz-appearance: textfield;
+}
+
+.filter-panel .filter-form .controls input[type="number"]::-webkit-inner-spin-button,
+.filter-panel .filter-form .controls input[type="number"]::-webkit-outer-spin-button {
+    margin: 0;
+
+    -webkit-appearance: none;
+}

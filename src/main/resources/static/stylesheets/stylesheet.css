@@ -60,3 +60,7 @@ main > div { /* TODO: Refactor */
     box-shadow: 0 8px 10px var(--color-shadow);
     border-radius: 20px;
 }
+
+.hidden {
+    display: none;
+}

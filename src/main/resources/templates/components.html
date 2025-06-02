@@ -21,5 +21,170 @@ Note:
        class="message-content"></p>
 </div>
 
+
+<!-- Filter form
+    Params:
+        - elementName - A name to be displayed in count message.
+    Note:
+        - Should replace div 'th:replace=~{ components :: filterForms('elements') }
+        - Implementing party should supply specified template with ${page} model attribute,
+            which should be mapped into Pageable.
+        - Additionally, fragment should get sortOptions (list of strings), sortBy and orderBy attributes.
+
+    © Maksymilian Strzelczak, 02.06.2025
+-->
+<div th:fragment="filterForm(elementName, page, sortOptions, sortBy, orderBy)"
+     class="filter-panel">
+
+    <p class="page-info">
+        Found
+        <span th:text="${ page.totalElements }">Count</span>
+        <span th:text="${ elementName }">elements</span>.
+    </p>
+
+    <p class="page-info">
+        Showing
+        <span th:text="${ elementName }"></span>
+        from
+        <span th:text="${ page.number * page.size + 1 }">From</span>-<span th:text="${ page.size * (page.number + 1) }">To</span>.
+        Current page is
+        <span th:text="${ page.number + 1 }">Current page</span>.
+    </p>
+
+    <form method="get"
+          action=""
+          id="filter-form"
+          class="filter-form"
+          onsubmit="handleFilters(event)">
+
+        <h2 class="hidden">
+            Sort & filters
+        </h2>
+
+        <div class="sort-controls controls">
+
+            <h3 class="hidden">
+                Sort options:
+            </h3>
+
+            <div class="sort-options">
+                <label for="sort-by">
+                    Sort by:
+                </label><br />
+                <select name="sort-by"
+                        id="sort-by">
+                    <option value=""
+                            disabled>
+                        - Select sorting key -
+                    </option>
+                    <option th:each="option : ${ sortOptions }"
+                            th:value="${ option.key }"
+                            th:text="${ option.value }"
+                            th:selected="${ option.key == sortBy }">
+                        Sort option
+                    </option>
+                </select><br />
+            </div>
+
+            <div class="order-options">
+                <label for="order-by">
+                    Order by:
+                </label><br />
+                <select name="order-by"
+                        id="order-by">
+                    <option value=""
+                            disabled>
+                        - Select sorting order -
+                    </option>
+                    <option value="asc"
+                            th:selected="${ orderBy == 'asc' }">
+                        Ascending
+                    </option>
+                    <option value="asc"
+                            th:selected="${ orderBy == 'desc' }">
+                        Descending
+                    </option>
+                </select>
+            </div>
+
+
+        </div>
+
+        <div class="filter-controls controls">
+
+            <h3 class="hidden">
+                Filter & pagination options
+            </h3>
+
+            <div class="search-options">
+
+                <h3 class="hidden">
+                    Search options
+                </h3>
+
+                <label for="name-of">
+                    Search:
+                </label><br />
+                <input type="search"
+                       placeholder="Code"
+                       name="name-of"
+                       id="name-of"
+                       min="2"
+                       max="4"/>
+
+            </div>
+
+            <div class="pagination-options">
+
+                <h4 class="hidden">
+                    Pagination options
+                </h4>
+
+                <label for="page">
+                    Page:
+                </label><br />
+
+                <button th:disabled="${ page.first }"
+                        onclick="changePage(event, false)">
+                    «
+                </button>
+
+                <input th:value="${ page.number + 1 }"
+                       id="page"
+                       name="page"
+                       type="number"
+                       min="1"
+                       step="1"
+                       required/>
+
+                <button th:disabled="${ page.last }"
+                        onclick="changePage(event, true)">
+                    »
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="form-controls controls">
+
+            <h3 class="hidden">
+                Form controls
+            </h3>
+
+            <button type="submit">
+                Submit
+            </button><br />
+
+            <button type="reset">
+                Reset
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
 </body>
 </html>
