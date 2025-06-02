@@ -1,0 +1,81 @@
+/*
+ Author: © Maksymilian Strzelczak 02.06.2025
+
+ Dropdown menu component
+ */
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown .dropdown-button {
+    background-color: transparent;
+    color: var(--color-font);
+    border: 0;
+
+    cursor: pointer;
+}
+
+.dropdown .dropdown-button::after {
+    content: " ▼";
+}
+
+.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+
+    min-width: 320px;
+
+    margin: 0;
+    padding: 0;
+
+    background: var(--color-main);
+    color: var(--color-font);
+    border: 2px solid var(--color-accent-2);
+    box-shadow: 0 8px 16px var(--color-shadow);
+
+    list-style-type: none;
+    overflow: hidden;
+    text-align: center;
+}
+
+.dropdown .dropdown-content li {
+    border-bottom: 1px solid var(--color-accent-2);
+}
+
+.dropdown .dropdown-content li:last-child {
+    border-bottom: 0;
+}
+
+.dropdown .dropdown-content li a {
+    display: block;
+
+    padding: 12px 16px;
+
+    color: var(--color-font);
+
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dropdown .dropdown-content li a:hover,
+.dropdown .dropdown-content li a.selected {
+    background: var(--color-accent-1);
+    color: var(--color-accent-4);
+
+    text-decoration: underline;
+}
+
+.dropdown:focus-within .dropdown-content {
+    display: block;
+}
+
+.dropdown:focus-within .dropdown-button::after {
+    content: " ▲";
+}

@@ -41,17 +41,11 @@
 
         <div class="dropdown button">
             <button class="dropdown-button">...</button>
+
             <ul class="dropdown-content">
                 <li>
                     <a th:href="${page != 'studies'} ? @{/studies} : null"
                        th:classappend="${page == 'studies'} ? ' selected'">Studies</a>
-                </li>
-                <li>
-                    <ul> <!-- TODO: NESTED DROPDOWN MENUS -->
-                        <li>
-                            <a href="#">###</a>
-                        </li>
-                    </ul>
                 </li>
                 <li>
                     <a th:href="${page != 'files'} ? @{/files} : null"

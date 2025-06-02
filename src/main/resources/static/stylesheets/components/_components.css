@@ -8,5 +8,6 @@
 @import url("../components.css"); /* TODO: <- to delete */
 
 @import url("layout.css");
+@import url("dropdown.css");
 @import url("message.css");
 @import url("note.css");
