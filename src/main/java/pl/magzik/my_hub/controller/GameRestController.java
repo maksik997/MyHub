@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.my_hub.dto.GameDTO;
 import pl.magzik.my_hub.dto.StringResponse;
 import pl.magzik.my_hub.model.Game;
-import pl.magzik.my_hub.service.GameService;
+import pl.magzik.my_hub.service.GameServiceImpl;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,10 +30,10 @@ public class GameRestController {
 
     private static final Logger log = LoggerFactory.getLogger(GameRestController.class);
 
-    private final GameService gameService;
+    private final GameServiceImpl gameService;
 
     @Autowired
-    public GameRestController(GameService gameService) {
+    public GameRestController(GameServiceImpl gameService) {
         this.gameService = gameService;
         log.info("Game REST controller has been initialized.");
     }
@@ -41,7 +41,7 @@ public class GameRestController {
     /**
      * Retrieves all game records stored in the system.
      * <p>
-     *     This method fetches game records from {@link GameService}
+     *     This method fetches game records from {@link GameServiceImpl}
      *     and returns them as list of {@link GameDTO}, ensuring a safe and structured data representation for the user.
      * </p>
      * <p>
