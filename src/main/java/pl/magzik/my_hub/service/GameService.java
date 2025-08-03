@@ -36,7 +36,6 @@ import java.util.List;
  * @author Maksymilian Strzelczak
  * @version 1.0
  * */
-@Service
 public interface GameService {
 
     /**

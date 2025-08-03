@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import pl.magzik.my_hub.dto.GameDTO;
 import pl.magzik.my_hub.model.Game;
-import pl.magzik.my_hub.service.GameServiceImpl;
+import pl.magzik.my_hub.service.GameService;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Controller class shares various endpoints regarding {@link Game} handling.
@@ -24,7 +23,7 @@ import java.util.Optional;
  * @version 1.1
  *
  * @see Game
- * @see GameServiceImpl
+ * @see GameService
  */
 @Controller
 @RequestMapping("/games")
@@ -32,7 +31,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GameController {
 
-    private final GameServiceImpl gameService;
+    private final GameService gameService;
 
     /**
      * Handles HTTP GET requests to display a list of all games.
@@ -42,7 +41,7 @@ public class GameController {
      */
     @GetMapping
     public String getAllGames(Model model) {
-        List<String> games = gameService.findAllGames()
+        List<String> games = gameService.findAll()
                                         .stream()
                                         .map(GameDTO::name)
                                         .toList();
@@ -63,7 +62,7 @@ public class GameController {
     /**
      * Handles HTTP GET requests for a specific game identified by its name.
      *
-     * <p>This method searches for the game by its name using the {@link GameServiceImpl}. If the game is found,
+     * <p>This method searches for the game by its name using the {@link GameService}. If the game is found,
      * it redirects to the game's HTML page. If the game is not found, it throws a {@link ResponseStatusException}
      * with a {@link HttpStatus#NOT_FOUND} status.</p>
      *
@@ -73,13 +72,8 @@ public class GameController {
      */
     @GetMapping("/{name}")
     public String launchGame( @PathVariable(name = "name") String name) {
-        Optional<Game> optionalGame = gameService.findGameByName(name);
-        if (optionalGame.isEmpty()) {
-            log.warn("Game '{}' not found", name);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found.");
-        }
+        GameDTO game = gameService.findByName(name);
 
-        Game game = optionalGame.get();
         return String.format("redirect:/games/%s/%s", game.name(), game.htmlFile());
     }
 

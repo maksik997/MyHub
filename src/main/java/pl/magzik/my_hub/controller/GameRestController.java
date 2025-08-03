@@ -57,7 +57,7 @@ public class GameRestController {
      * */
     @GetMapping
     public ResponseEntity<List<GameDTO>> getAllGames() {
-        return ResponseEntity.ok(gameService.findAllGames());
+        return ResponseEntity.ok(gameService.findAll());
     }
 
     /**
@@ -90,7 +90,7 @@ public class GameRestController {
     @PostMapping
     public ResponseEntity<StringResponse> addGame(@RequestParam MultipartFile game) {
         // Will throw exception if upload operation fails.
-        gameService.saveGame(Objects.requireNonNull(game));
+        gameService.addByName(Objects.requireNonNull(game));
         return ResponseEntity.ok(new StringResponse("The game has been successfully uploaded."));
     }
 
@@ -118,7 +118,7 @@ public class GameRestController {
     @DeleteMapping("/{gameName}")
     public ResponseEntity<StringResponse> deleteGame(@PathVariable String gameName) {
         // Will throw exception if delete operation fails.
-        gameService.deleteGame(Objects.requireNonNull(gameName));
+        gameService.deleteByName(Objects.requireNonNull(gameName));
         return ResponseEntity.ok(new StringResponse("The game has been successfully deleted."));
     }
 }

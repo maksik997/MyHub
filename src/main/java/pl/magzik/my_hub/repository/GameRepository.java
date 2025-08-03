@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
+import pl.magzik.my_hub.exception.GameNotFoundException;
 import pl.magzik.my_hub.model.Game;
 import pl.magzik.my_hub.utils.FileUtils;
 
@@ -41,18 +42,13 @@ public class GameRepository {
     @Value("${game-dir}")
     private String gameDirectory;
 
-    /**
-     * Finds a game with specified name.
-     * @param name The name of the games.
-     * @return An {@link Optional} of the game, or {@link Optional#empty()} if no game found.
-     * @throws NullPointerException If given name is null.
-     * */
-    public Optional<Game> findByName(String name) {
+    public Game findByName(String name) {
         Objects.requireNonNull(name);
 
         return FileUtils.getFileStream(gameDirectory, this::isGameValid, Game::of)
                 .filter(game -> game.name().equalsIgnoreCase(name))
-                .findFirst();
+                .findFirst()
+                .orElseThrow(GameNotFoundException::new);
     }
 
     /**

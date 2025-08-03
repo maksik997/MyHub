@@ -1,8 +1,7 @@
 package pl.magzik.my_hub.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.my_hub.dto.GameDTO;
@@ -11,50 +10,49 @@ import pl.magzik.my_hub.repository.GameRepository;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
-/**
- * Service layer that acts as an interface to the {@link GameRepository}.
- *
- * @author Maksymilian Strzelczak
- * @version 1.1
- *
- * @see GameRepository
- * */
 @Service
-public class GameServiceImpl {
-
-    private static final Logger log = LoggerFactory.getLogger(GameServiceImpl.class);
+@Slf4j
+@RequiredArgsConstructor
+public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepository;
 
-    @Autowired
-    public GameServiceImpl(GameRepository gameRepository) {
-        this.gameRepository = gameRepository;
-        log.info("Game service has been initialized.");
-    }
-
-    public List<GameDTO> findAllGames() {
+    @Override
+    public List<GameDTO> findAll() {
         return gameRepository.findAll()
                 .stream()
                 .map(GameDTO::of)
                 .toList();
     }
 
-    public Optional<Game> findGameByName(String name) {
+    @Override
+    public GameDTO findByName(String name) {
         Objects.requireNonNull(name);
-        return gameRepository.findByName(name);
+        var g = gameRepository.findByName(name);
+        return GameDTO.of(g);
     }
 
-    public void saveGame(MultipartFile file) {
+    @Deprecated
+    @Override
+    public void addByName(MultipartFile file) {
         Objects.requireNonNull(file);
         gameRepository.save(file);
     }
 
-    public void deleteGame(String fileName) {
+    @Deprecated
+    @Override
+    public void deleteByName(String fileName) {
         Objects.requireNonNull(fileName);
-        Game game = gameRepository.findByName(fileName)
-                .orElseThrow(() -> new IllegalArgumentException("Provided game doesn't exists."));
+        Game game = getOrThrow(fileName);
         gameRepository.delete(game);
     }
+
+    private Game getOrThrow(String name) {
+        Objects.requireNonNull(name);
+
+        return gameRepository.findByName(name);
+    }
+
 }
+
