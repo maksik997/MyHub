@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.my_hub.exception.game.GameNotFoundException;
-import pl.magzik.my_hub.model.Game;
+import pl.magzik.my_hub.model.old.Game;
 import pl.magzik.my_hub.utils.FileUtils;
 
 import java.io.File;
@@ -26,8 +26,9 @@ import java.util.stream.Stream;
  *
  * @see Game
  * */
+@Deprecated
 @Repository
-public class GameRepository {
+public class GameRepositoryImpl {
 
     /* TODO:
     *   No.1 - Extent's persistence
@@ -37,7 +38,7 @@ public class GameRepository {
     *   No.3 - This class is quiet a mess right now. Will be fixed with JPA one day.
     *  */
 
-    private static final Logger log = LoggerFactory.getLogger(GameRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(GameRepositoryImpl.class);
 
     @Value("${game-dir}")
     private String gameDirectory;
@@ -52,7 +53,7 @@ public class GameRepository {
     }
 
     /**
-     * Find all games in the {@link GameRepository#gameDirectory}.
+     * Find all games in the {@link GameRepositoryImpl#gameDirectory}.
      * @return {@link List} of games found.
      */
     public List<Game> findAll() {
