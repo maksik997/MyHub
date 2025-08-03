@@ -40,5 +40,5 @@ build/
 /src/main/resources/*.p12
 
 ### MyHub ###
-temporary/
+tmp/
 .env

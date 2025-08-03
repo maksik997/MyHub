@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: my_hub
+    display-name: MyHub Suite
+    version: 1.3
+  profiles:
+    active: "dev"
+---
+spring:
+  config.activate.on-profile: "dev"
+  servlet:
+    multipart:
+      max-file-size: 5GB
+      max-request-size: 5GB
+server:
+  port: 8080
+management:
+  endpoints.web.exposure.include: health,info,prometheus
+  endpoint.prometheus.enabled: true
+  metrics:
+    export.prometheus: true
+    tags.application: ${spring.application.name}
+game-dir: ./tmp/games
+media-dir: ./tmp/media
+---
+spring: # Kinda redundant, but for future use ;todo;
+  config.activate.on-profile: "prod"
+  servlet:
+    multipart:
+      max-file-size: 5GB
+      max-request-size: 5GB
+server:
+  port: 8080
+management:
+  endpoints.web.exposure.include: health,info,prometheus
+  endpoint.prometheus.enabled: true
+  metrics:
+    export.prometheus: true
+    tags.application: ${spring.application.name}
+game-dir: /app/games
+media-dir: /app/media
