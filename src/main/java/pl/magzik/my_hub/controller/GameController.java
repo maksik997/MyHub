@@ -1,5 +1,6 @@
 package pl.magzik.my_hub.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import java.util.Optional;
  */
 @Controller
 @RequestMapping("/games")
+@RequiredArgsConstructor
 public class GameController {
 
     /* TODO:
@@ -38,11 +40,6 @@ public class GameController {
 
     private final GameService gameService;
 
-
-    @Autowired
-    public GameController(GameService gameService) {
-        this.gameService = gameService;
-    }
 
     /**
      * Handles HTTP GET requests to display a list of all games.
