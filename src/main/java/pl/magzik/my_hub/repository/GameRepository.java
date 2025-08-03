@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
-import pl.magzik.my_hub.exception.GameNotFoundException;
+import pl.magzik.my_hub.exception.game.GameNotFoundException;
 import pl.magzik.my_hub.model.Game;
 import pl.magzik.my_hub.utils.FileUtils;
 

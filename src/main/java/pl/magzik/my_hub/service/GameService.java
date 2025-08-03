@@ -2,10 +2,13 @@ package pl.magzik.my_hub.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.my_hub.dto.GameDTO;
 import pl.magzik.my_hub.exception.development.NotImplementedException;
+import pl.magzik.my_hub.exception.game.GameAlreadyExistsException;
+import pl.magzik.my_hub.exception.game.GameInvalidFormatException;
+import pl.magzik.my_hub.exception.game.GameNotFoundException;
+import pl.magzik.my_hub.exception.game.GameUploadFailureException;
 
 import java.util.List;
 
@@ -73,7 +76,7 @@ public interface GameService {
      *
      * @param id an identifier of the game in the system.
      * @return a game that matches provided identifier.
-     * @throws pl.magzik.my_hub.exception.GameNotFoundException if there is no game under provided identifier.
+     * @throws GameNotFoundException if there is no game under provided identifier.
      *
      * @since tbd
      * */
@@ -89,7 +92,7 @@ public interface GameService {
      *
      * @param name a name of the game in the system
      * @return a game that matches provided name.
-     * @throws pl.magzik.my_hub.exception.GameNotFoundException if there is no game under provided identifier.
+     * @throws GameNotFoundException if there is no game under provided identifier.
      *
      * @since 1.0
      * */
@@ -102,9 +105,9 @@ public interface GameService {
      *     or the game already exists.
      * </p>
      *
-     * @throws pl.magzik.my_hub.exception.GameAlreadyExistsException if game of provided details already exists.
-     * @throws pl.magzik.my_hub.exception.GameUploadFailureException if game couldn't be uploaded to the server.
-     * @throws pl.magzik.my_hub.exception.GameInvalidFormatException if provided game's format is invalid.
+     * @throws GameAlreadyExistsException if game of provided details already exists.
+     * @throws GameUploadFailureException if game couldn't be uploaded to the server.
+     * @throws GameInvalidFormatException if provided game's format is invalid.
      *
      * @since tbd
      * */
@@ -120,9 +123,9 @@ public interface GameService {
      * </p>
      *
      * @param file an {@code zip} archive containing game files.
-     * @throws pl.magzik.my_hub.exception.GameAlreadyExistsException if game of provided details already exists.
-     * @throws pl.magzik.my_hub.exception.GameUploadFailureException if game couldn't be uploaded to the server.
-     * @throws pl.magzik.my_hub.exception.GameInvalidFormatException if provided game's format is invalid.
+     * @throws GameAlreadyExistsException if game of provided details already exists.
+     * @throws GameUploadFailureException if game couldn't be uploaded to the server.
+     * @throws GameInvalidFormatException if provided game's format is invalid.
      *
      * @deprecated <b>Will be removed in future releases.</b>
      * @since 1.0
@@ -136,7 +139,7 @@ public interface GameService {
      *     Please note the system will throw exception if game is not found.
      * </p>
      *
-     * @throws pl.magzik.my_hub.exception.GameNotFoundException if game of the provided details couldn't be found.
+     * @throws GameNotFoundException if game of the provided details couldn't be found.
      *
      * @since tbd
      * */
@@ -150,7 +153,7 @@ public interface GameService {
      *     Please note the system will throw exception if game is not found.
      * </p>
      *
-     * @throws pl.magzik.my_hub.exception.GameNotFoundException if game of the provided details couldn't be found.
+     * @throws GameNotFoundException if game of the provided details couldn't be found.
      *
      * @since tbd
      * */
@@ -165,7 +168,7 @@ public interface GameService {
      * </p>
      *
      * @param fileName a game's name.
-     * @throws pl.magzik.my_hub.exception.GameNotFoundException if game of provided name couldn't be found.
+     * @throws GameNotFoundException if game of provided name couldn't be found.
      *
      * @since 1.0
      * @deprecated <b>Will be removed in future releases.</b>
