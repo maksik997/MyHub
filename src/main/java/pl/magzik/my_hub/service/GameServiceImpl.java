@@ -22,14 +22,14 @@ import java.util.Optional;
  * @see GameRepository
  * */
 @Service
-public class GameService {
+public class GameServiceImpl {
 
-    private static final Logger log = LoggerFactory.getLogger(GameService.class);
+    private static final Logger log = LoggerFactory.getLogger(GameServiceImpl.class);
 
     private final GameRepository gameRepository;
 
     @Autowired
-    public GameService(GameRepository gameRepository) {
+    public GameServiceImpl(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
         log.info("Game service has been initialized.");
     }
