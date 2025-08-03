@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.magzik.my_hub.dto.GameDTO;
 import pl.magzik.my_hub.dto.StringResponse;
-import pl.magzik.my_hub.model.Game;
+import pl.magzik.my_hub.model.old.Game;
 import pl.magzik.my_hub.service.GameServiceImpl;
 
 import java.util.List;

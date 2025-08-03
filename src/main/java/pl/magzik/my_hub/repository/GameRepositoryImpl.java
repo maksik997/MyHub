@@ -30,6 +30,8 @@ import java.util.stream.Stream;
 @Repository
 public class GameRepositoryImpl {
 
+    /* todo -> here nexxt  */
+
     /* TODO:
     *   No.1 - Extent's persistence
     *           Because there is no database - it has to be addressed manually.

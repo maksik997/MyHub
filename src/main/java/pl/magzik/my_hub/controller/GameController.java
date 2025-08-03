@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import pl.magzik.my_hub.dto.GameDTO;
-import pl.magzik.my_hub.model.Game;
+import pl.magzik.my_hub.model.old.Game;
 import pl.magzik.my_hub.service.GameService;
 
 import java.util.List;
@@ -74,7 +74,7 @@ public class GameController {
     public String launchGame( @PathVariable(name = "name") String name) {
         GameDTO game = gameService.findByName(name);
 
-        return String.format("redirect:/games/%s/%s", game.name(), game.htmlFile());
+        return String.format("redirect:/games/%s/%s", game.name(), game.html());
     }
 
 }
