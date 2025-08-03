@@ -1,54 +1,53 @@
 package pl.magzik.my_hub.model;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.Objects;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
 
-/**
- * Represents a game directory containing an HTML file, typically used to identify a game
- * and provide access to the HTML file associated with that game.
- * <p>
- * This record holds the name of the game, the name of the `.html` file within the directory,
- * and the full path to the `.html` file.
- *
- * <p>The {@link Game} record is immutable and designed to be used with files on a file system.</p>
- *
- * <p>Instances of {@link Game} are created via the static {@link #of(File)} method,
- * which requires a directory containing exactly one `.html` file, along with a base directory
- * for constructing the full path to the `.html` file.</p>
- *
- * @param name the name of the game directory (typically the directory name).
- * @param htmlFile the name of the `.html` file within the game directory.
- *
- * @author Maksymilian Strzelczak
- * @version 1.0
- */
-public record Game(String name, String htmlFile) {
+import java.time.LocalDateTime;
+import java.util.UUID;
 
-    /**
-     * Creates a {@link Game} instance from the given directory containing a `.html` file.
-     * The method searches for the first `.html` file in the directory and constructs a {@link Game}
-     * object using the directory name and the `.html` file's name as properties.
-     *
-     * @param directory the directory to scan for the `.html` file (must not be {@code null}).
-     * @return a new {@link Game} object containing the directory name, `.html` file name, and full path to the file.
-     * @throws IllegalArgumentException if the directory is unreadable, or if no `.html` file is found in the directory.
-     * */
-    public static Game of(File directory) {
-        Objects.requireNonNull(directory);
+@Entity
+@Data
+public class Game {
 
-        String name = directory.getName();
+    @Getter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-        File[] innerFiles = directory.listFiles();
-        if (innerFiles == null)
-            throw new IllegalArgumentException("Couldn't read this directory: " + directory.getAbsolutePath());
+    @Basic(optional = false)
+    @Column(nullable = false,
+            length = 200)
+    private String name;
 
-        File htmlFile = Arrays.stream(innerFiles)
-            .filter(f -> f.getName().endsWith(".html"))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("There is no `.html` file in this directory: " + directory.getAbsolutePath()));
+    @Basic(optional = false)
+    @Column(nullable = false,
+            length = 1000)
+    private String html;
 
-        return new Game(name, htmlFile.getName());
+    @Basic(optional = false)
+    @Column(nullable = false)
+    private UUID currentGameRevision;
 
+    @Basic
+    @Column(nullable = false,
+            updatable = false)
+    private LocalDateTime creationDate;
+
+    @Basic
+    @Column(nullable = false)
+    private LocalDateTime modificationDate;
+
+    @PrePersist
+    public void prePersist() {
+        this.creationDate = LocalDateTime.now();
+        preUpdate();
     }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.modificationDate = LocalDateTime.now();
+    }
+
 }
