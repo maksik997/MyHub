@@ -1,0 +1,11 @@
+services:
+  myhub-app:
+    build: .
+    container_name: myhub-app
+    ports:
+      - "${PORT}:8080"
+    volumes:
+      - ${GAME_DIR}:/app/games
+      - ${MEDIA_DIR}:/app/media
+    env_file:
+      - ./.env
