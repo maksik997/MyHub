@@ -1,5 +1,7 @@
 # MyHub
 
+### REBUILDING
+
 **!!! PENDING UPDATE !!!**
 
 This web application, built using the Spring Framework and Thymeleaf,
