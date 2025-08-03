@@ -13,6 +13,7 @@ import java.util.UUID;
  *         <li>{@link GameStorageRepository#save(MultipartFile)}</li>
  *         <li>{@link GameStorageRepository#delete(UUID)}</li>
  *         <li>{@link GameStorageRepository#update(UUID, MultipartFile)}</li>
+ *         <li>{@link GameStorageRepository#locateExecutable(UUID)}</li>
  *     </ol>
  * </p>
  *
