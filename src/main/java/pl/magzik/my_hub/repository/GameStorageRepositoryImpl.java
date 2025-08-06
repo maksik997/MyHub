@@ -20,6 +20,14 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+/**
+ * Implementation of {@link GameStorageRepository}.
+ *
+ * @version 1.0
+ * @author Maksymilian Strzelczak
+ *
+ * @since 1.3
+ * */
 @Repository
 @Slf4j
 public class GameStorageRepositoryImpl implements GameStorageRepository {
