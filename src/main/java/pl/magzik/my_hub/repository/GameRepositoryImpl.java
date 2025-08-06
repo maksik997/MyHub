@@ -25,6 +25,7 @@ import java.util.stream.Stream;
  * @version 1.1
  *
  * @see Game
+ * @deprecated Will be removed in version 1.3
  * */
 @Deprecated
 @Repository

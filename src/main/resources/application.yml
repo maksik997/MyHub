@@ -30,8 +30,12 @@ management:
   metrics:
     export.prometheus: true
     tags.application: ${spring.application.name}
-game-dir: ./tmp/games
-media-dir: ./tmp/media
+pl.magzik.my_hub:
+  content:
+    game-directory: ./tmp/games
+    media-directory: ./tmp/media
+game-dir: ./tmp/games # DEPRECATED todo;
+media-dir: ./tmp/media # DEPRECATED todo;
 ---
 spring: # Kinda redundant, but for future use ;todo;
   config.activate.on-profile: "prod"

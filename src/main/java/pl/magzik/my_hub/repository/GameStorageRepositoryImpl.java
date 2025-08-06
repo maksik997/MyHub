@@ -42,6 +42,12 @@ public class GameStorageRepositoryImpl implements GameStorageRepository {
         log.debug("Uploading a new game source files.");
         Path temporary = null;
         try {
+            // Pre-validate existence of the upload directory.
+            Path uploadDir = Path.of(uploadPath);
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+            }
+
             // Pre-validate provided archive
             log.debug("Validating received archive.");
             var originalFileName = archive.getOriginalFilename();
