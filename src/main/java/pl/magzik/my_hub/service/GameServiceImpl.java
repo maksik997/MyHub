@@ -7,12 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import pl.magzik.my_hub.dto.CreateGameRequest;
-import pl.magzik.my_hub.dto.GameDTO;
+import pl.magzik.my_hub.dto.game.CreateGameRequest;
+import pl.magzik.my_hub.dto.game.GameDTO;
 import pl.magzik.my_hub.exception.game.GameNotFoundException;
 import pl.magzik.my_hub.model.Game;
-import pl.magzik.my_hub.repository.GameRepository;
-import pl.magzik.my_hub.repository.GameStorageRepository;
+import pl.magzik.my_hub.repository.game.GameRepository;
+import pl.magzik.my_hub.repository.game.GameStorageRepository;
 
 import java.util.List;
 import java.util.Objects;

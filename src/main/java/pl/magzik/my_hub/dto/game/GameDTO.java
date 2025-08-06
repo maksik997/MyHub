@@ -1,4 +1,4 @@
-package pl.magzik.my_hub.dto;
+package pl.magzik.my_hub.dto.game;
 
 
 import pl.magzik.my_hub.model.Game;

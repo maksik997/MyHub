@@ -1,4 +1,4 @@
-package pl.magzik.my_hub.repository;
+package pl.magzik.my_hub.repository.game;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
