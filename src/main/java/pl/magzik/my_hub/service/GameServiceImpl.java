@@ -37,20 +37,20 @@ public class GameServiceImpl implements GameService {
     public List<GameDTO> findAll() {
         return entityRepository.findAll()
                                .stream()
-                               .map(GameDTO::of)
+                               .map(GameDTO::toDto)
                                .toList();
     }
 
     @Override
     public Page<GameDTO> findAll(Pageable pageable) {
         return entityRepository.findAll(pageable)
-                               .map(GameDTO::of);
+                               .map(GameDTO::toDto);
     }
 
     @Override
     public GameDTO findById(long id) {
         var game = getOrThrow(id);
-        return GameDTO.of(game);
+        return GameDTO.toDto(game);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class GameServiceImpl implements GameService {
 
         var game = entityRepository.findByName(name)
                 .orElseThrow(GameNotFoundException::new);
-        return GameDTO.of(game);
+        return GameDTO.toDto(game);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class CreateGameRequest {
     private String name;
 
     /**
-     * Create an entity from the provided dto.
+     * Create an entity from the provided DTO.
      *
      * @param dto a dto used in entity construction. Must not be null.
      * @return a newly created entity.

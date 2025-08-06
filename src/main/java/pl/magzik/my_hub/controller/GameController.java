@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/games")
 @Slf4j
 @RequiredArgsConstructor
-public class GameController {
+public class GameController { // todo;
 
     private final GameService gameService;
 
@@ -33,7 +33,7 @@ public class GameController {
     public String getAllGames(Model model) {
         List<String> games = gameService.findAll()
                                         .stream()
-                                        .map(GameDTO::name)
+                                        .map(GameDTO::getName)
                                         .toList();
         model.addAttribute("games", games);
         return "games";
