@@ -24,6 +24,7 @@ import java.util.Objects;
  * @author Maksymilian Strzelczak
  * @since 1.2
  * */
+@Deprecated // Old idea not used.
 @RestController
 @RequestMapping("/api/1.2/games")
 public class GameRestController {
