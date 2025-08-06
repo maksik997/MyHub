@@ -18,12 +18,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * todo; ...
+ * Implementation of GameService interface.
  *
  * @since 1.0
  *
  * @author Maksymilian Strzelczak
- * @version 2.0
+ * @version 2.1
  * */
 @Service
 @Slf4j
@@ -32,7 +32,6 @@ public class GameServiceImpl implements GameService {
 
     private final GameRepository entityRepository;
     private final GameStorageRepository storageRepository;
-//    private final GameRepositoryImpl storageRepository;
 
     @Override
     public List<GameDTO> findAll() {
