@@ -7,6 +7,12 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * @author Maksymilian Strzelczak
+ * @version 1.0
+ *
+ * @since 1.3
+ * */
 @Entity
 @Data
 public class Game {
