@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${game-dir}")
+    @Value("${pl.magzik.my_hub.content.game-directory}")
     private String gameDirectory;
 
     @Override
