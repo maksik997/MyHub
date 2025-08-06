@@ -1,6 +1,11 @@
 package pl.magzik.my_hub.exception.game;
 
-public class GameUploadFailureException extends RuntimeException {
+/**
+ * @author Maksymilian Strzelczak
+ *
+ * @since 1.3
+ * */
+public class GameUploadFailureException extends GameException {
 
     public GameUploadFailureException(String message) {
         super("Game upload failed, due to '%s'.".formatted(message));
