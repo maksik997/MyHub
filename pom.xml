@@ -29,6 +29,13 @@
             <version>2.11.5</version>
         </dependency>
 
+        <!-- IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.16.1</version>
+        </dependency>
+
         <!-- SPRING BOOT -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

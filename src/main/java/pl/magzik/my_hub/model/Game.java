@@ -30,12 +30,12 @@ public class Game {
     @Column(nullable = false)
     private UUID currentGameRevision;
 
-    @Basic
+    @Basic(optional = false)
     @Column(nullable = false,
             updatable = false)
     private LocalDateTime creationDate;
 
-    @Basic
+    @Basic(optional = false)
     @Column(nullable = false)
     private LocalDateTime modificationDate;
 

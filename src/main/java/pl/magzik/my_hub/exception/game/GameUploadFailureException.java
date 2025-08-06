@@ -6,4 +6,8 @@ public class GameUploadFailureException extends RuntimeException {
         super("Game upload failed, due to '%s'.".formatted(message));
     }
 
+    public GameUploadFailureException(Throwable cause) {
+        super(cause);
+    }
+
 }
