@@ -1,0 +1,6 @@
+.button-pane {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15px;
+}

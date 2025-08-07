@@ -8,6 +8,7 @@
     <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
     <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
     <link th:href="@{/stylesheets/components/components.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/games/details.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -55,13 +56,14 @@
                 </p>
             </div>
 
-            <div>
+            <div class="button-pane">
 
-                <button id="update">Update</button>
+                <button class="button"
+                        id="update">Update</button>
 
                 <form th:action="@{/games/{id}/delete(id=${game.id})}"
                       method="post">
-                    <button>Delete</button>
+                    <button class="button">Delete</button>
                 </form>
 
             </div>

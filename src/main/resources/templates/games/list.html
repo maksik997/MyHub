@@ -38,15 +38,11 @@
                     <div>
                         <a th:href="@{/games/{id}/play(id=${game.id})}"
                            target="_blank">
-                            ▶ PLAY
+                            ▶ Play
                         </a>
                         <a th:href="@{/games/{id}(id=${game.id})}">
                             Details
                         </a>
-                        <form th:action="@{/games/{id}/delete(id=${game.id})}"
-                              method="post">
-                            <button>Delete</button>
-                        </form>
                     </div>
 
                 </li>
