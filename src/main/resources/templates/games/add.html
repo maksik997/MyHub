@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
     <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
-    <link th:href="@{/stylesheets/games_page.css}" rel="stylesheet">
     <link th:href="@{/stylesheets/components/components.css}" rel="stylesheet">
 
 </head>
@@ -17,29 +16,33 @@
 
     <main>
 
-        <h1>Add game:</h1>
+        <nav class="main-header">
+            <h1>Add game:</h1>
+            <a th:href="@{/games}">Back</a>
+        </nav>
 
-        <div>
+        <div class="main-content">
             <form th:action="@{/games/add}"
                   class="form"
                   method="post"
                   enctype="multipart/form-data">
 
-                <div>
+                <div> <!-- Game name container -->
                     <label for="name">Name:</label>
-                    <input type="text" id="name" th:name="name"/>
+                    <input type="text"
+                           id="name"
+                           th:name="name"/>
                 </div>
 
-                <div>
+                <div> <!-- File upload container -->
                     <label for="file">Game archive: (.zip)</label>
                     <div class="file-upload">
                         <input type="file"
                                class="file-input"
                                id="file"
-                               th:name="file"><br />
-                        <span class="file-label">
-                            No files selected
-                        </span>
+                               th:name="file"
+                               required><br />
+                        <span class="file-label"></span>
                     </div>
                 </div>
 
@@ -54,6 +57,9 @@
 
     <script>
         'use strict';
+        /*
+         Piece of code responsible for correct file upload handling.
+         */
         const fileUpload = document.querySelector(".file-upload");
         const fileInput = fileUpload.querySelector(".file-input");
         const fileLabel = fileUpload.querySelector(".file-label");
@@ -63,7 +69,7 @@
             if (fileInput.files.length > 0) {
                 fileLabel.textContent = fileInput.files[0].name;
             } else {
-                fileLabel.textContent = "No files selected.";
+                fileLabel.textContent = "";
             }
         });
     </script>

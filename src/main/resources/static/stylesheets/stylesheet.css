@@ -151,7 +151,6 @@ main > div {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 300px;
     margin: 10px auto 0;
     padding: 10px;
     border-radius: 20px;
