@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub - Games</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/components/components.css}" rel="stylesheet">
+</head>
+<body>
+
+    <header th:replace="~{ layout/header :: header }"></header>
+
+    <main>
+
+        <nav class="main-header">
+            <h1>Game: <span th:text="${game.name}">NAME</span></h1>
+            <a th:href="@{/games}">Back</a>
+        </nav>
+
+        <div class="main-content">
+            <h2>Game info:</h2>
+
+            <div>
+                <p>
+                    Identifier:
+                    <span th:text="${game.id}">ID</span>
+                </p>
+
+                <p>
+                    Name:
+                    <span th:text="${game.name}">NAME</span>
+                </p>
+
+                <p>
+                    Executable:
+                    <span th:text="${game.html}">HTML</span>
+                </p>
+
+                <p>
+                    Revision id:
+                    <span th:text="${game.currentGameRevision}">REVISION</span>
+                </p>
+
+                <p>
+                    Creation date:
+                    <span th:text="${#temporals.format(game.creationDate, 'yyyy-MM-dd HH:mm:ss')}">CREATE DATE</span>
+                </p>
+
+                <p>
+                    Modification date:
+                    <span th:text="${#temporals.format(game.modificationDate, 'yyyy-MM-dd HH:mm:ss')}">MODIFY DATE</span>
+                </p>
+            </div>
+
+            <div>
+
+                <button id="update">Update</button>
+
+                <form th:action="@{/games/{id}/delete(id=${game.id})}"
+                      method="post">
+                    <button>Delete</button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer th:replace="~{ layout/footer :: footer }"></footer>
+
+    <div class="modal">
+
+        <button class="modal-close">&times;</button>
+
+        <div class="modal-content">
+
+            <form th:action="@{/games/{id}/update(id=${game.id})}"
+                  class="form"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div> <!-- Game name container -->
+                    <label for="name">Name:</label>
+                    <input type="text"
+                           th:value="${game.name}"
+                           id="name"
+                           th:name="name"/>
+                </div>
+
+                <div> <!-- File upload container -->
+                    <label for="file">Game archive: (.zip)</label>
+                    <div class="file-upload">
+                        <input type="file"
+                               class="file-input"
+                               id="file"
+                               th:name="file"><br />
+                        <span class="file-label"></span>
+                    </div>
+                </div>
+
+                <button class="button">Submit</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script>
+        'use strict';
+
+        const updateButton = document.querySelector("#update");
+        const closeButton = document.querySelector(".modal-close");
+        const modal = document.querySelector(".modal");
+
+        updateButton.addEventListener("click", () => {
+            modal.style.display = "flex";
+        });
+        closeButton.addEventListener("click", () => {
+           modal.style.display = "none";
+        });
+    </script>
+
+</body>
+</html>

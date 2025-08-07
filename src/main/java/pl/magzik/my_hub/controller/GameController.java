@@ -35,6 +35,16 @@ public class GameController { // todo;
         return "games/list";
     }
 
+    @GetMapping("/{id}")
+    public String getGame(@PathVariable long id,
+                          Model model) {
+
+        var game = gameService.findById(id);
+        model.addAttribute("game", game);
+
+        return "games/details";
+    }
+
     @GetMapping("/add")
     public String addGame(Model model) {
 
@@ -54,8 +64,10 @@ public class GameController { // todo;
         return "redirect:/games";
     }
 
-    @PostMapping("/{name}")
-    public String updateGame() { // todo;
+    @PostMapping("/{id}/update")
+    public String updateGame(@PathVariable long id,
+                             @ModelAttribute CreateGameRequest request,
+                             @RequestParam("file") MultipartFile file) {
         throw new UnsupportedOperationException("Not implemented.");
     }
 
@@ -65,7 +77,7 @@ public class GameController { // todo;
         return "redirect:/games";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/play")
     public String launchGame(@PathVariable long id) {
         return String.format("redirect:/games/%s",
                 gameService.locate(id));

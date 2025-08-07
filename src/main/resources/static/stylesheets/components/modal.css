@@ -1,0 +1,40 @@
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.modal .modal-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    background: transparent;
+    color: var(--color-accent-1);
+    border: 0;
+    outline: 0;
+
+    font-size: 32px;
+
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal .modal-close:hover {
+    color: var(--color-accent-2);
+}
+
+.modal .modal-content {
+    margin: auto;
+
+    background: var(--color-main);
+}
