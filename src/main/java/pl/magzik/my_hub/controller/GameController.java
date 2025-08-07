@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import pl.magzik.my_hub.dto.game.CreateGameRequest;
 import pl.magzik.my_hub.dto.game.GameDTO;
 import pl.magzik.my_hub.service.GameService;
 
@@ -19,7 +18,7 @@ import java.util.List;
  * @author Maksymilian Strzelczak
  * @version 1.1
  *
- * @since 1.1
+ * @since 2.0
  */
 @Controller
 @RequestMapping("/games")
@@ -31,22 +30,39 @@ public class GameController { // todo;
 
     @GetMapping
     public String getAllGames(Model model) {
-        List<String> games = gameService.findAll()
-                                        .stream()
-                                        .map(GameDTO::getName)
-                                        .toList();
+        var games = gameService.findAll();
         model.addAttribute("games", games);
         return "games";
     }
 
-    @PostMapping
-    public String addGame() { // todo;
-        throw new UnsupportedOperationException("Not implemented.");
+    @GetMapping("/add")
+    public String addGame(Model model) {
+
+        model.addAttribute("request", new CreateGameRequest());
+
+        return "games/add";
+    }
+
+    @PostMapping("/add")
+    public String addGame(
+            @ModelAttribute CreateGameRequest request,
+            @RequestParam("file") MultipartFile file,
+            Model model) {
+
+        gameService.add(request, file);
+
+        return "redirect:/games";
     }
 
     @PostMapping("/{name}")
     public String updateGame() { // todo;
         throw new UnsupportedOperationException("Not implemented.");
+    }
+
+    @PostMapping("/{id}/delete")
+    public String deleteGame(@PathVariable long id) {
+        gameService.delete(id);
+        return "redirect:/games";
     }
 
     @GetMapping("/{id}")

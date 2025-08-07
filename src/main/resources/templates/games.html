@@ -45,8 +45,11 @@
             </p>
             <ul>
                 <li th:each="game : ${games}">
-                    <p th:text="${game}">Game name</p>
-                    <a th:href="@{/games/{name}(name=${game})}" target="_blank">▶ PLAY</a>
+                    <p th:text="${game.name}">Game name</p>
+                    <a th:href="@{/games/{id}(id=${game.id})}" target="_blank">▶ PLAY</a>
+                    <form th:action="@{/games/{id}/delete(id=${game.id})}" method="post">
+                        <button>Delete</button>
+                    </form>
                 </li>
             </ul>
         </div>
