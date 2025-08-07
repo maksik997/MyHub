@@ -32,7 +32,7 @@ public class GameController { // todo;
     public String getAllGames(Model model) {
         var games = gameService.findAll();
         model.addAttribute("games", games);
-        return "games";
+        return "games/list";
     }
 
     @GetMapping("/add")

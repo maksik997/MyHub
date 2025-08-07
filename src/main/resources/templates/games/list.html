@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub - Games</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/components/components.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/games_page.css}" rel="stylesheet">
+</head>
+<body>
+
+    <header th:replace="~{ layout/header :: header }"></header>
+
+    <main>
+
+        <nav class="main-header">
+            <h1>Games:</h1>
+            <a th:href="@{/games/add}">+ Add</a>
+        </nav>
+
+        <div class="main-content">
+
+            <p class="element-counter">
+                Showing
+                <b th:text="${games.size()}">Count</b>
+                games.
+            </p>
+
+            <ul class="element-list">
+                <li class="element"
+                    th:each="game : ${games}">
+
+                    <p th:text="${game.name}">Game name</p>
+
+                    <div>
+                        <a th:href="@{/games/{id}/play(id=${game.id})}"
+                           target="_blank">
+                            ▶ PLAY
+                        </a>
+                        <a th:href="@{/games/{id}(id=${game.id})}">
+                            Details
+                        </a>
+                        <form th:action="@{/games/{id}/delete(id=${game.id})}"
+                              method="post">
+                            <button>Delete</button>
+                        </form>
+                    </div>
+
+                </li>
+            </ul>
+
+        </div>
+
+    </main>
+
+    <footer th:replace="~{ layout/footer :: footer }"></footer>
+
+</body>
+</html>
