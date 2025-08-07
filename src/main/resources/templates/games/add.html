@@ -2,23 +2,70 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub - Games</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link th:href="@{/images/logo.png}" rel="icon" type="image/x-icon">
+    <link th:href="@{/stylesheets/stylesheet.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/games_page.css}" rel="stylesheet">
+    <link th:href="@{/stylesheets/components/components.css}" rel="stylesheet">
+
 </head>
 <body>
 
-    <form th:action="@{/games/add}"
-          method="post"
-          enctype="multipart/form-data">
+    <header th:replace="~{ layout/header :: header }"></header>
 
-        <label>Name:</label>
-        <input type="text" th:name="name"/>
+    <main>
 
-        <label>Game files</label>
-        <input type="file" th:name="file">
+        <h1>Add game:</h1>
 
-        <button type="submit">Submit</button>
+        <div>
+            <form th:action="@{/games/add}"
+                  class="form"
+                  method="post"
+                  enctype="multipart/form-data">
 
-    </form>
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" th:name="name"/>
+                </div>
 
+                <div>
+                    <label for="file">Game archive: (.zip)</label>
+                    <div class="file-upload">
+                        <input type="file"
+                               class="file-input"
+                               id="file"
+                               th:name="file"><br />
+                        <span class="file-label">
+                            No files selected
+                        </span>
+                    </div>
+                </div>
+
+                <button class="button">Submit</button>
+
+            </form>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{ layout/footer :: footer }"></footer>
+
+    <script>
+        'use strict';
+        const fileUpload = document.querySelector(".file-upload");
+        const fileInput = fileUpload.querySelector(".file-input");
+        const fileLabel = fileUpload.querySelector(".file-label");
+
+        fileUpload.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileLabel.textContent = fileInput.files[0].name;
+            } else {
+                fileLabel.textContent = "No files selected.";
+            }
+        });
+    </script>
 </body>
 </html>

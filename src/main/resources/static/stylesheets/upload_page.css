@@ -16,7 +16,7 @@ main > form {
     font-size: 1.2em;
 }
 
-main > form input[type="file"] {
+main form input[type="file"] {
     max-width: 100%;
     margin: 15px 0;
     padding: 10px;
@@ -27,11 +27,11 @@ main > form input[type="file"] {
     font-weight: bold;
 }
 
-main > form input[type="file"]:hover {
+main form input[type="file"]:hover {
     cursor: pointer;
 }
 
-main > form button {
+main form button {
     padding: 10px 30px;
     background-color: var(--color-accent-1);
     box-shadow: 2px 8px 10px var(--color-shadow);
@@ -43,7 +43,7 @@ main > form button {
     font-size: 0.8em;
 }
 
-main > form button:hover {
+main form button:hover {
     transform: translateY(-2px);
     background-color: var(--color-accent-2);
     font-weight: bold;
