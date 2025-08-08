@@ -92,7 +92,7 @@ public class GameServiceImpl implements GameService {
         if (!game.getName().equals(request.getName())) {
             game.setName(request.getName());
         }
-        if (file != null) {
+        if (file != null && file.getOriginalFilename() != null && !file.getOriginalFilename().isEmpty()) {
             var oldRev = game.getCurrentGameRevision();
             var newRev = storageRepository.update(oldRev, file);
             game.setCurrentGameRevision(newRev);

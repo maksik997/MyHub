@@ -36,6 +36,11 @@ pl.magzik.my_hub:
     media-directory: ./tmp/media
 game-dir: ./tmp/games # DEPRECATED todo;
 media-dir: ./tmp/media # DEPRECATED todo;
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    pl.magzik.my_hub: DEBUG
 ---
 spring: # Kinda redundant, but for future use ;todo;
   config.activate.on-profile: "prod"

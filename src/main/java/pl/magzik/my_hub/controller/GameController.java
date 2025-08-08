@@ -68,7 +68,9 @@ public class GameController { // todo;
     public String updateGame(@PathVariable long id,
                              @ModelAttribute CreateGameRequest request,
                              @RequestParam("file") MultipartFile file) {
-        throw new UnsupportedOperationException("Not implemented.");
+
+        gameService.update(id, request, file);
+        return "redirect:/games/%d".formatted(id);
     }
 
     @PostMapping("/{id}/delete")
