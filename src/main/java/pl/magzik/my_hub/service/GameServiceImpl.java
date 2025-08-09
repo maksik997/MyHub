@@ -23,7 +23,7 @@ import java.util.Objects;
  * @since 1.0
  *
  * @author Maksymilian Strzelczak
- * @version 2.1
+ * @version 2.2
  * */
 @Service
 @Slf4j
@@ -77,11 +77,6 @@ public class GameServiceImpl implements GameService {
         entityRepository.save(game);
     }
 
-    @Deprecated
-    public void addByName(MultipartFile file) { // Legacy
-        throw new UnsupportedOperationException();
-    }
-
     @Override
     @Transactional
     public void update(long id, CreateGameRequest request, MultipartFile file) {
@@ -115,16 +110,16 @@ public class GameServiceImpl implements GameService {
     @Override
     public String locate(long id) {
         var game = getOrThrow(id);
-        var revId = game.getCurrentGameRevision();
-        var html = game.getHtml();
-        return "%s/%s".formatted(revId, html);
+        return game.getUniformLocator();
     }
 
-    @Deprecated
-    public void deleteByName(String fileName) { // Legacy
-        throw new UnsupportedOperationException();
-    }
-
+    /**
+     * Retrieves a game entity by the provided id. If game entity cannot be found throws exception.
+     *
+     * @param id an identifier for looked up game.
+     * @return game entity that corresponds to the provided identifier.
+     * @throws GameNotFoundException if game entity cannot be found.
+     * */
     private Game getOrThrow(long id) {
         return entityRepository.findById(id)
                 .orElseThrow(GameNotFoundException::new);
