@@ -44,8 +44,8 @@ spring: # Inside the container
   config.activate.on-profile: "prod"
   servlet:
     multipart:
-      max-file-size: 20GB
-      max-request-size: 20GB
+      max-file-size: ${MYHUB_MAX_FILE_SIZE}
+      max-request-size: ${MYHUB_MAX_FILE_SIZE}
   jpa:
     open-in-view: false
     hibernate:

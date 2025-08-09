@@ -21,10 +21,10 @@ services:
     ports:
       - "${PORT}:8080"
     volumes:
-      - ${GAME_DIRECTORY}:/app/games
-      - ${MEDIA_DIRECTORY}:/app/media
+      - ${MYHUB_GAME_DIRECTORY}:/app/games
+      - ${MYHUB_MEDIA_DIRECTORY}:/app/media
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:${DB_PORT}/myhub
+      DB_URL: jdbc:postgresql://db:${DB_PORT}/myhub
     env_file:
       - ./.env
     depends_on:
