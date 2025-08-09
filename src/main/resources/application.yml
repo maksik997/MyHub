@@ -6,12 +6,12 @@ spring:
   profiles:
     active: "dev"
 ---
-spring:
-`  config.activate.on-profile: "dev"
+spring: # Outside the container
+  config.activate.on-profile: "dev"
   servlet:
     multipart:
-      max-file-size: 5GB
-      max-request-size: 5GB
+      max-file-size: 100MB
+      max-request-size: 100MB
   jpa:
     open-in-view: false
     hibernate:
@@ -32,22 +32,30 @@ management:
     tags.application: ${spring.application.name}
 pl.magzik.my_hub:
   content:
-    game-directory: ./tmp/games
-    media-directory: ./tmp/media
-game-dir: ./tmp/games # DEPRECATED todo;
-media-dir: ./tmp/media # DEPRECATED todo;
+    game-directory: ./tmp/games/
+    media-directory: ./tmp/media/
 logging:
   level:
     root: INFO
     org.springframework: INFO
     pl.magzik.my_hub: DEBUG
 ---
-spring: # Kinda redundant, but for future use ;todo;
+spring: # Inside the container
   config.activate.on-profile: "prod"
   servlet:
     multipart:
-      max-file-size: 5GB
-      max-request-size: 5GB
+      max-file-size: 20GB
+      max-request-size: 20GB
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      show-sql: false
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 server:
   port: 8080
 management:
@@ -56,5 +64,12 @@ management:
   metrics:
     export.prometheus: true
     tags.application: ${spring.application.name}
-game-dir: /app/games
-media-dir: /app/media
+pl.magzik.my_hub:
+  content:
+    game-directory: /app/games/
+    media-directory: /app/media/
+logging:
+  level:
+    root: WARN
+    org.springframework: WARN
+    pl.magzik.my_hub: INFO

@@ -1,11 +1,31 @@
 services:
+  db:
+    image: postgres:16
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: myhub
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - ./.env
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - ${DB_DATA}:/var/lib/postgresql/data
+
   myhub-app:
     build: .
     container_name: myhub-app
+    restart: unless-stopped
     ports:
       - "${PORT}:8080"
     volumes:
-      - ${GAME_DIR}:/app/games
-      - ${MEDIA_DIR}:/app/media
+      - ${GAME_DIRECTORY}:/app/games
+      - ${MEDIA_DIRECTORY}:/app/media
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:${DB_PORT}/myhub
     env_file:
       - ./.env
+    depends_on:
+      - db

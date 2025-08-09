@@ -32,7 +32,7 @@ public class MediaRepository {
 
     private static final Logger log = LoggerFactory.getLogger(MediaRepository.class);
 
-    @Value("${media-dir}")
+    @Value("${pl.magzik.my_hub.content.media-directory}")
     private String mediaDirectory;
 
     /**
