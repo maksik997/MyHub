@@ -1,0 +1,10 @@
+
+ _|      _|            _|    _|            _|
+ _|_|  _|_|  _|    _|  _|    _|  _|    _|  _|_|_|
+ _|  _|  _|  _|    _|  _|_|_|_|  _|    _|  _|    _|
+ _|      _|  _|    _|  _|    _|  _|    _|  _|    _|
+ _|      _|    _|_|_|  _|    _|    _|_|_|  _|_|_|
+                   _|
+               _|_|
+${spring.application.display-name} ${spring.application.version}
+Powered by Spring Boot ${spring-boot.version}
