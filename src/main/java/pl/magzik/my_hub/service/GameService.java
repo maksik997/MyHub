@@ -25,7 +25,6 @@ import java.util.List;
  *         <li>{@link GameService#findAll()},</li>
  *         <li>{@link GameService#findAll(Pageable)},</li>
  *         <li>{@link GameService#findById(long)},</li>
- *         <li>{@link GameService#findByName(String)},</li>
  *         <li>{@link GameService#add(CreateGameRequest,MultipartFile)},</li>
  *         <li>{@link GameService#update(long,CreateGameRequest,MultipartFile)},</li>
  *         <li>{@link GameService#delete(long)},</li>
@@ -36,7 +35,7 @@ import java.util.List;
  * @since 1.3
  *
  * @author Maksymilian Strzelczak
- * @version 1.1
+ * @version 1.3
  * */
 public interface GameService {
 
@@ -77,21 +76,7 @@ public interface GameService {
      *
      * @since 1.1
      * */
-    GameDTO findById(long id);
-
-    /**
-     * Find a specific game by its name.
-     * <p>
-     *     Please note the system will throw exception if game of the provided name is not found.
-     * </p>
-     *
-     * @param name a name of the game in the system
-     * @return a game that matches provided name.
-     * @throws GameNotFoundException if there is no game under provided identifier.
-     *
-     * @since 1.0
-     * */
-    GameDTO findByName(String name);
+    GameDTO findById(long id) throws GameNotFoundException;
 
     /**
      * Registers a new game in the system.
@@ -108,7 +93,10 @@ public interface GameService {
      *
      * @since 1.1
      * */
-    void add(CreateGameRequest request, MultipartFile file);
+    void add(CreateGameRequest request,
+             MultipartFile file) throws GameAlreadyExistsException,
+                                        GameUploadFailureException,
+                                        GameInvalidFormatException;
 
     /**
      * Updates existing game in the system.
@@ -120,10 +108,16 @@ public interface GameService {
      * @param request an updated details about the game
      * @param file a game source file archive. Optional.
      * @throws GameNotFoundException if game of the provided details couldn't be found.
+     * @throws GameUploadFailureException if game couldn't be uploaded to the server.
+     * @throws GameInvalidFormatException if provided game's format is invalid.
      *
      * @since 1.1
      * */
-    void update(long id, CreateGameRequest request, MultipartFile file);
+    void update(long id,
+                CreateGameRequest request,
+                MultipartFile file) throws GameNotFoundException,
+                                           GameUploadFailureException,
+                                           GameInvalidFormatException;
 
     /**
      * Deletes existing game from the system.
@@ -136,7 +130,7 @@ public interface GameService {
      *
      * @since 1.1
      * */
-    void delete(long id);
+    void delete(long id) throws GameNotFoundException;
 
     /**
      * Retrieves game source location path.
@@ -149,6 +143,6 @@ public interface GameService {
      *
      * @since 1.1
      * */
-    String locate(long id);
+    String locate(long id) throws GameNotFoundException;
 
 }
