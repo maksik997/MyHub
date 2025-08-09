@@ -35,7 +35,7 @@ import java.util.List;
  * @since 1.3
  *
  * @author Maksymilian Strzelczak
- * @version 1.3
+ * @version 1.4
  * */
 public interface GameService {
 
@@ -86,7 +86,7 @@ public interface GameService {
      * </p>
      *
      * @param request a dto containing game details
-     * @param file a file containg game source file archive.
+     * @param file a file contain game source file archive.
      * @throws GameAlreadyExistsException if game of provided details already exists.
      * @throws GameUploadFailureException if game couldn't be uploaded to the server.
      * @throws GameInvalidFormatException if provided game's format is invalid.
@@ -139,7 +139,7 @@ public interface GameService {
      * </p>
      *
      * @param id an identifier of the game.
-     * @throws GameNotFoundException if game of the provided id could not be find.
+     * @throws GameNotFoundException if game of the provided id could not be found.
      *
      * @since 1.1
      * */
