@@ -8,8 +8,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
+ * A game entity.
+ *
  * @author Maksymilian Strzelczak
- * @version 1.0
+ * @version 1.1
  *
  * @since 1.3
  * */
@@ -44,6 +46,11 @@ public class Game {
     @Basic(optional = false)
     @Column(nullable = false)
     private LocalDateTime modificationDate;
+
+    @Transient
+    public String getUniformLocator() {
+        return "%s/%s".formatted(currentGameRevision, html);
+    }
 
     @PrePersist
     public void prePersist() {
