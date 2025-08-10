@@ -37,7 +37,7 @@
 
                 <div> <!-- File upload container -->
                     <label>Game archive: (.zip)</label>
-                    <div th:replace="~{ fragments/file_upload :: fileUpload }"></div>
+                    <div th:replace="~{ fragments/file_upload :: fileUpload(true) }"></div>
                 </div>
 
                 <button class="button">Submit</button>

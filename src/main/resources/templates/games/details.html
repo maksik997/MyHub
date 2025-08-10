@@ -94,14 +94,8 @@
                 </div>
 
                 <div> <!-- File upload container -->
-                    <label for="file">Game archive: (.zip)</label>
-                    <div class="file-upload">
-                        <input type="file"
-                               class="file-input"
-                               id="file"
-                               th:name="file"><br />
-                        <span class="file-label"></span>
-                    </div>
+                    <label>Game archive: (.zip)</label>
+                    <div th:replace="~{ fragments/file_upload :: fileUpload(false) }"></div>
                 </div>
 
                 <button class="button">Submit</button>
@@ -124,22 +118,6 @@
         });
         closeButton.addEventListener("click", () => {
            modal.style.display = "none";
-        });
-
-        /*
-         Piece of code responsible for correct file upload handling.
-         */
-        const fileUpload = document.querySelector(".file-upload");
-        const fileInput = fileUpload.querySelector(".file-input");
-        const fileLabel = fileUpload.querySelector(".file-label");
-
-        fileUpload.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', () => {
-            if (fileInput.files.length > 0) {
-                fileLabel.textContent = fileInput.files[0].name;
-            } else {
-                fileLabel.textContent = "";
-            }
         });
     </script>
 

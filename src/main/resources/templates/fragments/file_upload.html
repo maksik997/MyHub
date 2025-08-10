@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<div th:fragment="fileUpload"
+<div th:fragment="fileUpload(required)"
      class="file-upload">
 
     <input type="file"
            class="file-input"
            id="file"
-           th:name="file"
-           required><br />
+           th:required="${required}"
+           th:name="file"><br />
     <span class="file-label"></span>
 
     <script>
