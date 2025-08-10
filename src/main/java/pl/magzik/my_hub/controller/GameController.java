@@ -53,7 +53,9 @@ public class GameController { // todo;
             @RequestParam("file") MultipartFile file,
             Model model,
             RedirectAttributes redirectAttributes) {
+
         gameService.add(request, file);
+
         return "redirect:/games";
     }
 

@@ -13,12 +13,33 @@
     <header th:replace="~{ layout/header :: header }"></header>
 
     <main>
-        <h1>Unfortunately an error has occurred 😢.</h1>
-        <pre>Status: <span th:text="${status}">[Status]</span></pre>
-        <pre>Message: <span th:text="${message}">[Message]</span></pre>
+
+        <div class="main-header">
+            <h1>Error notification!</h1>
+
+            <a th:href="@{/}">Back home</a>
+        </div>
+
+        <div class="main-content">
+            <h1>Something went wrong 😢.</h1>
+            <p>HTTP Status:</p>
+            <pre th:text="${status}"></pre>
+
+            <p>Error message:</p>
+            <pre th:text="${message}"></pre>
+
+            <p>
+                If you think this should not ever happen, please report this on
+                <a href="https://github.com/maksik997/MyHub"
+                   class="hyperlink">GitHub</a>.
+            </p>
+        </div>
+
     </main>
 
     <footer th:replace="~{ layout/footer :: footer }"></footer>
+
+    <div th:replace="~{ fragments/notification :: notification }"></div>
 
 </body>
 </html>
