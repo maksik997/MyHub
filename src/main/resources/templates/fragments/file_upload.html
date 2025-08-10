@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="fileUpload"
+     class="file-upload">
+
+    <input type="file"
+           class="file-input"
+           id="file"
+           th:name="file"
+           required><br />
+    <span class="file-label"></span>
+
+    <script>
+        'use strict';
+        document.addEventListener("DOMContentLoaded", () => {
+            const fileUpload = document.querySelector(".file-upload");
+            const fileInput = fileUpload.querySelector(".file-input");
+            const fileLabel = fileUpload.querySelector(".file-label");
+
+            fileUpload.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length > 0) {
+                    fileLabel.textContent = fileInput.files[0].name;
+                } else {
+                    fileLabel.textContent = "";
+                }
+            });
+        });
+    </script>
+</div>
+
+</body>
+</html>
