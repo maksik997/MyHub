@@ -6,11 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.magzik.my_hub.dto.game.CreateGameRequest;
-import pl.magzik.my_hub.dto.game.GameDTO;
 import pl.magzik.my_hub.service.GameService;
-
-import java.util.List;
 
 /**
  * Controller class for the Game Module.
@@ -38,18 +36,14 @@ public class GameController { // todo;
     @GetMapping("/{id}")
     public String getGame(@PathVariable long id,
                           Model model) {
-
         var game = gameService.findById(id);
         model.addAttribute("game", game);
-
         return "games/details";
     }
 
     @GetMapping("/add")
     public String addGame(Model model) {
-
         model.addAttribute("request", new CreateGameRequest());
-
         return "games/add";
     }
 
@@ -57,10 +51,9 @@ public class GameController { // todo;
     public String addGame(
             @ModelAttribute CreateGameRequest request,
             @RequestParam("file") MultipartFile file,
-            Model model) {
-
+            Model model,
+            RedirectAttributes redirectAttributes) {
         gameService.add(request, file);
-
         return "redirect:/games";
     }
 
@@ -68,7 +61,6 @@ public class GameController { // todo;
     public String updateGame(@PathVariable long id,
                              @ModelAttribute CreateGameRequest request,
                              @RequestParam("file") MultipartFile file) {
-
         gameService.update(id, request, file);
         return "redirect:/games/%d".formatted(id);
     }
@@ -82,7 +74,7 @@ public class GameController { // todo;
     @GetMapping("/{id}/play")
     public String launchGame(@PathVariable long id) {
         return String.format("redirect:/games/%s",
-                gameService.locate(id));
+                             gameService.locate(id));
     }
 
 }

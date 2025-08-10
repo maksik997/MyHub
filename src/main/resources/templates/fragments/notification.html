@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="notification"
+     th:if="${message != null}"
+     class="notification fly-in">
+
+    <div class="notification-header">
+        <h1 class="notification-title">
+            Notification
+        </h1>
+
+        <span class="notification-close">&times;</span>
+    </div>
+
+
+    <p th:text="${message}"
+       class="notification-content">
+        Message
+    </p>
+
+    <script>
+        'use strict';
+        document.addEventListener("DOMContentLoaded", () => {
+            const notification = document.querySelector(".notification");
+            const closeButton = notification.querySelector(".notification-close");
+            const notificationTimeout = 5000; // 5 seconds
+            const closeNotification = () => {
+                notification.classList.remove("fly-in");
+                notification.classList.add("fly-out");
+            };
+            closeButton.addEventListener("click", () => closeNotification());
+            setTimeout(closeNotification, 5000);
+        });
+    </script>
+</div>
+
+</body>
+</html>

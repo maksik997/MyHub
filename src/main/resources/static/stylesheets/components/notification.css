@@ -1,0 +1,69 @@
+@keyframes flyInFromRight {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes flyOutToRight {
+    to {
+        transform: translateX(200%);
+        opacity: 0;
+    }
+}
+
+.fly-in {
+    opacity: 0;
+    transform: translateX(200%);
+    animation: flyInFromRight 600ms cubic-bezier(.22, .9, .32, 1) forwards;
+    animation-delay: 200ms;
+}
+
+.fly-out {
+    opacity: 1;
+    transform: translateX(0);
+    animation: flyOutToRight 500ms cubic-bezier(.22, .9, .32, 1) forwards;
+}
+
+.notification {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    max-width: 350px;
+    width: 350px;
+    min-height: 100px;
+    max-height: 200px;
+
+    padding: 10px 20px;
+
+    background: var(--color-accent-1);
+    border-radius: 20px;
+    box-shadow: 2px 8px 20px var(--color-shadow);
+}
+
+.notification .notification-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.notification .notification-header .notification-title {
+    font-size: 1.1rem;
+}
+
+.notification .notification-header .notification-close {
+    font-size: 2em;
+
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.notification .notification-header .notification-close:hover {
+    color: var(--color-accent-4);
+}
+
+.notification .notification-content {
+    font-size: 0.9em;
+}
