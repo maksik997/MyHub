@@ -22,7 +22,7 @@ import pl.magzik.my_hub.service.GameService;
 @RequestMapping("/games")
 @Slf4j
 @RequiredArgsConstructor
-public class GameController { // todo;
+public class GameController {
 
     private final GameService gameService;
 
@@ -53,23 +53,26 @@ public class GameController { // todo;
             @RequestParam("file") MultipartFile file,
             Model model,
             RedirectAttributes redirectAttributes) {
-
         gameService.add(request, file);
-
+        redirectAttributes.addFlashAttribute("message", "Game has been successfully added");
         return "redirect:/games";
     }
 
     @PostMapping("/{id}/update")
     public String updateGame(@PathVariable long id,
                              @ModelAttribute CreateGameRequest request,
-                             @RequestParam("file") MultipartFile file) {
+                             @RequestParam("file") MultipartFile file,
+                             RedirectAttributes redirectAttributes) {
         gameService.update(id, request, file);
+        redirectAttributes.addFlashAttribute("message", "Game has been successfully updated.");
         return "redirect:/games/%d".formatted(id);
     }
 
     @PostMapping("/{id}/delete")
-    public String deleteGame(@PathVariable long id) {
+    public String deleteGame(@PathVariable long id,
+                             RedirectAttributes redirectAttributes) {
         gameService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Game has been successfully deleted.");
         return "redirect:/games";
     }
 
