@@ -13,6 +13,7 @@ import pl.magzik.my_hub.exception.game.GameAlreadyExistsException;
 import pl.magzik.my_hub.exception.game.GameInvalidFormatException;
 import pl.magzik.my_hub.exception.game.GameNotFoundException;
 import pl.magzik.my_hub.exception.game.GameUploadFailureException;
+import pl.magzik.my_hub.mapper.GameMapper;
 import pl.magzik.my_hub.model.Game;
 import pl.magzik.my_hub.repository.game.GameRepository;
 import pl.magzik.my_hub.repository.game.GameStorageRepository;
@@ -35,25 +36,26 @@ public class GameServiceImpl implements GameService {
 
     private final GameRepository entityRepository;
     private final GameStorageRepository storageRepository;
+    private final GameMapper mapper;
 
     @Override
     public List<GameDTO> findAll() {
         return entityRepository.findAll()
                                .stream()
-                               .map(GameDTO::toDto)
+                               .map(mapper::toDto)
                                .toList();
     }
 
     @Override
     public Page<GameDTO> findAll(Pageable pageable) {
         return entityRepository.findAll(pageable)
-                               .map(GameDTO::toDto);
+                               .map(mapper::toDto);
     }
 
     @Override
     public GameDTO findById(long id) throws GameNotFoundException {
         var game = getOrThrow(id);
-        return GameDTO.toDto(game);
+        return mapper.toDto(game);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class GameServiceImpl implements GameService {
         Objects.requireNonNull(request);
         Objects.requireNonNull(file);
 
-        var game = CreateGameRequest.toEntity(request);
+        var game = mapper.toEntityFromRequest(request);
         var revision = storageRepository.save(file);
         game.setCurrentGameRevision(revision);
         var html = storageRepository.locateExecutable(revision);

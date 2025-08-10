@@ -58,6 +58,11 @@
 
             <div class="button-pane">
 
+                <a th:href="@{/games/{id}/play(id=${game.id})}"
+                   class="button"
+                   target="_blank">
+                    ▶ Play
+                </a>
                 <button class="button"
                         id="update">Update</button>
 
