@@ -23,6 +23,7 @@
 
         <div class="main-content">
             <form th:action="@{/games/add}"
+                  th:object="${request}"
                   class="form"
                   method="post"
                   enctype="multipart/form-data">
@@ -30,6 +31,7 @@
                 <div> <!-- Game name container -->
                     <label for="name">Name:</label>
                     <input type="text"
+                           th:field="*{name}"
                            id="name"
                            th:name="name"
                            required/>

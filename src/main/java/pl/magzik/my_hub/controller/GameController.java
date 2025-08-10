@@ -1,14 +1,18 @@
 package pl.magzik.my_hub.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.magzik.my_hub.dto.game.CreateGameRequest;
 import pl.magzik.my_hub.service.GameService;
+
+import java.util.stream.Collectors;
 
 /**
  * Controller class for the Game Module.
@@ -49,10 +53,22 @@ public class GameController {
 
     @PostMapping("/add")
     public String addGame(
-            @ModelAttribute CreateGameRequest request,
+            @Valid @ModelAttribute CreateGameRequest request,
+            BindingResult bindingResult,
             @RequestParam("file") MultipartFile file,
             Model model,
             RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            // In case of errors
+            var errors = bindingResult.getFieldErrors() // todo; Extract to method
+                                      .stream()
+                                      .map(e -> "%s %s".formatted(e.getField(), e.getDefaultMessage()))
+                                      .collect(Collectors.joining("\n"));
+            model.addAttribute("message", errors);
+            model.addAttribute("request", request);
+            return "games/add";
+        }
+
         gameService.add(request, file);
         redirectAttributes.addFlashAttribute("message", "Game has been successfully added");
         return "redirect:/games";
@@ -60,9 +76,23 @@ public class GameController {
 
     @PostMapping("/{id}/update")
     public String updateGame(@PathVariable long id,
-                             @ModelAttribute CreateGameRequest request,
+                             @Valid @ModelAttribute CreateGameRequest request,
+                             BindingResult bindingResult,
                              @RequestParam("file") MultipartFile file,
+                             Model model,
                              RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            // In case of errors
+            var game = gameService.findById(id);
+            var errors = bindingResult.getFieldErrors()
+                    .stream()
+                    .map(e -> "%s %s".formatted(e.getField(), e.getDefaultMessage()))
+                    .collect(Collectors.joining("\n"));
+            model.addAttribute("message", errors);
+            model.addAttribute("game", game);
+            return "games/details";
+        }
+
         gameService.update(id, request, file);
         redirectAttributes.addFlashAttribute("message", "Game has been successfully updated.");
         return "redirect:/games/%d".formatted(id);
