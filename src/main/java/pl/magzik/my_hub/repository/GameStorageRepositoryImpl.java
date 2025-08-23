@@ -1,4 +1,4 @@
-package pl.magzik.my_hub.repository.game;
+package pl.magzik.my_hub.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;

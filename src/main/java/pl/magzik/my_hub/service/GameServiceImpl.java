@@ -15,8 +15,8 @@ import pl.magzik.my_hub.exception.game.GameNotFoundException;
 import pl.magzik.my_hub.exception.game.GameUploadFailureException;
 import pl.magzik.my_hub.mapper.GameMapper;
 import pl.magzik.my_hub.model.Game;
-import pl.magzik.my_hub.repository.game.GameRepository;
-import pl.magzik.my_hub.repository.game.GameStorageRepository;
+import pl.magzik.my_hub.repository.GameRepository;
+import pl.magzik.my_hub.repository.GameStorageRepository;
 
 import java.util.List;
 import java.util.Objects;

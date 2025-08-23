@@ -1,4 +1,4 @@
-package pl.magzik.my_hub.repository.game;
+package pl.magzik.my_hub.repository;
 
 import org.springframework.web.multipart.MultipartFile;
 

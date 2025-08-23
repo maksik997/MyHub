@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.magzik.my_hub.dto.game.CreateGameRequest;
 import pl.magzik.my_hub.service.GameService;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -60,10 +61,7 @@ public class GameController {
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             // In case of errors
-            var errors = bindingResult.getFieldErrors() // todo; Extract to method
-                                      .stream()
-                                      .map(e -> "%s %s".formatted(e.getField(), e.getDefaultMessage()))
-                                      .collect(Collectors.joining("\n"));
+            var errors = extractErrorsFromBinding(bindingResult);
             model.addAttribute("message", errors);
             model.addAttribute("request", request);
             return "games/add";
@@ -84,10 +82,7 @@ public class GameController {
         if (bindingResult.hasErrors()) {
             // In case of errors
             var game = gameService.findById(id);
-            var errors = bindingResult.getFieldErrors()
-                    .stream()
-                    .map(e -> "%s %s".formatted(e.getField(), e.getDefaultMessage()))
-                    .collect(Collectors.joining("\n"));
+            var errors = extractErrorsFromBinding(bindingResult);
             model.addAttribute("message", errors);
             model.addAttribute("game", game);
             return "games/details";
@@ -110,6 +105,15 @@ public class GameController {
     public String launchGame(@PathVariable long id) {
         return String.format("redirect:/games/%s",
                              gameService.locate(id));
+    }
+
+    private String extractErrorsFromBinding(BindingResult bindingResult) {
+        Objects.requireNonNull(bindingResult);
+
+        return bindingResult.getFieldErrors()
+                            .stream()
+                            .map(e -> "%s %s".formatted(e.getField(), e.getDefaultMessage()))
+                            .collect(Collectors.joining("\n"));
     }
 
 }
